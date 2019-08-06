@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @SpringBootApplication
 public class SecurepumpApplication {
-	
 	public static void main(String[] args) {
 		SpringApplication.run(SecurepumpApplication.class, args);
 	}
