@@ -47,14 +47,14 @@
 
     <!-- BEGIN: Header-->
 	
-	
+	<th:block th:include="fragments/header :: header"></th:block>
 	
     <!-- END: Header-->
 
 
     <!-- BEGIN: Main Menu-->
 	<!-- slider-->
-    
+    <th:block th:include="fragments/submenu :: submenu"></th:block>
     <!-- END: Main Menu-->
     <!-- BEGIN: Content-->
     <div class="app-content content">
@@ -493,6 +493,7 @@
 
     <!-- BEGIN: Footer-->
 	<!-- Footer -->
+	 <th:block th:include="fragments/footer :: footer"></th:block>
     <!-- END: Footer-->
 
 

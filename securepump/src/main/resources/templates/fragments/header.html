@@ -1,9 +1,11 @@
- <nav class="header-navbar navbar-expand-lg navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-semi-dark navbar-shadow">
+
+<div th:fragment="header">
+<nav class="header-navbar navbar-expand-lg navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-semi-dark navbar-shadow" >
         <div class="navbar-wrapper">
             <div class="navbar-header">
                 <ul class="nav navbar-nav flex-row">
                     <li class="nav-item mobile-menu d-lg-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
-                    <li class="nav-item mr-auto"><a class="navbar-brand" href="index.php"><img class="brand-logo" alt="modern admin logo" src="./app-assets/images/logo/logo.png">
+                    <li class="nav-item mr-auto"><a class="navbar-brand" href="/home"><img class="brand-logo" alt="modern admin logo" src="./app-assets/images/logo/logo.png">
                             <h3 class="brand-text">Secure Pump</h3>
                         </a></li>
                     <li class="nav-item d-none d-lg-block nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="toggle-icon ft-toggle-right font-medium-3 white" data-ticon="ft-toggle-right"></i></a></li>
@@ -57,7 +59,7 @@
                                             <div class="card-header p-0 pb-2 border-0" id="headingThree" role="tab"><a class="collapsed" data-toggle="collapse" href="#accordionThree" aria-expanded="false" aria-controls="accordionThree">Accordion Item #3</a></div>
                                             <div class="card-collapse collapse" id="accordionThree" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordionWrap" aria-expanded="false">
                                                 <div class="card-content">
-                                                    <p class="accordion-text">Candy cupcake sugar plum oat cake wafer marzipan jujubes lollipop macaroon. Cake dragÃ©e jujubes donut chocolate bar chocolate cake cupcake chocolate topping.</p>
+                                                    <p class="accordion-text">Candy cupcake sugar plum oat cake wafer marzipan jujubes lollipop macaroon. Cake dragée jujubes donut chocolate bar chocolate cake cupcake chocolate topping.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -221,4 +223,4 @@
             </div>
         </div>
     </nav>
-   
+  </div> 
