@@ -1,5 +1,7 @@
 package com.securepump.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,6 +25,21 @@ public class AccountCreationEntity {
     
     @Column(name="account_group", nullable=false, length=200)
     private String actGroup;
+    
+    @Column(name = "created_by",updatable=false)
+    private int created_by;
+    
+    @Column(name = "created_date" ,updatable=false)
+    //@ColumnTransformer(write="Coalesce(Current_Timestamp, ?)")
+    private Date created_date;
+    
+    @Column(name = "updated_by")
+    private int updated_by;
+    
+    @Column(name="updated_date")
+   // @ColumnTransformer(write="Coalesce(Current_Timestamp, ?)")
+    private Date updated_date;
+
     
     public Long getId() {
 		return id;
@@ -54,6 +71,38 @@ public class AccountCreationEntity {
 
 	public void setActGroup(String actGroup) {
 		this.actGroup = actGroup;
+	}
+
+	public int getCreated_by() {
+		return created_by;
+	}
+
+	public void setCreated_by(int created_by) {
+		this.created_by = created_by;
+	}
+
+	public Date getCreated_date() {
+		return created_date;
+	}
+
+	public void setCreated_date(Date created_date) {
+		this.created_date = created_date;
+	}
+
+	public int getUpdated_by() {
+		return updated_by;
+	}
+
+	public void setUpdated_by(int updated_by) {
+		this.updated_by = updated_by;
+	}
+
+	public Date getUpdated_date() {
+		return updated_date;
+	}
+
+	public void setUpdated_date(Date updated_date) {
+		this.updated_date = updated_date;
 	}
 
 	@Override

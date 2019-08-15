@@ -116,28 +116,30 @@
 											</div>
 														
 												
-                                        <form class="form" action="" method="post">
+                                        <form class="form" action="#" th:action="@{/saveAccount}" method="post" th:object="${account}">
+                                        
                                             <div class="form-body">
                                                 <h4 class="form-section"><i class="ft-user"></i> Account Creation</h4>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="projectinput1">Name</label>
-                                                           <input type="text" id="timesheetinput1" class="form-control" placeholder="Please Enter Customer Name" name="accname">
+                                                        <input type="hidden" th:field="*{id}" readonly="readonly" />
+                                                            <label for="customerName">Name</label>
+                                                           <input type="text" id="customerName" th:field="*{actName}" class="form-control" placeholder="Please Enter Customer Name" name="actName">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="projectinput2">Account Type</label>
-															<select id="issueinput6" name="accounttype" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
-																	<option value="Assets">Assets</option>
-																	<option value="Liability">Liability</option>
-																	<option value="Wallet">Wallet</option>
-																	<option value="Bank">Bank</option>
-																	<option value="Expence">Expence</option>
-																	<option value="Income">Income</option>
-																	<option value="Income">Swipe Machine</option>
-																	<option value="Income">Fleet/Drive Track Card </option>
+                                                            <label for="accountType">Account Type</label>
+															<select id="accountType" th:field="*{actType}" name="accountType" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
+																	<option th:value="'Assets'" th:text="Assets">Assets</option>
+																	<option th:value="'Liability'" th:text="Liability"></option>
+																	<option th:value="'Wallet'" th:text="Wallet"></option>
+																	<option th:value="'Bank'" th:text="Bank"></option>
+																	<option th:value="'Expence'" th:text="Expence"></option>
+																	<option th:value="'Income'" th:text="Income"></option>
+																	<option th:value="'SwipeMachine'" th:text="SwipeMachine"></option>
+																	<option th:value="'FleetDriveTrackCard'" th:text="FleetDriveTrackCard"> </option>
 															</select>
                                                          </div>
                                                     </div>
@@ -145,22 +147,21 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="projectinput3">Group</label>
-                                                             <select id="issueinput6" name="group" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
-																<option value="Assets">Direct Income</option>
-																<option value="Assets">Direct Expence</option>
-																<option value="Assets">Indirect Income</option>
-																<option value="Liability">Indirect Expence</option>
-																<option value="Assets">Assests</option>
-																<option value="Assets">Liability</option>
-																<option value="Assets">Other Current Assets</option>
-																<option value="Assets">Saving/Current A/C</option>
-																<option value="Assets">OD A/C</option>
-																<option value="Assets">Credit Card </option>
-																<option value="Assets">Sundry Creditors </option>
-																<option value="Assets">Sundry Debitors</option>
-																<option value="Assets">Walltes</option>
-																
+                                                            <label for="actGroup">Group</label>
+                                                             <select id="actGroup" th:field="*{actGroup}" name="actGroup" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
+																<option th:value="'DirectIncome'" th:text="DirectIncome"></option>
+																<option th:value="'DirectExpence'" th:text="DirectExpence"></option>
+																<option th:value="'IndirectIncome'" th:text="IndirectIncome"></option>
+																<option th:value="'IndirectExpence'" th:text="IndirectExpence"></option>
+																<option th:value="'Assets'" th:text="Assests"></option>
+																<option th:value="'Liability'" th:text="Liability"></option>
+																<option th:value="'OtherCurrentAssets'" th:text="OtherCurrentAssets"></option>
+																<option th:value="'SavingCurrentAC'" th:text="SavingCurrentAC"></option>
+																<option th:value="'ODAC'" th:text="ODAC"></option>
+																<option th:value="'CreditCard'" th:text="CreditCard"> </option>
+																<option th:value="'SundryCreditors'" th:text="SundryCreditors"> </option>
+																<option th:value="'SundryDebitors'" th:text="SundryDebitors"></option>
+																<option th:value="'Walltes'" th:text="Walltes"></option>
 																
 															  </select>
                                                         </div>
@@ -174,9 +175,10 @@
                                             </div>
 
                                             <div class="form-actions">
-                                                <button type="button" class="btn btn-warning mr-1">
+                                            <a href="#" th:href="@{/account-creation}" class="btn btn-warning mr-1" role="button">Cancel</a>
+                                                <!-- <button type="button" class="btn btn-warning mr-1">
                                                     <i class="ft-x"></i> Cancel
-                                                </button>
+                                                </button> -->
                                                 <button type="submit" class="btn btn-primary" name="SubmitButton">
                                                     <i class="la la-check-square-o"></i> Save
                                                 </button>
@@ -219,16 +221,17 @@
                                             </thead>
                                             <tbody>
                                              
-												 
-																<tr>
-																	<th scope="row">64</th>
-																	<td>55</td>
-																	<td>4545</td>
-																	<td>454</td>
-																	
-																	<td></td>
-																</tr>
-																
+												 <tr th:each="accounts : ${listAccounts}">
+									                <td th:text="${accounts.id}"  scope="row">ID</td>
+									                <td th:text="${accounts.actName}">Name</td>
+									                <td th:text="${accounts.actType}">actType</td>
+									                <td th:text="${accounts.actGroup}">actGroup</td>
+									                <td>
+									                    <a th:href="/@{'/accountEdit/' + ${accounts.id}">Edit</a>
+									                    &nbsp;&nbsp;&nbsp;
+									                    <a th:href="/@{'/accountDelete/' + ${accounts.id}">Delete</a>
+									                </td>
+									            </tr>																										
 														 
                                             </tbody>
                                         </table>
@@ -240,8 +243,8 @@
                     </div>
 
 
-                   
-                   
+                   </div>
+                   </div>
 
                </section>
                 <!-- // Basic form layout section end -->
