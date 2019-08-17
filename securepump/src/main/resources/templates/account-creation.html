@@ -82,7 +82,7 @@
                 <!-- Basic form layout section start -->
                 <section id="basic-form-layouts">
                     <div class="row match-height">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title" id="basic-layout-form">Project Info</h4>
@@ -116,52 +116,53 @@
 											</div>
 														
 												
-                                        <form class="form" action="#" th:action="@{/saveAccount}" method="post" th:object="${account}">
+                                        <form class="form" action="/saveAccount" method="post">
                                         
                                             <div class="form-body">
                                                 <h4 class="form-section"><i class="ft-user"></i> Account Creation</h4>
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
-                                                        <!-- <input type="hidden" th:field="*{id}" readonly="readonly" /> -->
-                                                            <label for="customerName">Name</label>
-                                                           <input type="text" id="customerName" th:field="*{actName}" class="form-control" placeholder="Please Enter Customer Name" name="actName">
+															 <input type="hidden" name="id" id="actID" />
+                                                            <label for="actName">Name</label>
+                                                           <input type="text" id="actName" name="actName" class="form-control" placeholder="Please Enter Customer Name">
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="accountType">Account Type</label>
-															<select id="accountType" th:field="*{actType}" name="accountType" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
-																	<option th:value="'Assets'" th:text="Assets">Assets</option>
-																	<option th:value="'Liability'" th:text="Liability"></option>
-																	<option th:value="'Wallet'" th:text="Wallet"></option>
-																	<option th:value="'Bank'" th:text="Bank"></option>
-																	<option th:value="'Expence'" th:text="Expence"></option>
-																	<option th:value="'Income'" th:text="Income"></option>
-																	<option th:value="'SwipeMachine'" th:text="SwipeMachine"></option>
-																	<option th:value="'FleetDriveTrackCard'" th:text="FleetDriveTrackCard"> </option>
+                                                            <label for="actType">Account Type</label>
+															<select id="actType" name="actType" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
+																	<option value="Assets">Assets</option>
+																	<option value="Liability">Liability</option>
+																	<option value="Wallet">Wallet</option>
+																	<option value="Bank">Bank</option>
+																	<option value="Expence">Expence</option>
+																	<option value="Income">Income</option>
+																	<option value="SwipeMachine">Swipe Machine</option>
+																	<option value="FleetDriveTrackCard">Fleet/Drive Track Card </option>
 															</select>
                                                          </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
+                                                
+                                                
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="actGroup">Group</label>
-                                                             <select id="actGroup" th:field="*{actGroup}" name="actGroup" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
-																<option th:value="'DirectIncome'" th:text="DirectIncome"></option>
-																<option th:value="'DirectExpence'" th:text="DirectExpence"></option>
-																<option th:value="'IndirectIncome'" th:text="IndirectIncome"></option>
-																<option th:value="'IndirectExpence'" th:text="IndirectExpence"></option>
-																<option th:value="'Assets'" th:text="Assests"></option>
-																<option th:value="'Liability'" th:text="Liability"></option>
-																<option th:value="'OtherCurrentAssets'" th:text="OtherCurrentAssets"></option>
-																<option th:value="'SavingCurrentAC'" th:text="SavingCurrentAC"></option>
-																<option th:value="'ODAC'" th:text="ODAC"></option>
-																<option th:value="'CreditCard'" th:text="CreditCard"> </option>
-																<option th:value="'SundryCreditors'" th:text="SundryCreditors"> </option>
-																<option th:value="'SundryDebitors'" th:text="SundryDebitors"></option>
-																<option th:value="'Walltes'" th:text="Walltes"></option>
+                                                             <select id="actGroup" name="actGroup" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
+																<option value="DirectIncome">Direct Income</option>
+																<option value="DirectExpence">Direct Expence</option>
+																<option value="IndirectIncome">Indirect Income</option>
+																<option value="IndirectExpence">Indirect Expence</option>
+																<option value="Assets">Assests</option>
+																<option value="Liability">Liability</option>
+																<option value="OtherCurrentAssets">Other Current Assets</option>
+																<option value="SavingCurrentAC">Saving/Current A/C</option>
+																<option value="ODAC">OD A/C</option>
+																<option value="CreditCard">Credit Card </option>
+																<option value="Sundry Creditors">Sundry Creditors </option>
+																<option value="Sundry Debitors">Sundry Debitors</option>
+																<option value="Walltes">Walltes</option>
+																
 																
 															  </select>
                                                         </div>
@@ -175,11 +176,10 @@
                                             </div>
 
                                             <div class="form-actions">
-                                            <a href="#" th:href="@{/account-creation}" class="btn btn-warning mr-1" role="button">Cancel</a>
-                                                <!-- <button type="button" class="btn btn-warning mr-1">
+                                            	<button type="button" class="btn btn-warning mr-1btnCancel btnCancel" id="btnCancel">
                                                     <i class="ft-x"></i> Cancel
-                                                </button> -->
-                                                <button type="submit" class="btn btn-primary" name="SubmitButton">
+                                                </button>
+                                                <button type="submit" class="btn btn-primary btnSave" name="SubmitButton" id="btnSave">
                                                     <i class="la la-check-square-o"></i> Save
                                                 </button>
                                             </div>
@@ -189,7 +189,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             
 						<div class="card">
                             <div class="card-header">
@@ -222,15 +222,14 @@
                                             <tbody>
                                              
 												 <tr th:each="accounts : ${listAccounts}">
-									                <td th:text="${accounts.id}">ID</td>
+									                <td th:text="${accounts.id}">S.No</td>
 									                <td th:text="${accounts.actName}">Name</td>
 									                <td th:text="${accounts.actType}">actType</td>
 									                <td th:text="${accounts.actGroup}">actGroup</td>
 									                <td>
-									                <a href="#">Edit</a>
-									                    <!-- <a th:href="/@{'/accountEdit/' + ${accounts.id}">Edit</a> -->
+									                <button type='button' class="accountEdit" th:data-id="${accounts.id}">Edit</button>									                     
 									                    &nbsp;&nbsp;&nbsp;
-									                     <a href="#">Delete</a>
+									                     <a th:href="@{'/accountDelete/'+${accounts.id}}">Delete</a>
 									                </td>
 									            </tr>																										
 														 
@@ -278,6 +277,37 @@
         <!-- BEGIN: Page JS-->
     <script src="./app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
     <!-- END: Page JS-->
+    
+    <script>
+    
+    $(document).on("click", ".accountEdit", function(e) {
+ 	   //$('#topicchange').attr('disabled',false);
+ 	   $("#clearform").find('input:text,select, textarea').val('').css('border-color', '');
+        $("#errordesc").html("");
+        $("#btnSave").html("Update");
+        var $row = $(this).closest("tr");
+        var actName = $row.find("td:nth-child(2)").eq(0).text();
+        var actType = $row.find("td:nth-child(3)").eq(0).text();
+        var actGroup = $row.find("td:nth-child(4)").eq(0).text();
+        var actID = $(this).attr('data-id');
+
+        $("#actID").val(actID*1);
+        $("#actName").val(actName);
+        $("#actType").val(actType);
+        $("#actGroup").val(actGroup);
+        
+       
+    });
+    $(document).on("click", ".btnCancel", function(e) {
+	   	 $("#actID").val("");
+	     $("#actName").val("");
+	     $("#actType").val("");
+	     $("#actGroup").val("");
+	     $("#btnSave").html("Save");
+    });
+
+   
+    </script>
 
 </body>
 <!-- END: Body-->

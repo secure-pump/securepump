@@ -24,11 +24,10 @@ public class AccountCreationController {
 	AccountCreationService accountService;
 
 	@RequestMapping("/account-creation")
-	public String AccountCreate(Model model) {
+	public String AccountCreate(@ModelAttribute("account") AccountCreationEntity account,Model model) {
 		List<AccountCreationEntity> listAccounts = accountService.getAllAccounts();		
 	    model.addAttribute("listAccounts", listAccounts);
-	    AccountCreationEntity account = new AccountCreationEntity();
-	    model.addAttribute("account", account);
+	   // model.addAttribute("account", account);
 		return "account-creation";
 	}
 	@RequestMapping(value = "/saveAccount", method = RequestMethod.POST)
@@ -51,8 +50,8 @@ public class AccountCreationController {
 	@RequestMapping("/accountDelete/{id}")
 	public String deleteProduct(@PathVariable(name = "id") Long id,Model model) throws RecordNotFoundException {
 		accountService.deleteAccountsById(id);
-		List<AccountCreationEntity> listAccounts = accountService.getAllAccounts();
-	    model.addAttribute("listAccounts", listAccounts);
-	    return "account-creation";       
+		//List<AccountCreationEntity> listAccounts = accountService.getAllAccounts();
+	    //model.addAttribute("listAccounts", listAccounts);
+	    return "/account-creation";       
 	}
 }
