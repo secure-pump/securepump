@@ -48,29 +48,14 @@ public class AccountCreationServiceImpl implements AccountCreationService {
 	@Override
 	public AccountCreationEntity createOrUpdateAccounts(AccountCreationEntity entity) {
 		// TODO Auto-generated method stub
-		if(entity.getId()  == null) 
-		{
+		
 			entity.setCreated_date(new Date());
 			entity.setCreated_by(0);
+			entity.setUpdated_date(new Date());
+			entity.setUpdated_by(0);
 			entity = accountRepository.save(entity);
 			return entity;
-		}else {
-			Optional<AccountCreationEntity> employee = accountRepository.findById(entity.getId());
-			if(employee.isPresent()) 
-			{
-				AccountCreationEntity newEntity = employee.get();
-				newEntity.setActName(entity.getActName());
-				newEntity.setActType(entity.getActType());
-				newEntity.setActGroup(entity.getActGroup());
-				newEntity.setUpdated_date(new Date());
-				newEntity.setUpdated_by(0);
-				newEntity = accountRepository.save(newEntity);
-				return newEntity;
-			} else {
-				entity = accountRepository.save(entity);
-				return entity;
-			}
-		}
+		
 	}
 
 	@Override
