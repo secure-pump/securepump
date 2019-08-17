@@ -131,7 +131,7 @@
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="actType">Account Type</label>
-															<select id="actType" name="actType" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
+															<select id="actType" name="actType" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Account Type">
 																	<option value="Assets">Assets</option>
 																	<option value="Liability">Liability</option>
 																	<option value="Wallet">Wallet</option>
@@ -148,7 +148,7 @@
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="actGroup">Group</label>
-                                                             <select id="actGroup" name="actGroup" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
+                                                             <select id="actGroup" name="actGroup" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Account Group">
 																<option value="DirectIncome">Direct Income</option>
 																<option value="DirectExpence">Direct Expence</option>
 																<option value="IndirectIncome">Indirect Income</option>
@@ -177,10 +177,10 @@
 
                                             <div class="form-actions">
                                             	<button type="button" class="btn btn-warning mr-1btnCancel btnCancel" id="btnCancel">
-                                                    <i class="ft-x"></i> Cancel
+                                                    Cancel
                                                 </button>
                                                 <button type="submit" class="btn btn-primary btnSave" name="SubmitButton" id="btnSave">
-                                                    <i class="la la-check-square-o"></i> Save
+                                                    Save
                                                 </button>
                                             </div>
                                         </form>
@@ -227,12 +227,11 @@
 									                <td th:text="${accounts.actType}">actType</td>
 									                <td th:text="${accounts.actGroup}">actGroup</td>
 									                <td>
-									                <button type='button' class="accountEdit" th:data-id="${accounts.id}">Edit</button>									                     
+									                <button type='button' class="btn btn-primary btn-xs accountEdit" data-title="Edit" th:data-id="${accounts.id}"><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
 									                    &nbsp;&nbsp;&nbsp;
-									                     <a th:href="@{'/accountDelete/'+${accounts.id}}">Delete</a>
+									                     <a th:href="@{'/accountDelete/'+${accounts.id}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>Delete</a>
 									                </td>
-									            </tr>																										
-														 
+									            </tr>														 
                                             </tbody>
                                         </table>
                                     </div>

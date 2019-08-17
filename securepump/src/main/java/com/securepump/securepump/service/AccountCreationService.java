@@ -1,12 +1,12 @@
-package com.securepump.service;
+package com.securepump.securepump.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 
-import com.securepump.exception.RecordNotFoundException;
-import com.securepump.model.AccountCreationEntity;
+import com.securepump.securepump.exception.RecordNotFoundException;
+import com.securepump.securepump.model.AccountCreationEntity;
 @Service
 @Configurable
 public interface AccountCreationService {
