@@ -34,10 +34,10 @@ public class AccountCreationController {
 	public String saveProduct(@ModelAttribute("account") AccountCreationEntity account,Model model) {
 		System.out.println("account--"+account);
 		accountService.createOrUpdateAccounts(account);
-		List<AccountCreationEntity> listAccounts = accountService.getAllAccounts();
-		System.out.println("listAccounts--"+listAccounts.size());
-	    model.addAttribute("listAccounts", listAccounts);
-	    return "account-creation";
+		//List<AccountCreationEntity> listAccounts = accountService.getAllAccounts();
+		//System.out.println("listAccounts--"+listAccounts.size());
+	   // model.addAttribute("listAccounts", listAccounts);
+	    return "redirect:/account-creation?status=de";
 	}
 	@RequestMapping("/accountEdit/{id}")
 	public ModelAndView showEditProductPage(@PathVariable(name = "id") Long id) throws RecordNotFoundException {
@@ -52,6 +52,6 @@ public class AccountCreationController {
 		accountService.deleteAccountsById(id);
 		//List<AccountCreationEntity> listAccounts = accountService.getAllAccounts();
 	    //model.addAttribute("listAccounts", listAccounts);
-	    return "/account-creation";       
+		 return "redirect:/account-creation";
 	}
 }
