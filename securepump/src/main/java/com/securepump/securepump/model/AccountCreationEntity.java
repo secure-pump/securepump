@@ -1,4 +1,4 @@
-package com.securepump.model;
+package com.securepump.securepump.model;
 
 import java.util.Date;
 

@@ -3,7 +3,6 @@ package com.securepump.securepump.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,12 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import com.securepump.securepump.exception.RecordNotFoundException;
+import com.securepump.securepump.model.AccountCreationEntity;
+import com.securepump.securepump.service.AccountCreationService;
 
-import com.securepump.exception.RecordNotFoundException;
-import com.securepump.model.AccountCreationEntity;
-import com.securepump.service.AccountCreationService;
-
-@Configurable
 @Controller
 public class AccountCreationController {
 	
