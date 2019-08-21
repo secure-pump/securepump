@@ -29,9 +29,9 @@ public class ItemCreationEntity {
 	@Column(name="opening_stock",length=15)
 	private int openingStock;
 	@Column(name="Opening_stock_date")
+	@DateTimeFormat (pattern="dd-MM-yyyy")
 	private Date openingStockDate;
 	@Column(name = "created_by",updatable=false)
-	@DateTimeFormat (pattern="dd-MM-yyyy")
     private String created_by;
     
     @Column(name = "created_date" ,updatable=false)
