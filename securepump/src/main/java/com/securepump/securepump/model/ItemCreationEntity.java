@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name="TBL_ITEM_CREATION")
 public class ItemCreationEntity {
@@ -29,6 +31,7 @@ public class ItemCreationEntity {
 	@Column(name="Opening_stock_date")
 	private Date openingStockDate;
 	@Column(name = "created_by",updatable=false)
+	@DateTimeFormat (pattern="dd-MM-yyyy")
     private String created_by;
     
     @Column(name = "created_date" ,updatable=false)

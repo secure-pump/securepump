@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="loading" lang="en" data-textdirection="ltr">
+<html class="loading" lang="en" data-textdirection="ltr" xmlns:th="http://www.thymeleaf.org">
 <!-- BEGIN: Head-->
 
 <head>
@@ -83,70 +83,79 @@
                 <!-- Basic form layout section start -->
                 <section id="basic-form-layouts">
                     <div class="row match-height">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title" id="basic-layout-form">Item Creation </h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
-                                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                            <li><a data-action="collapse" id="createDiv"><i id="createDivIcon" class="ft-plus"></i></a></li>
                                             <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                             <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
                                             <li><a data-action="close"><i class="ft-x"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="card-content collapse show">
+                                <div id="createDivClass" class="card-content collapse">
                                     <div class="card-body">
-                                  
-																
-											<div class="alert alert-info alert-dismissible mb-2" role="alert">
-											   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-													<span aria-hidden="true">×</span>
-												</button>
-												<strong>  Records</strong> Inserted Sucessfully <a href="#" class="alert-link"></a>
-											</div>
-											
-											<div class="alert alert-info alert-dismissible mb-2" role="alert">
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-												  <span aria-hidden="true">×</span>
-												 </button>
-												<strong>  Sorry</strong> Unable to process Customer Details, please try again.<a href="#" class="alert-link"></a>
-											</div>
-																		
-											
                                         
-                                        <form class="form" action="" method="post">
+										<!-- <div th:if="${status=='save'}">-->
+									<div th:switch="${status}">
+												
+										<div th:case="'save'" class="alert alert-success alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Records</strong> Inserted Successfully <a href="#" class="alert-link"></a>                                            
+                                        </div>
+                                        <div th:case="'update'" class="alert alert-success alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Records</strong> Updated Successfully <a href="#" class="alert-link"></a>                                            
+                                        </div>
+                                        <div th:case="'error'" class="alert alert-danger alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Sorry</strong> Unable to process, please try again.<a href="#" class="alert-link"></a>                                           
+                                        </div>                                   
+                                      </div>
+										
+														
+												
+                                        <form class="form" action="/saveItem" method="post">
+                                        
                                             <div class="form-body">
                                                 <h4 class="form-section"><i class="ft-user"></i> Item Details</h4>
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-2">
                                                         <div class="form-group">
-                                                            <label for="projectinput1">Item Name </label>
-                                                            <input type="text" id="timesheetinput1" class="form-control" placeholder="Please Enter Item Name" name="itemname"> </div>
+														<input type="hidden" name="id" id="itemID" />
+                                                            <label for="itemName">Item Name </label>
+                                                            <input type="text" id="itemName" class="form-control" placeholder="Please Enter Item Name" name="itemName"> </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-2">
                                                         <div class="form-group">
-                                                            <label for="projectinput2">Item Nature</label>
-                                                              <select id="issueinput6" name="itemnature" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
+                                                            <label for="itemNature">Item Nature</label>
+                                                              <select id="itemNature" name="itemNature" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Item Nature">
 																	<option value="Fuel">Fuel</option>
 																	<option value="Lubs">Lub's</option>
 																</select>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
+                                               
+                                                    <div class="col-md-2">
                                                         <div class="form-group">
-                                                            <label for="projectinput3">HSN Code</label>
-                                                            <input type="text" class="form-control" placeholder="Please Enter  HSN Code " aria-describedby="basic-addon3" name="HSNCode">
+                                                            <label for="hsnCode">HSN Code</label>
+                                                            <input type="text" id="hsnCode" class="form-control" placeholder="Please Enter  HSN Code " aria-describedby="basic-addon3" name="hsnCode">
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-2">
                                                         <div class="form-group">
-                                                            <label for="projectinput4">GST%</label>
-                                                             <select id="issueinput6" name="GST" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
+                                                            <label for="gstPercent">GST%</label>
+                                                             <select id="gstPercent" name="gstPercent" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="GST Percent">
 																	<option value="0">0</option>
 																	<option value="5">5</option>
 																	<option value="12">12</option>
@@ -155,18 +164,17 @@
 																</select>
                                                         </div>
                                                     </div>
-                                                </div>
-												 <div class="row">
-                                                    <div class="col-md-6">
+                                               
+                                                    <div class="col-md-2">
                                                         <div class="form-group">
-                                                            <label for="projectinput3"> Opening Stock</label>
-                                                            <input type="text" class="form-control" placeholder="Please Enter Opeining Stock" aria-describedby="basic-addon3" Name="openingstock">
+                                                            <label for="openingStock"> Opening Stock</label>
+                                                            <input type="text" id="openingStock" class="form-control" placeholder="Please Enter Opeining Stock" aria-describedby="basic-addon3" Name="openingStock">
                                                         </div>
                                                     </div>
-                                                   <div class="col-md-6">
+                                                   <div class="col-md-2">
                                                         <div class="form-group">
-                                                            <label for="projectinput3"> Opening Stock Date</label>
-                                                            <input type="date" id="timesheetinput3" class="form-control" name="date">
+                                                            <label for="openingStockDate"> Opening Stock Date</label>
+                                                            <input type="date" id="openingStockDate" class="form-control" name="openingStockDate">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -177,11 +185,11 @@
                                             </div>
 
                                             <div class="form-actions">
-                                                <button type="button" class="btn btn-warning mr-1">
-                                                    <i class="ft-x"></i> Cancel
+                                            	<button type="button" class="btn btn-warning mr-1btnCancel btnCancel" id="btnCancel">
+                                                    Cancel
                                                 </button>
-                                                <button type="submit" class="btn btn-primary" name="SubmitButton">
-                                                    <i class="la la-check-square-o"></i> Save
+                                                <button type="submit" class="btn btn-primary btnSave" name="SubmitButton" id="btnSave">
+                                                    Save
                                                 </button>
                                             </div>
                                         </form>
@@ -190,8 +198,14 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             
+                                        <div th:if="${status=='delete'}" class="alert alert-success alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Records</strong> Deleted Successfully <a href="#" class="alert-link"></a>                                            
+                                        </div>
 						<div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Basic Tables</h4>
@@ -218,24 +232,27 @@
 													 <th>HSN Code</th>
 													 <th>GST</th>
 													 <th>Opening Stock</th>
+													 <th>Opening Stock Date</th>
 													 <th>Action </th>
 													  
                                                 </tr>
                                             </thead>
                                             <tbody>
                                              
-																<tr>
-																	<th scope="row">444</th>
-																	<td>201</td>
-																	<td>444</td>
-																	<td>11</td>
-																	<td>2525</td>
-																	<td>55</td>
-																	
-																	<td></td>
-																</tr>
-														
-                                                
+												 <tr th:each="items : ${listItems}">
+									                <td th:text="${items.id}">S.No</td>
+									                <td th:text="${items.itemName}"></td>
+									                <td th:text="${items.itemNature}"></td>
+									                <td th:text="${items.hsnCode}"></td>
+									                <td th:text="${items.gstPercent}"></td>
+									                <td th:text="${items.openingStock}"></td>
+													<td th:text="${items.openingStockDate}"></td>
+									                <td>
+									                <button type='button' class="btn btn-primary btn-xs accountEdit" data-title="Edit" th:data-id="${items.id}"><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
+									                    &nbsp;&nbsp;&nbsp;
+									                     <a th:href="@{'/itemDelete/'+${items.id}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>Delete</a>
+									                </td>
+									            </tr>														 
                                             </tbody>
                                         </table>
                                     </div>
@@ -243,6 +260,8 @@
                            
                               
                         </div>
+                    </div>
+                    </div>
                     </div>
 
 
@@ -280,6 +299,54 @@
         <!-- BEGIN: Page JS-->
     <script src="./app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
     <!-- END: Page JS-->
+    
+    <script>
+    
+    $(document).on("click", ".accountEdit", function(e) {
+ 	   //$('#topicchange').attr('disabled',false);
+ 	   $("#clearform").find('input:text,select, textarea').val('').css('border-color', '');
+        $("#errordesc").html("");
+        $("#btnSave").html("Update");
+        var $row = $(this).closest("tr");
+        var itemName = $row.find("td:nth-child(2)").eq(0).text();
+        var itemNature = $row.find("td:nth-child(3)").eq(0).text();
+        var hsnCode = $row.find("td:nth-child(4)").eq(0).text();
+		var gstPercent = $row.find("td:nth-child(5)").eq(0).text();
+        var openingStock = $row.find("td:nth-child(6)").eq(0).text();
+        var openingStockDate = $row.find("td:nth-child(7)").eq(0).text();
+        var itemID = $(this).attr('data-id');
+
+        $("#itemID").val(itemID*1);
+        $("#itemName").val(itemName);
+        $("#itemNature").val(itemNature);
+        $("#hsnCode").val(hsnCode);
+		$("#gstPercent").val(gstPercent);
+        $("#openingStock").val(openingStock);
+        $("#openingStockDate").val(openingStockDate);
+        $("#createDiv").trigger("click");
+       
+    });
+    $(document).on("click", ".btnCancel", function(e) {
+	   	 
+		 $("#itemID").val("");
+        $("#itemName").val("");
+        $("#itemNature").val("");
+        $("#hsnCode").val("");
+		$("#gstPercent").val("");
+        $("#openingStock").val("");
+        $("#openingStockDate").val("");
+	     $("#btnSave").html("Save");
+    });
+
+    var url = new URL(window.location.href);
+    var status= url.searchParams.get("status");
+    //alert(status);
+    if(status=='save' || status=='update'){
+    	   $("#createDivIcon").removeClass().addClass('ft-minus');
+    	   $("#createDivClass").addClass('show');
+    	   
+    }
+    </script>
 
 </body>
 <!-- END: Body-->

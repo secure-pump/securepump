@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.securepump.securepump.exception.RecordNotFoundException;
-import com.securepump.securepump.model.AccountCreationEntity;
 import com.securepump.securepump.model.ItemCreationEntity;
 import com.securepump.securepump.service.ItemCreationService;
 
@@ -25,7 +24,7 @@ public class ItemCreationController {
 	@RequestMapping("/item-creation")
 	public String itemCreate(@ModelAttribute("item") ItemCreationEntity item,Model model,@RequestParam(name = "status") String status) {
 		List<ItemCreationEntity> listAccounts = itemService.getAllItems();		
-	    model.addAttribute("listitem", listAccounts);
+	    model.addAttribute("listItems", listAccounts);
 	  System.out.println("status--"+status);
 	   model.addAttribute("status", status);
 		return "item-creation";
