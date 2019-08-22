@@ -9,7 +9,7 @@
     <meta name="description" content="Modern admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities with bitcoin dashboard.">
     <meta name="keywords" content="admin template, modern admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard">
     <meta name="author" content="PIXINVENT">
-    <title>Basic Forms - Modern Admin - Clean Bootstrap 4 Dashboard HTML Template + Bitcoin Dashboard</title>
+    <title>Boy Creation</title>
     <link rel="apple-touch-icon" href="./app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="./app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
@@ -82,74 +82,80 @@
                 <!-- Basic form layout section start -->
                 <section id="basic-form-layouts">
                     <div class="row match-height">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title" id="basic-layout-form">Boy Creation</h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
-                                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                            <li><a data-action="collapse" id="createDiv"><i id="createDivIcon" class="ft-plus"></i></a></li>
                                             <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                             <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
                                             <li><a data-action="close"><i class="ft-x"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="card-content collapse show">
+                                <div id="createDivClass" class="card-content collapse">
                                     <div class="card-body">
-                                        	
+                                        
+										<!-- <div th:if="${status=='save'}">-->
+									<div th:switch="${status}">
 												
-												<div class="alert alert-info alert-dismissible mb-2" role="alert">
+										<div th:case="'save'" class="alert alert-success alert-dismissible mb-2" role="alert">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
-                                            <strong> Records</strong> Inserted Sucessfully <a href="#" class="alert-link"></a>
+                                            <strong>  Records</strong> Inserted Successfully <a href="#" class="alert-link"></a>                                            
                                         </div>
-										
-														<div class="alert alert-info alert-dismissible mb-2" role="alert">
+                                        <div th:case="'update'" class="alert alert-success alert-dismissible mb-2" role="alert">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
-                                            <strong>  Sorry</strong> Unable to process Customer Details, please try again.<a href="#" class="alert-link"></a>
-											</div>
-														
-                                        <form class="form"  action="" method="post">
+                                            <strong>  Records</strong> Updated Successfully <a href="#" class="alert-link"></a>                                            
+                                        </div>
+					<div th:case="'error'" class="alert alert-danger alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Sorry</strong> Unable to process, please try again.<a href="#" class="alert-link"></a>                                           
+                                        </div>                                   
+                                      </div>
+				      									
+                                        <form class="form"  action="/saveBoy" method="post">
                                             <div class="form-body">
                                                 <h4 class="form-section"><i class="ft-user"></i> Boy Setup </h4>
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput1">Boy Name</label>
-                                                           <input type="text" id="timesheetinput1" class="form-control" placeholder="Please Enter Boy Name" name="boyname">
+														<input type="hidden" name="id" id="boyID" />
+                                                            <label for="boyName">Boy Name</label>
+                                                           <input type="text" id="boyName" class="form-control" placeholder="Please Enter Boy Name" name="boyName">
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput2">Mobile Number</label>
-                                                             <input type="text" class="form-control" placeholder="Please Enter Mobile Number" aria-describedby="basic-addon3" name="mobileno">
+                                                            <label for="mobileNo">Mobile Number</label>
+                                                             <input type="text" id="mobileNo" class="form-control" placeholder="Please Enter Mobile Number" aria-describedby="basic-addon3" name="mobileNo">
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
+                                                
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput3">Address1</label>
-                                                            <input type="text" class="form-control" placeholder="Please Enter Address1" aria-describedby="basic-addon3" name="addr1">
+                                                            <label for="address1">Address1</label>
+                                                            <input type="text" id="address1" class="form-control" placeholder="Please Enter Address1" aria-describedby="basic-addon3" name="address1">
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput4">Address 2</label>
-                                                             <input type="text" class="form-control" placeholder="Please Enter Address2" aria-describedby="basic-addon3" name="addr2">
+                                                            <label for="address2">Address 2</label>
+                                                             <input type="text" id="address2" class="form-control" placeholder="Please Enter Address2" aria-describedby="basic-addon3" name="address2">
                                                         </div>
                                                     </div>
-                                                </div>
-												 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput3">Salary</label>
-                                                            <input type="number" class="form-control" placeholder="Please Enter Salary" aria-describedby="basic-addon3" name="salary">
+                                                            <label for="salary">Salary</label>
+                                                            <input type="number" id="salary" class="form-control" placeholder="Please Enter Salary" aria-describedby="basic-addon3" name="salary">
                                                         </div>
                                                     </div>
                                                    
@@ -159,11 +165,11 @@
                                             </div>
 
                                             <div class="form-actions">
-                                                <button type="button" class="btn btn-warning mr-1">
-                                                    <i class="ft-x"></i> Cancel
+                                            	<button type="button" class="btn btn-warning mr-1btnCancel btnCancel" id="btnCancel">
+                                                    Cancel
                                                 </button>
-                                                <button type="submit" class="btn btn-primary" name="SaveButton">
-                                                    <i class="la la-check-square-o"></i> Save
+                                                <button type="submit" class="btn btn-primary btnSave" name="SubmitButton" id="btnSave">
+                                                    Save
                                                 </button>
                                             </div>
                                         </form>
@@ -172,8 +178,14 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             
+                                        <div th:if="${status=='delete'}" class="alert alert-success alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Records</strong> Deleted Successfully <a href="#" class="alert-link"></a>                                            
+                                        </div>
 						<div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Basic Tables</h4>
@@ -197,24 +209,28 @@
                                                     <th>#</th>
                                                     <th>First Name</th>
                                                     <th>Mobile Num</th>
-                                                    <th>Address </th>
+                                                    <th>Address1 </th>
+                                                    <th>Address2 </th>
+                                                    <th>Salary </th>
                                                     <th>Action </th>
 													
                                                 </tr>
                                             </thead>
                                             <tbody>
                                              
-												 
-																<tr>
-																	<th scope="row">777</th>
-																	<td>778</td>
-																	<td>774</td>
-																	<td>4444</td>
-																	
-																	<td></td>
-																</tr>
-														
-                                                
+												 <tr th:each="boys : ${listboys}">
+									                <td th:text="${boys.id}">S.No</td>
+									                <td th:text="${boys.boyName}">Name</td>
+									                <td th:text="${boys.mobileNo}">actType</td>
+									                <td th:text="${boys.address1}">actGroup</td>
+									                <td th:text="${boys.address2}">actGroup</td>
+									                <td th:text="${boys.salary}">actGroup</td>
+									                <td>
+									                <button type='button' class="btn btn-primary btn-xs accountEdit" data-title="Edit" th:data-id="${boys.id}"><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
+									                    &nbsp;&nbsp;&nbsp;
+									                     <a th:href="@{'/boyDelete/'+${boys.id}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>Delete</a>
+									                </td>
+									            </tr>														 
                                             </tbody>
                                         </table>
                                     </div>
@@ -225,8 +241,8 @@
                     </div>
 
 
-                   
-                   
+                   </div>
+                   </div>
 
                </section>
                 <!-- // Basic form layout section end -->
@@ -259,6 +275,51 @@
         <!-- BEGIN: Page JS-->
     <script src="./app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
     <!-- END: Page JS-->
+    
+    <script>
+    
+    $(document).on("click", ".accountEdit", function(e) {
+ 	   //$('#topicchange').attr('disabled',false);
+ 	   $("#clearform").find('input:text,select, textarea').val('').css('border-color', '');
+        $("#errordesc").html("");
+        $("#btnSave").html("Update");
+        var $row = $(this).closest("tr");
+        var boyName = $row.find("td:nth-child(2)").eq(0).text();
+        var mobileNo = $row.find("td:nth-child(3)").eq(0).text();
+        var address1 = $row.find("td:nth-child(4)").eq(0).text();
+        var address2 = $row.find("td:nth-child(5)").eq(0).text();
+        var salary = $row.find("td:nth-child(6)").eq(0).text();
+        var boyID = $(this).attr('data-id');
+
+        $("#boyID").val(boyID*1);
+        $("#boyName").val(boyName);
+        $("#mobileNo").val(mobileNo);
+        $("#address1").val(address1);
+		$("#address2").val(address2);
+        $("#salary").val(salary);
+        $("#createDivIcon").removeClass().addClass('ft-minus');
+ 	   $("#createDivClass").addClass('show');
+       
+    });
+    $(document).on("click", ".btnCancel", function(e) {  	
+		$("#boyID").val("");
+        $("#boyName").val("");
+        $("#mobileNo").val("");
+        $("#address1").val("");
+		$("#address2").val("");
+        $("#salary").val("");
+	     $("#btnSave").html("Save");
+    });
+
+    var url = new URL(window.location.href);
+    var status= url.searchParams.get("status");
+    //alert(status);
+    if(status=='save' || status=='update'){
+    	   $("#createDivIcon").removeClass().addClass('ft-minus');
+    	   $("#createDivClass").addClass('show');
+    	   
+    }
+    </script>
 
 </body>
 <!-- END: Body-->
