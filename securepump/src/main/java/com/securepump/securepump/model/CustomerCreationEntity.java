@@ -19,7 +19,7 @@ public class CustomerCreationEntity {
 		@Column(name="customer_name")
 		private String customerName;
 		@Column(name="mobile_no",length=15)
-		private int MobileNo;
+		private int mobileNo;
 		@Column(name="address1")
 		private String address1;
 		@Column(name="address2")
@@ -54,11 +54,12 @@ public class CustomerCreationEntity {
 		public void setCustomerName(String customerName) {
 			this.customerName = customerName;
 		}
+		
 		public int getMobileNo() {
-			return MobileNo;
+			return mobileNo;
 		}
 		public void setMobileNo(int mobileNo) {
-			MobileNo = mobileNo;
+			this.mobileNo = mobileNo;
 		}
 		public String getAddress1() {
 			return address1;
@@ -128,7 +129,7 @@ public class CustomerCreationEntity {
 		}
 		@Override
 		public String toString() {
-			return "CustomerCreationEntity [Id=" + Id + ", customerName=" + customerName + ", MobileNo=" + MobileNo
+			return "CustomerCreationEntity [Id=" + Id + ", customerName=" + customerName + ", MobileNo=" + mobileNo
 					+ ", address1=" + address1 + ", address2=" + address2 + ", gstNo=" + gstNo + ", creditLimit="
 					+ creditLimit + ", dueDays=" + dueDays + ", openingBal=" + openingBal + ", openingBalDate="
 					+ openingBalDate + ", created_by=" + created_by + ", created_date=" + created_date + ", updated_by="

@@ -89,68 +89,72 @@
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
-                                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                            <li><a data-action="collapse" id="createDiv"><i id="createDivIcon" class="ft-plus"></i></a></li>
                                             <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                             <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
                                             <li><a data-action="close"><i class="ft-x"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="card-content collapse show">
+                                <div id="createDivClass" class="card-content collapse">
                                     <div class="card-body">
                                         
-										
-									
+										<!-- <div th:if="${status=='save'}">-->
+									<div th:switch="${status}">
 												
-												<div class="alert alert-info alert-dismissible mb-2" role="alert">
+										<div th:case="'save'" class="alert alert-success alert-dismissible mb-2" role="alert">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
-                                            <strong>  Records</strong> Inserted Sucessfully <a href="#" class="alert-link"></a>
+                                            <strong>  Records</strong> Inserted Successfully <a href="#" class="alert-link"></a>                                            
                                         </div>
-										
-														<div class="alert alert-info alert-dismissible mb-2" role="alert">
+                                        <div th:case="'update'" class="alert alert-success alert-dismissible mb-2" role="alert">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
-                                            <strong>  Sorry</strong> Unable to process Customer Details, please try again.<a href="#" class="alert-link"></a>
-											</div>
-													
-                                        <form class="form" action="" method="post">
+                                            <strong>  Records</strong> Updated Successfully <a href="#" class="alert-link"></a>                                            
+                                        </div>
+					<div th:case="'error'" class="alert alert-danger alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Sorry</strong> Unable to process, please try again.<a href="#" class="alert-link"></a>                                           
+                                        </div>                                   
+                                      </div>
+				      									
+                                        <form class="form"  action="/saveCustomer" method="post">
                                             <div class="form-body">
                                                 <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4>
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput1">Customer Name</label>
-                                                           <input type="text" id="timesheetinput1" class="form-control" placeholder="Please Enter Customer Name" name="customername">
+														<input type="hidden" name="id" id="customerID" />
+                                                            <label for="customerName">Customer Name</label>
+                                                           <input type="text" id="customerName" class="form-control" placeholder="Please Enter Customer Name" name="customerName">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput2">Mobile Number</label>
-                                                             <input type="text" class="form-control" placeholder="Please Enter Mobile Number" aria-describedby="basic-addon3" name="mobileno" required>
+                                                            <label for="mobileNo">Mobile Number</label>
+                                                             <input type="text" class="form-control" placeholder="Please Enter Mobile Number" aria-describedby="basic-addon3" name="mobileNo" id="mobileNo" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput3">Address1</label>
-                                                            <input type="text" class="form-control" placeholder="Please Enter Address1" aria-describedby="basic-addon3" name="addr1" required>
+                                                            <label for="address1">Address1</label>
+                                                            <input type="text" class="form-control" placeholder="Please Enter Address1" aria-describedby="basic-addon3" name="address1" id="address1" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput4">Address 2</label>
-                                                             <input type="text" class="form-control" placeholder="Please Enter Address2" aria-describedby="basic-addon3" name="addr2" required>
+                                                            <label for="address2">Address 2</label>
+                                                             <input type="text" class="form-control" placeholder="Please Enter Address2" aria-describedby="basic-addon3" name="address2" id="address2" required>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                               
-												 <div class="row">
+                                                    </div>                                            
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput3">GST Number</label>
-                                                            <input type="text" class="form-control" placeholder="Please Enter GST Number" aria-describedby="basic-addon3" name="GSTNo" required> 
+                                                            <label for="gstNo">GST Number</label>
+                                                            <input type="text" class="form-control" placeholder="Please Enter GST Number" aria-describedby="basic-addon3" name="gstNo" id="gstNo" required> 
                                                         </div>
                                                     </div>
                                                    
@@ -161,38 +165,38 @@
                                                <div class="row">
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput3">Credit Limit</label>
-                                                             <input type="number" class="form-control" placeholder="Please Enter Credit Limit" aria-describedby="basic-addon3" name="creditlimit">
+                                                            <label for="creditLimit">Credit Limit</label>
+                                                             <input type="number" class="form-control" placeholder="Please Enter Credit Limit" aria-describedby="basic-addon3" name="creditLimit" id="creditLimit">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput4">Due Days</label>
-                                                             <input type="number" class="form-control" placeholder="Please Enter Due Days " aria-describedby="basic-addon3" name="duedays" >
+                                                            <label for="dueDays">Due Days</label>
+                                                             <input type="number" class="form-control" placeholder="Please Enter Due Days " aria-describedby="basic-addon3" name="dueDays" id="dueDays" >
                                                         </div>
                                                     </div>
                                                       <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput5">Opening Balance</label>
-                                                            <input type="number" class="form-control" placeholder="Please Enter Opening Balance" aria-describedby="basic-addon3" name="openingbalance" >
+                                                            <label for="openingBal">Opening Balance</label>
+                                                            <input type="number" class="form-control" placeholder="Please Enter Opening Balance" aria-describedby="basic-addon3" name="openingBal" id="openingBal" >
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput6">Opening Balance Date</label>
-                                                          <input type="date" id="timesheetinput3" class="form-control" name="date">
+                                                            <label for="openingBalDate">Opening Balance Date</label> <!--  timesheetinput3-->
+                                                          <input type="date" id="openingBalDate" class="form-control" name="openingBalDate">
                                                         </div>
                                                     </div>
                                                 </div>                                              
                                             </div>
 
                                             <div class="form-actions">
-                                                <button type="button" class="btn btn-warning mr-1">
-                                                    <i class="ft-x"></i> Cancel
+                                            	<button type="button" class="btn btn-warning mr-1btnCancel btnCancel" id="btnCancel">
+                                                    Cancel
                                                 </button>
-                                                <button type="submit" class="btn btn-primary" name="SubmitButton">
-                                                    <i class="la la-check-square-o"></i> Save
+                                                <button type="submit" class="btn btn-primary btnSave" name="SubmitButton" id="btnSave">
+                                                    Save
                                                 </button>
                                             </div>
                                         </form>
@@ -203,6 +207,12 @@
 
                         <div class="col-md-12">
                             
+                                        <div th:if="${status=='delete'}" class="alert alert-success alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Records</strong> Deleted Successfully <a href="#" class="alert-link"></a>                                            
+                                        </div>
 						<div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Basic Tables</h4>
@@ -226,32 +236,35 @@
                                                     <th>#</th>
                                                     <th>Username</th>
                                                     <th>Mobile Number</th>
-                                                    <th>Address</th>
+                                                    <th>Address1</th>
+													<th>Address2</th>
 													 <th>GST Number</th>
 													  <th>Credit Limit</th>
+													  <th>Due Days</th>
 													  <th>Opening Balance</th>
 													  <th>Opening Balance Date</th>
 													  <th> Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-											
-												 
-																<tr>
-																	<th scope="row">1</th>
-																	<td>11</td>
-																	<td>44</td>
-																	<td>22</td>
-																	<td>22</td>
-																	<td>44</td>
-																	<td>45</td>
-																	<td>444</td>
-																	<td></td>
-																</tr>
-																
-													
-                                                
-                                              
+                                             
+												 <tr th:each="customer : ${listCustomer}">
+									                <td th:text="${customer.id}"></td>
+									                <td th:text="${customer.customerName}"></td>
+									                <td th:text="${customer.mobileNo}"></td>
+									                <td th:text="${customer.address1}"></td>
+									                <td th:text="${customer.address2}"></td>
+									                <td th:text="${customer.gstNo}"></td>
+									                <td th:text="${customer.creditLimit}"></td>
+									                <td th:text="${customer.dueDays}"></td>
+									                <td th:text="${customer.openingBal}"></td>
+													<td th:text="${customer.openingBalDate}"></td>
+									                <td>
+									                <button type='button' class="btn btn-primary btn-xs accountEdit" data-title="Edit" th:data-id="${customer.id}"><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
+									                    &nbsp;&nbsp;&nbsp;
+									                     <a th:href="@{'/customerDelete/'+${customer.id}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>Delete</a>
+									                </td>
+									            </tr>														 
                                             </tbody>
                                         </table>
                                     </div>
@@ -262,8 +275,8 @@
                     </div>
 
 
-                   
-                   
+                   </div>
+                   </div>
 
                </section>
                 <!-- // Basic form layout section end -->
@@ -296,6 +309,62 @@
         <!-- BEGIN: Page JS-->
     <script src="./app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
     <!-- END: Page JS-->
+    
+    <script>
+    
+    $(document).on("click", ".accountEdit", function(e) {
+ 	   //$('#topicchange').attr('disabled',false);
+ 	   $("#clearform").find('input:text,select, textarea').val('').css('border-color', '');
+        $("#errordesc").html("");
+        $("#btnSave").html("Update");
+        var $row = $(this).closest("tr");
+        var customerName = $row.find("td:nth-child(2)").eq(0).text();
+        var mobileNo = $row.find("td:nth-child(3)").eq(0).text();
+        var address1 = $row.find("td:nth-child(4)").eq(0).text();
+        var address2 = $row.find("td:nth-child(5)").eq(0).text();
+        var gstNo = $row.find("td:nth-child(6)").eq(0).text();
+        var creditLimit = $row.find("td:nth-child(7)").eq(0).text();
+        var dueDays = $row.find("td:nth-child(8)").eq(0).text();
+        var openingBal = $row.find("td:nth-child(9)").eq(0).text();
+        var openingBalDate = $row.find("td:nth-child(10)").eq(0).text();
+        var customerID = $(this).attr('data-id');
+
+        $("#customerID").val(customerID*1);
+        $("#customerName").val(customerName);
+        $("#mobileNo").val(mobileNo);
+        $("#address1").val(address1);
+		$("#address2").val(address2);
+        $("#gstNo").val(gstNo);
+        $("#creditLimit").val(creditLimit);
+		$("#dueDays").val(dueDays);
+        $("#openingBal").val(openingBal);
+        $("#openingBalDate").val(openingBalDate);
+        $("#createDivIcon").removeClass().addClass('ft-minus');
+ 	   $("#createDivClass").addClass('show');
+    });
+    $(document).on("click", ".btnCancel", function(e) {  	
+		$("#customerID").val("");
+        $("#customerName").val("");
+        $("#mobileNo").val("");
+        $("#address1").val("");
+		$("#address2").val("");
+        $("#gstNo").val("");
+        $("#creditLimit").val("");
+		$("#dueDays").val("");
+        $("#openingBal").val("");
+        $("#openingBalDate").val("");
+	     $("#btnSave").html("Save");
+    });
+
+    var url = new URL(window.location.href);
+    var status= url.searchParams.get("status");
+    //alert(status);
+    if(status=='save' || status=='update'){
+    	   $("#createDivIcon").removeClass().addClass('ft-minus');
+    	   $("#createDivClass").addClass('show');
+    	   
+    }
+    </script>
 
 </body>
 <!-- END: Body-->

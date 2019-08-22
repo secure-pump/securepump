@@ -308,7 +308,8 @@
         $("#actName").val(actName);
         $("#actType").val(actType);
         $("#actGroup").val(actGroup);
-        $("#createDiv").trigger("click");
+        $("#createDivIcon").removeClass().addClass('ft-minus');
+ 	   $("#createDivClass").addClass('show');
        
     });
     $(document).on("click", ".btnCancel", function(e) {
