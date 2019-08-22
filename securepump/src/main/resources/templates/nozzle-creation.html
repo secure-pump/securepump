@@ -43,12 +43,12 @@
 <body class="vertical-layout vertical-menu-modern 2-columns   fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
 
     <!-- BEGIN: Header-->
-	
+	<th:block th:include="fragments/header :: header"></th:block>
     <!-- END: Header-->
 
 
     <!-- BEGIN: Main Menu-->
-		
+		<th:block th:include="fragments/submenu :: submenu"></th:block>
     <!-- END: Main Menu-->
     <!-- BEGIN: Content-->
     <div class="app-content content">
@@ -255,7 +255,7 @@
     <div class="drag-target"></div>
 
     <!-- BEGIN: Footer-->
-
+		<th:block th:include="fragments/footer :: footer"></th:block>
     <!-- END: Footer-->
 
 

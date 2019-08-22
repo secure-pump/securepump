@@ -83,81 +83,86 @@
                 <!-- Basic form layout section start -->
                 <section id="basic-form-layouts">
                     <div class="row match-height">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title" id="basic-layout-form">Supplier Creation</h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
-                                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                            <li><a data-action="collapse" id="createDiv"><i id="createDivIcon" class="ft-plus"></i></a></li>
                                             <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                             <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
                                             <li><a data-action="close"><i class="ft-x"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="card-content collapse show">
+                                <div id="createDivClass" class="card-content collapse">
                                     <div class="card-body">
 									
-									
-												<div class="alert alert-info alert-dismissible mb-2" role="alert">
+										<div th:switch="${status}">
+												
+										<div th:case="'save'" class="alert alert-success alert-dismissible mb-2" role="alert">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
-                                            <strong><?php echo $customername; ?>  Records</strong> Inserted Sucessfully <a href="#" class="alert-link"></a>
+                                            <strong>  Records</strong> Inserted Successfully <a href="#" class="alert-link"></a>                                            
                                         </div>
-									
-														<div class="alert alert-info alert-dismissible mb-2" role="alert">
+                                        <div th:case="'update'" class="alert alert-success alert-dismissible mb-2" role="alert">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
-                                            <strong>  Sorry</strong> Unable to process Customer Details, please try again.<a href="#" class="alert-link"></a>
-											</div>
-														
+                                            <strong>  Records</strong> Updated Successfully <a href="#" class="alert-link"></a>                                            
+                                        </div>
+                                        <div th:case="'error'" class="alert alert-danger alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Sorry</strong> Unable to process, please try again.<a href="#" class="alert-link"></a>                                           
+                                        </div>                                   
+                                      </div>	
                                         
-                                        <form class="form" action="" method="post" >
+                                        <form class="form" action="/saveSupplier" method="post" >
                                             <div class="form-body">
                                                 <h4 class="form-section"><i class="ft-user"></i> Supplier Info </h4>
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput1">Customer Name</label>
-                                                           <input type="text" id="timesheetinput1" class="form-control" placeholder="Please Enter Customer Name" name="customername">
+                                                        	 <input type="hidden" name="id" id="suppID" />
+                                                            <label for="supplierName">Supplier Name</label>
+                                                           <input type="text" id="supplierName" class="form-control" placeholder="Please Enter Customer Name" name="supplierName">
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput2">Mobile Number</label>
-                                                             <input type="text" class="form-control" placeholder="Please Enter Mobile Number" aria-describedby="basic-addon3" name="mobileno">
+                                                            <label for="mobileNo">Mobile Number</label>
+                                                             <input type="text" id ="mobileNo" class="form-control" placeholder="Please Enter Mobile Number" aria-describedby="basic-addon3" name="mobileNo">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label for="address1">Address1</label>
+                                                            <input type="text" id="address1" class="form-control" placeholder="Please Enter Address1" aria-describedby="basic-addon3" name="address1">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label for="address2">Address 2</label>
+                                                             <input type="text" id="address2" class="form-control" placeholder="Please Enter Address2" aria-describedby="basic-addon3" name="address2">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
+                                                 <div class="row">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput3">Address1</label>
-                                                            <input type="text" class="form-control" placeholder="Please Enter Address1" aria-describedby="basic-addon3" name="addr1">
+                                                            <label for="gstNo">GST Number</label>
+                                                            <input type="text" class="form-control" id="gstNo" placeholder="Please Enter GST Number" aria-describedby="basic-addon3" name="gstNo">
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                   <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput4">Address 2</label>
-                                                             <input type="text" class="form-control" placeholder="Please Enter Address2" aria-describedby="basic-addon3" name="addr2">
-                                                        </div>
-                                                    </div>
-                                                </div>
-												 <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="projectinput3">GST Number</label>
-                                                            <input type="text" class="form-control" placeholder="Please Enter GST Number" aria-describedby="basic-addon3" name="GSTNo">
-                                                        </div>
-                                                    </div>
-                                                   <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="projectinput5">Opening Balance</label>
-                                                            <input type="number" class="form-control" placeholder="Please Enter Opening Balance" aria-describedby="basic-addon3" name="openingBalance">
+                                                            <label for="openingBal">Opening Balance</label>
+                                                            <input type="number" class="form-control" id="openingBal" placeholder="Please Enter Opening Balance" aria-describedby="basic-addon3" name="openingBal">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -167,11 +172,11 @@
                                             </div>
 
                                             <div class="form-actions">
-                                                <button type="button" class="btn btn-warning mr-1">
-                                                    <i class="ft-x"></i> Cancel
+                                               <button type="button" class="btn btn-warning mr-1btnCancel btnCancel" id="btnCancel">
+                                                    Cancel
                                                 </button>
-                                               <button type="submit" class="btn btn-primary" name="SaveButton">
-                                                    <i class="la la-check-square-o"></i> Save
+                                                <button type="submit" class="btn btn-primary btnSave" name="SubmitButton" id="btnSave">
+                                                    Save
                                                 </button>
                                             </div>
                                         </form>
@@ -180,8 +185,14 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             
+                                        <div th:if="${status=='delete'}" class="alert alert-success alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Records</strong> Deleted Successfully <a href="#" class="alert-link"></a>                                            
+                                        </div>
 						<div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Basic Tables</h4>
@@ -213,18 +224,21 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-																<th scope="row">111</th>
-																	<td>112</td>
-																	<td>4545</td>
-																	<td>786</td>
-																	<td>221</td>
-																	
-																	<td>24242</td>
-																	
-																	<td></td>
-																</tr>
-																
-														 
+                                            	 <tr th:each="supplier : ${listSuppliers}">
+									                <td th:text="${supplier.id}">S.No</td>
+									                <td th:text="${supplier.supplierName}">Name</td>
+									                <td th:text="${supplier.mobileNo}">Mobile No</td>
+									                <td th:text="${supplier.address1}">Address1</td>
+									                <td th:text="${supplier.gstNo}">GST NO</td>
+									                <td th:text="${supplier.openingBal}">Opening Bal</td>
+									                
+									                
+									                <td>
+									                	<button type='button' class="btn btn-primary btn-xs supplierEdit" data-title="Edit" th:data-id="${supplier.id}"><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
+									                    &nbsp;&nbsp;&nbsp;
+									                     <a th:href="@{'/supplierDelete/'+${supplier.id}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>Delete</a>
+									                </td>
+									            </tr>	 
                                             </tbody>
                                         </table>
                                     </div>
@@ -265,6 +279,51 @@
     <script src="./app-assets/js/core/app-menu.js"></script>
     <script src="./app-assets/js/core/app.js"></script>
     <!-- END: Theme JS-->
+    
+        <script>
+    
+    $(document).on("click", ".supplierEdit", function(e) {
+ 	   //$('#topicchange').attr('disabled',false);
+ 	   
+ 	   $("#clearform").find('input:text,select, textarea').val('').css('border-color', '');
+        $("#errordesc").html("");
+        $("#btnSave").html("Update");
+        var $row = $(this).closest("tr");
+        var supplierName = $row.find("td:nth-child(2)").eq(0).text();
+        var mobileNo = $row.find("td:nth-child(3)").eq(0).text();
+        var address1 = $row.find("td:nth-child(4)").eq(0).text();
+        var gstNo = $row.find("td:nth-child(5)").eq(0).text();
+        var openingBal = $row.find("td:nth-child(6)").eq(0).text();
+        var suppID = $(this).attr('data-id');
+
+        $("#suppID").val(suppID*1);
+        $("#supplierName").val(supplierName);
+        $("#mobileNo").val(mobileNo);
+        $("#address1").val(address1);
+        $("#gstNo").val(gstNo);
+        $("#openingBal").val(openingBal);
+        $("#createDiv").trigger("click");
+       
+    });
+    $(document).on("click", ".btnCancel", function(e) {
+	   	 $("#suppID").val("");
+	     $("#supplierName").val("");
+	     $("#mobileNo").val("");
+	     $("#address1").val("");
+	     $("#gstNo").val("");
+	     $("#openingBal").val("");
+	     $("#btnSave").html("Save");
+    });
+
+    var url = new URL(window.location.href);
+    var status= url.searchParams.get("status");
+    //alert(status);
+    if(status=='save' || status=='update'){
+    	   $("#createDivIcon").removeClass().addClass('ft-minus');
+    	   $("#createDivClass").addClass('show');
+    	   
+    }
+    </script>
 
         <!-- BEGIN: Page JS-->
     <script src="./app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
