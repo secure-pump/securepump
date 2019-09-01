@@ -20,7 +20,7 @@ import com.securepump.securepump.service.CustomerCreationService;
 public class CustomerCreationController {
 	@Autowired
 	CustomerCreationService customerService;
-	@RequestMapping("/customer-cretion") 
+	@RequestMapping("/customer-creation") 
 	public String customercreate(@ModelAttribute("customer") CustomerCreationEntity customer,Model model,@RequestParam(name = "status") String status ) {
 		List<CustomerCreationEntity> listCustomer=customerService.getAllCutomer();
 		model.addAttribute("listCustomer",listCustomer);

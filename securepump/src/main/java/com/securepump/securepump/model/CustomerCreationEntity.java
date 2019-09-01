@@ -18,8 +18,8 @@ public class CustomerCreationEntity {
 		private Long Id;
 		@Column(name="customer_name")
 		private String customerName;
-		@Column(name="mobile_no",length=15)
-		private int mobileNo;
+		@Column(name="mobile_no")
+		private String mobileNo;
 		@Column(name="address1")
 		private String address1;
 		@Column(name="address2")
@@ -55,10 +55,10 @@ public class CustomerCreationEntity {
 			this.customerName = customerName;
 		}
 		
-		public int getMobileNo() {
+		public String getMobileNo() {
 			return mobileNo;
 		}
-		public void setMobileNo(int mobileNo) {
+		public void setMobileNo(String mobileNo) {
 			this.mobileNo = mobileNo;
 		}
 		public String getAddress1() {
