@@ -83,72 +83,82 @@
                 <!-- Basic form layout section start -->
                 <section id="basic-form-layouts">
                     <div class="row match-height">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title" id="basic-layout-form">Tank Creation </h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
-                                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                            <li><a data-action="collapse" id="createDiv"><i id="createDivIcon" class="ft-plus"></i></a></li>
                                             <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                             <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
                                             <li><a data-action="close"><i class="ft-x"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="card-content collapse show">
+                                <div id="createDivClass" class="card-content collapse">
                                     <div class="card-body">
                                         
-												<div class="alert alert-info alert-dismissible mb-2" role="alert">
+										<!-- <div th:if="${status=='save'}">-->
+									<div th:switch="${status}">
+												
+										<div th:case="'save'" class="alert alert-success alert-dismissible mb-2" role="alert">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
-                                            <strong>  Records</strong> Inserted Sucessfully <a href="#" class="alert-link"></a>
+                                            <strong>  Records</strong> Inserted Successfully <a href="#" class="alert-link"></a>                                            
                                         </div>
-										
-														<div class="alert alert-info alert-dismissible mb-2" role="alert">
+                                        <div th:case="'update'" class="alert alert-success alert-dismissible mb-2" role="alert">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
-                                            <strong>  Sorry</strong> Unable to process Customer Details, please try again.<a href="#" class="alert-link"></a>
-											</div>
-													
-                                       <form class="form" action="" method="post">
+                                            <strong>  Records</strong> Updated Successfully <a href="#" class="alert-link"></a>                                            
+                                        </div>
+                                        <div th:case="'error'" class="alert alert-danger alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Sorry</strong> Unable to process, please try again.<a href="#" class="alert-link"></a>                                           
+                                        </div>                                   
+                                      </div>
+										
+														
+												
+                                        <form class="form" action="/saveTank" method="post">
+                                        
                                             <div class="form-body">
                                                 <h4 class="form-section"><i class="ft-user"></i> Tank Setup</h4>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="projectinput1">Name</label>
-                                                          <input type="text" id="timesheetinput1" class="form-control" placeholder="Please Enter Tank Name"  name="tankname">
+                                                        	<input type="hidden" name="id" id="tankID" />
+                                                            <label for="tankName">Name</label>
+                                                          <input type="text" id="tankName" class="form-control" placeholder="Please Enter Tank Name"  name="tankName">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="projectinput2">Capacity</label>
-                                                            <input type="number" class="form-control" placeholder="Please Enter Capacity  of Tank" aria-describedby="basic-addon3" name="capacity">
+                                                            <label for="capacity">Capacity</label>
+                                                            <input type="number" id="capacity" class="form-control" placeholder="Please Enter Capacity  of Tank" aria-describedby="basic-addon3" name="capacity">
                                                         </div>
                                                     </div>
-                                                </div>
-												
-													
-                                                <div class="row">
+                                                
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="projectinput3">Select Product</label>
-                                                            <select id="issueinput6" name="productname" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
-															
-																<option value="444">445</option>
-															
+                                                            <label for="itemId">Select Product</label>
+                                                            <select id="itemId" name="itemId" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">															
+															 	<option th:each="item : ${itemNameList}" th:value="${item.id}" th:text="${item.itemName}">
+														     	</option>
+														     	<!-- th:selected="${user.isSelected(lastselected)}"-->
 															  </select>
 															  
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="projectinput4">Opening Stock</label>
-                                                             <input type="text" class="form-control" placeholder="Please Enter Opening Stock " aria-describedby="basic-addon3" name="openingstock">
+                                                            <label for="openingStock">Opening Stock</label>
+                                                             <input type="text" id="openingStock" class="form-control" placeholder="Please Enter Opening Stock " aria-describedby="basic-addon3" name="openingStock">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -158,11 +168,11 @@
                                             </div>
 
                                             <div class="form-actions">
-                                                <button type="button" class="btn btn-warning mr-1">
-                                                    <i class="ft-x"></i> Cancel
+                                            	<button type="button" class="btn btn-warning mr-1btnCancel btnCancel" id="btnCancel">
+                                                    Cancel
                                                 </button>
-                                                <button type="submit" class="btn btn-primary" name="SaveButton">
-                                                    <i class="la la-check-square-o"></i> Save
+                                                <button type="submit" class="btn btn-primary btnSave" name="SubmitButton" id="btnSave">
+                                                    Save
                                                 </button>
                                             </div>
                                         </form>
@@ -171,8 +181,14 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             
+                                        <div th:if="${status=='delete'}" class="alert alert-success alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Records</strong> Deleted Successfully <a href="#" class="alert-link"></a>                                            
+                                        </div>
 						<div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Basic Tables</h4>
@@ -196,23 +212,26 @@
                                                     <th>#</th>
                                                     <th>Tank Name</th>
                                                     <th>Capacity</th>
+													<th>Item</th>
                                                     <th>OpeningStock</th>
                                                     <th>Action</th>
 													
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                              
-												 
-																<tr>
-																	<th scope="row">777</th>
-																	<td>77</td>
-																	<td>7788</td>
-																	<td>444</td>
-																																	
-																	<td></td>
-																</tr>
-														
+                                             
+												  <tr th:each="tank : ${listTanks}">
+									                <td th:text="${tank.id}">S.No</td>
+									                <td th:text="${tank.tankName}"></td>
+									                <td th:text="${tank.capacity}"></td>
+									                <td th:text="${tank.itemName}"></td>
+									                <td th:text="${tank.openingStock}"></td>
+									                <td>
+									                <button type='button' class="btn btn-primary btn-xs accountEdit" data-title="Edit" th:data-id="${tank.id}"><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
+									                    &nbsp;&nbsp;&nbsp;
+									                     <a th:href="@{'/tankDelete/'+${tank.id}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>Delete</a>
+									                </td>
+									            </tr>													 
                                             </tbody>
                                         </table>
                                     </div>
@@ -220,6 +239,8 @@
                            
                               
                         </div>
+                    </div>
+                    </div>
                     </div>
 
 
@@ -257,6 +278,54 @@
         <!-- BEGIN: Page JS-->
     <script src="./app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
     <!-- END: Page JS-->
+    
+    <script>
+    
+    $(document).on("click", ".accountEdit", function(e) {
+ 	   //$('#topicchange').attr('disabled',false);
+ 	   $("#clearform").find('input:text,select, textarea').val('').css('border-color', '');
+        $("#errordesc").html("");
+        $("#btnSave").html("Update");
+        var $row = $(this).closest("tr");
+        var itemName = $row.find("td:nth-child(2)").eq(0).text();
+        var itemNature = $row.find("td:nth-child(3)").eq(0).text();
+        var hsnCode = $row.find("td:nth-child(4)").eq(0).text();
+		var gstPercent = $row.find("td:nth-child(5)").eq(0).text();
+        var openingStock = $row.find("td:nth-child(6)").eq(0).text();
+        var openingStockDate = $row.find("td:nth-child(7)").eq(0).text();
+        var itemID = $(this).attr('data-id');
+
+        $("#itemID").val(itemID*1);
+        $("#itemName").val(itemName);
+        $("#itemNature").val(itemNature);
+        $("#hsnCode").val(hsnCode);
+		$("#gstPercent").val(gstPercent);
+        $("#openingStock").val(openingStock);
+        $("#openingStockDate").val(openingStockDate);
+        $("#createDiv").trigger("click");
+       
+    });
+    $(document).on("click", ".btnCancel", function(e) {
+	   	 
+		 $("#itemID").val("");
+        $("#itemName").val("");
+        $("#itemNature").val("");
+        $("#hsnCode").val("");
+		$("#gstPercent").val("");
+        $("#openingStock").val("");
+        $("#openingStockDate").val("");
+	     $("#btnSave").html("Save");
+    });
+
+    var url = new URL(window.location.href);
+    var status= url.searchParams.get("status");
+    //alert(status);
+    if(status=='save' || status=='update'){
+    	   $("#createDivIcon").removeClass().addClass('ft-minus');
+    	   $("#createDivClass").addClass('show');
+    	   
+    }
+    </script>
 
 </body>
 <!-- END: Body-->

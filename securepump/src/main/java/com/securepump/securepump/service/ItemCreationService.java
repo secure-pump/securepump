@@ -11,6 +11,7 @@ import com.securepump.securepump.model.ItemCreationEntity;
 public interface ItemCreationService {
 
 	public List<ItemCreationEntity> getAllItems();
+	public List<ItemCreationEntity> getAllItemNature(String itemNature) throws RecordNotFoundException;
 	public ItemCreationEntity getItemById(Long id) throws RecordNotFoundException;
 	public ItemCreationEntity createorUpdateItem(ItemCreationEntity entity);
 	public void deleteItemById(Long id) throws RecordNotFoundException;

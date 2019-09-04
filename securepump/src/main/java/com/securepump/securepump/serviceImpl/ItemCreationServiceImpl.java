@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.securepump.securepump.dao.ItemCreationRepository;
 import com.securepump.securepump.exception.RecordNotFoundException;
-import com.securepump.securepump.model.AccountCreationEntity;
 import com.securepump.securepump.model.ItemCreationEntity;
 import com.securepump.securepump.service.ItemCreationService;
 
@@ -27,6 +26,20 @@ public class ItemCreationServiceImpl implements ItemCreationService {
 			return result;
 		} else {
 			return new ArrayList<ItemCreationEntity>();
+		}
+
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ItemCreationEntity> getAllItemNature(String itemNature)throws RecordNotFoundException {
+		// TODO Auto-generated method stub
+		System.out.println("enter itemNature");
+		List<ItemCreationEntity> result=(List<ItemCreationEntity>) itemRepo.findByItemNature(itemNature);
+		System.out.println("enter itemNature---"+result.size());
+		if(result.size() > 0) {
+			return result;
+		} else {
+			return (List<ItemCreationEntity>) new RecordNotFoundException("No Item record exist for given item name");
 		}
 
 	}
