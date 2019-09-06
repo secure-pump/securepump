@@ -14,7 +14,7 @@ import com.securepump.securepump.model.CustomerCreationEntity;
 import com.securepump.securepump.model.UnitCreationEntity;
 import com.securepump.securepump.service.UnitCreationService;
 
-@Service
+@Service("unitservice")
 public class UnitCreationServiceImpl implements UnitCreationService {
 	@Autowired
 	UnitCreationRepository unitrepo;

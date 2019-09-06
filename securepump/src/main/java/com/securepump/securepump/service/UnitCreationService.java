@@ -8,7 +8,7 @@ import com.securepump.securepump.exception.RecordNotFoundException;
 import com.securepump.securepump.model.SupplierCreationEntity;
 import com.securepump.securepump.model.UnitCreationEntity;
 
-@Service
+@Service("unitservice")
 public interface UnitCreationService {
 	public List<UnitCreationEntity> getAllUnits();
 	public UnitCreationEntity getUnitById(Long id) throws RecordNotFoundException;

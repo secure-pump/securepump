@@ -82,7 +82,7 @@
                 <!-- Basic form layout section start -->
                 <section id="basic-form-layouts">
                     <div class="row match-height">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title" id="basic-layout-form">Nozzle Creation </h4>
@@ -104,7 +104,7 @@
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
-                                            <strong><?php echo $nozzlename; ?>  Records</strong> Inserted Sucessfully <a href="#" class="alert-link"></a>
+                                            <strong> Records</strong> Inserted Sucessfully <a href="#" class="alert-link"></a>
                                         </div>
 										
 														<div class="alert alert-info alert-dismissible mb-2" role="alert">
@@ -114,55 +114,56 @@
                                             <strong>  Sorry</strong> Unable to process Customer Details, please try again.<a href="#" class="alert-link"></a>
 											</div>
 													
-                                        <form class="form" action="" method="post">
+                                        <form class="form" action="/saveNozzle" method="post">
                                             <div class="form-body">
                                                 <h4 class="form-section"><i class="ft-user"></i> Nozzle Setup</h4>
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="projectinput1">Name</label>
-                                                          <input type="text" id="timesheetinput1" class="form-control" placeholder="Please Enter Nozzle Name"  name="nozzlename">
+                                                          <input type="text" id="nozzleName" class="form-control" placeholder="Please Enter Nozzle Name"  name="nozzleName">
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="projectinput2">Opening Meter Reading</label>
-                                                            <input type="number" class="form-control" placeholder="Please Enter Opening Meter Reading " aria-describedby="basic-addon3" name="openingmtreading">
+                                                            <input type="number" class="form-control" placeholder="Please Enter Opening Meter Reading " aria-describedby="basic-addon3" name="openingMeterReading" id="openingMeterReading">
+                                                        </div>
+                                                    </div>
+                                                     <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="projectinput1">Unit Name</label>
+                                                           <select id="unitId" name="unitId" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
+																
+																<option th:each="unit : ${unitNameList}" th:value="${unit.id}" th:text="${unit.unitName}">
+														     	</option>
+														
+															  </select>
                                                         </div>
                                                     </div>
                                                 </div>
 													
 												 <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="projectinput1">Unit Name</label>
-                                                           <select id="issueinput6" name="unitname" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
-																
-																<option value="1">33</option>
-														
-															  </select>
-                                                        </div>
-                                                    </div>
-                                                   <div class="col-md-6">
+                                                   
+                                                   <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="projectinput3">Opening Meter Date</label>
-                                                           <input type="date" id="timesheetinput3" class="form-control" name="date">
+                                                           <input type="date" id="openingMeterDate" class="form-control" name="openingMeterDate">
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                  
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="projectinput4">Select Tank Name</label>
-                                                             <select id="issueinput6" name="tankname" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
+                                                             <select id="tankId" name="tankId" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
 																
-																<option value="44">44</option>
+																<option th:each="tank : ${tankNameList}" th:value="${tank.id}" th:text="${tank.tankName}">
+														     	</option>
 																
 															  </select>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                
 												
 
                                                
@@ -182,7 +183,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             
 						<div class="card">
                             <div class="card-header">

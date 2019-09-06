@@ -3,6 +3,7 @@ package com.securepump.securepump.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,6 +23,7 @@ import com.securepump.securepump.service.UnitCreationService;
 public class UnitCreationController {
 	
 	@Autowired
+	@Qualifier("unitservice")
 	UnitCreationService unitService;
 	
 	@RequestMapping("/unit-creation")
