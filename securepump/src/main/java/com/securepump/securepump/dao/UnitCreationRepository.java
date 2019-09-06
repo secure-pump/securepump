@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.securepump.securepump.model.UnitCreationEntity;
 
 @Repository
-public interface UnitreationRepository extends CrudRepository<UnitCreationEntity, Long>{ 
+public interface UnitCreationRepository extends CrudRepository<UnitCreationEntity, Long>{ 
 
 }

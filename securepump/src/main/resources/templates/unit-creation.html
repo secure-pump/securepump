@@ -99,28 +99,37 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body">
                                       		
-										<div class="alert alert-info alert-dismissible mb-2" role="alert">
+										<div th:switch="${status}">
+												
+										<div th:case="'save'" class="alert alert-success alert-dismissible mb-2" role="alert">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
-                                            <strong><?php echo $unitname; ?>  Records</strong> Inserted Sucessfully <a href="#" class="alert-link"></a>
+                                            <strong>  Records</strong> Inserted Successfully <a href="#" class="alert-link"></a>                                            
                                         </div>
-										
-														<div class="alert alert-info alert-dismissible mb-2" role="alert">
+                                        <div th:case="'update'" class="alert alert-success alert-dismissible mb-2" role="alert">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
-                                            <strong>  Sorry</strong> Unable to process Customer Details, please try again.<a href="#" class="alert-link"></a>
-											</div>
+                                            <strong>  Records</strong> Updated Successfully <a href="#" class="alert-link"></a>                                            
+                                        </div>
+                                        <div th:case="'error'" class="alert alert-danger alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Sorry</strong> Unable to process, please try again.<a href="#" class="alert-link"></a>                                           
+                                        </div>                                   
+                                      </div>
 														
-                                       <form class="form" action="" method="post">
+                                       <form class="form" action="/saveUnitName" method="post">
                                             <div class="form-body">
                                                 <h4 class="form-section"><i class="ft-user"></i> Unit Setup</h4>
                                                 <div class="row">
                                                     <div class="col-md-6">
+                                                    <input type="hidden" name="id" id="unitID" />
                                                         <div class="form-group">
                                                             <label for="projectinput1">Name</label>
-                                                          <input type="text" id="timesheetinput1" class="form-control" placeholder="Please Enter Nozzle Name"  name="unitname">
+                                                          <input type="text" id="unitName" class="form-control" placeholder="Please Enter Nozzle Name"  name="unitName">
                                                         </div>
                                                     </div>
                                                    
@@ -143,7 +152,12 @@
                         </div>
 
                         <div class="col-md-6">
-                            
+                            <div th:if="${status=='delete'}" class="alert alert-success alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Records</strong> Deleted Successfully <a href="#" class="alert-link"></a>                                            
+                                        </div>
 						<div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Basic Tables</h4>
@@ -165,32 +179,22 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>First Name</th>
-                                                    <th>Last Name</th>
-                                                    <th>Username</th>
-													 <th>Username</th>
-													  <th>Username</th>
+                                                    <th>Unit Name</th>
+                                                    <th>Action</th>
+                                                    
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Mark</td>
-                                                    <td>Otto</td>
-                                                    <td>@mdo</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>Jacob</td>
-                                                    <td>Thornton</td>
-                                                    <td>@fat</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td>Larry</td>
-                                                    <td>the Bird</td>
-                                                    <td>@twitter</td>
-                                                </tr>
+                                                     <tr th:each="units : ${listUnits}">
+									                <td th:text="${units.id}">S.No</td>
+									                <td th:text="${units.unitName}"></td>
+									                 <td>
+									                <button type='button' class="btn btn-primary btn-xs unitEdit" data-title="Edit" th:data-id="${units.id}"><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
+									                    &nbsp;&nbsp;&nbsp;
+									                     <a th:href="@{'/unitNameDelete/'+${units.id}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>Delete</a>
+									                </td>
+									            </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -235,7 +239,39 @@
         <!-- BEGIN: Page JS-->
     <script src="./app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
     <!-- END: Page JS-->
+	<script>
+    
+    $(document).on("click", ".unitEdit", function(e) {
+ 	   //$('#topicchange').attr('disabled',false);
+ 	   $("#clearform").find('input:text,select, textarea').val('').css('border-color', '');
+        $("#errordesc").html("");
+        $("#btnSave").html("Update");
+        var $row = $(this).closest("tr");
+        var unitName = $row.find("td:nth-child(2)").eq(0).text();
+        var unitID = $(this).attr('data-id');
+		alert(unitID,unitName);
+        $("#unitID").val(unitID*1);
+        $("#unitName").val(unitName);
+        $("#createDiv").trigger("click");
+       
+    });
+    $(document).on("click", ".btnCancel", function(e) {
+	   	 
+		 $("#unitID").val("");
+        $("#unitName").val("");
+	     $("#btnSave").html("Save");
+    });
 
+    var url = new URL(window.location.href);
+    var status= url.searchParams.get("status");
+    //alert(status);
+    if(status=='save' || status=='update'){
+    	   $("#createDivIcon").removeClass().addClass('ft-minus');
+    	   $("#createDivClass").addClass('show');
+    	   
+    }
+    </script>
+	
 </body>
 <!-- END: Body-->
 
