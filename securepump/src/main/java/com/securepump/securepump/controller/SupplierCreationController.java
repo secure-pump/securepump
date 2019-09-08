@@ -19,11 +19,14 @@ import com.securepump.securepump.service.SupplierCreationService;
 @Configurable
 @Controller
 public class SupplierCreationController {
+	
 	@Autowired
-	SupplierCreationService suplierService;
+	//@Qualifier("supplierService")
+	SupplierCreationService supplierService;
+	
 	@RequestMapping("/supplier-creation")
 	public String supplierCreate(@ModelAttribute("supplier") SupplierCreationEntity supplier,Model model,@RequestParam(name = "status") String status ) {
-		List<SupplierCreationEntity> listSuppliers=suplierService.getAllSuppliers();
+		List<SupplierCreationEntity> listSuppliers=supplierService.getAllSuppliers();
 		model.addAttribute("listSuppliers", listSuppliers);
 		model.addAttribute("status", status);
 		return "supplier-creation";
@@ -38,14 +41,14 @@ public class SupplierCreationController {
 			}else {
 				status="update";
 			}
-			suplierService.createOrUpdateSupplier(supplier);
+			supplierService.createOrUpdateSupplier(supplier);
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 		
-		List<SupplierCreationEntity> listSuppliers=suplierService.getAllSuppliers();
+		List<SupplierCreationEntity> listSuppliers=supplierService.getAllSuppliers();
 		System.out.println("Suppliersize=="+listSuppliers.size());
 		model.addAttribute("listSuppliers", listSuppliers);
 		return "redirect:/supplier-creation?status="+status;
@@ -53,14 +56,14 @@ public class SupplierCreationController {
 	@RequestMapping("/supplierEdit/{id}")
 	public ModelAndView showEditSupplierPage(@PathVariable(name="id") Long id) throws RecordNotFoundException {
 		ModelAndView mav = new ModelAndView("account-creation");
-		SupplierCreationEntity supplier=suplierService.getSupplierById(id);
+		SupplierCreationEntity supplier=supplierService.getSupplierById(id);
 		mav.addObject("supplier",supplier);
 		return mav;
 		
 	}
 	@RequestMapping("/supplierDelete/{id}")
 	public String deleteSupplier(@PathVariable(name="id") Long id) throws RecordNotFoundException{
-		suplierService.deleteSupplierById(id);
+		supplierService.deleteSupplierById(id);
 		return "redirect:/supplier-creation?status=delete";
 	}
 	

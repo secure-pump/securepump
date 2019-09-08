@@ -16,7 +16,7 @@ public class SupplierCreationEntity {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name="supplier_ame",length=250)
+	@Column(name="supplier_name",length=250)
 	private String supplierName;
 	@Column(name="mobile_no",length=15)
 	private String mobileNo;

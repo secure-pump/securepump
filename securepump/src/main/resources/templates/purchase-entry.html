@@ -89,30 +89,57 @@
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
-                                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                            <li><a data-action="collapse" id="createDiv"><i id="createDivIcon" class="ft-plus"></i></a></li>
                                             <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                             <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
                                             <li><a data-action="close"><i class="ft-x"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="card-content collapse show">
+                                <div id="createDivClass" class="card-content collapse">
                                     <div class="card-body">
                                         
-                                        <form class="form">
+										<!-- <div th:if="${status=='save'}">-->
+									<div th:switch="${status}">
+												
+										<div th:case="'save'" class="alert alert-success alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Records</strong> Inserted Successfully <a href="#" class="alert-link"></a>                                            
+                                        </div>
+                                        <div th:case="'update'" class="alert alert-success alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Records</strong> Updated Successfully <a href="#" class="alert-link"></a>                                            
+                                        </div>
+                                        <div th:case="'error'" class="alert alert-danger alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Sorry</strong> Unable to process, please try again.<a href="#" class="alert-link"></a>                                           
+                                        </div>                                   
+                                      </div>
+										
+														
+												
+                                        <form class="form" action="/savePurchaceEntry" method="post">
+                                        
                                             <div class="form-body">
                                                 <h4 class="form-section"><i class="ft-user"></i> Purchase History </h4>
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput1">Invoice Date</label>
-                                                           <input type="date" id="timesheetinput3" class="form-control" name="date">
+                                                        	<input type="hidden" name="id" id="purchaceID" />
+                                                            <label for="invoiceDate">Invoice Date</label>
+                                                           <input type="date" id="invoiceDate" class="form-control" name="invoiceDate">
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <div class="form-group">
-                                                            <label for="projectinput2">Bill Mode</label>
-                                                            <select id="issueinput6" name="status" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
+                                                            <label for="billMode">Bill Mode</label>
+                                                            <select id="billMode" name="billMode" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
 																<option value="cash">Cash</option>
 																<option value="credit">Credit</option>
 															  </select>
@@ -120,26 +147,82 @@
                                                     </div>
 													<div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput2"> Supplier Name</label>
-                                                             <select id="issueinput6" name="status" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
-																<option value="Assets">Name1</option>
-																<option value="Liability">Name2</option>
+                                                            <label for="supplierId"> Supplier Name</label>
+                                                             <select id="supplierId" name="supplierId" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
+																<option th:each="supplier : ${supplierList}" th:value="${supplier.id}" th:text="${supplier.supplierName}"></option>
 															  </select>
                                                         </div>
                                                     </div>
-													<div class="col-md-3">
+													<div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label for="projectinput2">Supplier Invoice Num</label>
-                                                             <input type="text" class="form-control" placeholder="Please Enter Mobile Number" aria-describedby="basic-addon3">
+                                                            <label for="supplierInvoiceNum">Supplier Invoice Num</label>
+                                                             <input id="supplierInvoiceNum" name="supplierInvoiceNum" type="text" class="form-control" placeholder="Please Enter Supplier Invoice Num" aria-describedby="basic-addon3">
                                                         </div>
                                                     </div>
                                                 </div>
-                                               
+                                    <div class="row">
+										<div class="table-responsive">
+                                        <table class="table"  id="customFields">
+                                            <thead>
+                                                <tr>                                                    
+                                                    <th>Item Name</th>
+                                                    <th>Quantity</th>
+                                                    <th>Rate</th>
+													<th>Amount</th>
+													<th>SGST</th>
+													<th>CGST</th>
+													<th>IGST</th>
+													<th>Net Amount</th>													 
+													<th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                               <tr valign="top">													
+													<td>
+														<select id="itemId" name="itemId" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
+															<option th:each="item : ${itemNameList}" th:value="${item.id}" th:text="${item.itemName}"></option>														
+														</select>
+													</td>
+													<td>
+														<input type="text" class="code" id="quantity" name="quantity" value="" placeholder="quantity" size="5"/> 
+													</td>
+													<td>
+														<input type="text" class="code" id="rate" name="rate" value="" placeholder="rate" size="5"/> 
+													</td>
+													<td>
+														<input type="text" class="code" id="amount" name="amount" value="" placeholder="amount" size="5" /> 
+													</td>
+													<td>
+														<input type="text" class="code" id="sgst" name="sgst" value="" placeholder="sgst" size="2"/> 
+													</td>
+													<td>
+														<input type="text" class="code" id="cgst" name="cgst" value="" placeholder="cgst" size="2" /> 
+													</td>
+													<td>
+														<input type="text" class="code" id="igst" name="igst" value="" placeholder="igst" size="2" /> 
+													</td>
+													<td>
+														<input type="text" class="code" id="netAmt" name="netAmt" value="" placeholder="netAmt" size="10" /> 
+													</td>													
+													<td> <a href="javascript:void(0);" class="addCF">Add</a> </td>
+												</tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+											   </div>
 											
                                                
                                             </div>
 
-                                            
+                                            <div class="form-actions">
+                                            	<button type="button" class="btn btn-warning mr-1btnCancel btnCancel" id="btnCancel">
+                                                    Cancel
+                                                </button>
+                                                <button type="submit" class="btn btn-primary btnSave" name="SubmitButton" id="btnSave">
+                                                    Save
+                                                </button>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -148,6 +231,12 @@
 
                         <div class="col-md-12">
                             
+                                        <div th:if="${status=='delete'}" class="alert alert-success alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Records</strong> Deleted Successfully <a href="#" class="alert-link"></a>                                            
+                                        </div>
 						<div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Basic Tables</h4>
@@ -166,10 +255,14 @@
                                 <div class="card-body" style="padding-top: 2px;">
                                    
                                     <div class="table-responsive">
-                                        <table class="table"  id="customFields">
+                                        <table class="table"  id="">
                                             <thead>
                                                 <tr>
-                                                    
+                                                	<th>S.No</th>
+                                                    <th>Invoice Date</th>
+                                                    <th>Bill Mode</th>
+                                                    <th>Supplier Name</th>
+                                                    <th>Suppler Invoice No</th>
                                                     <th>Item Name</th>
                                                     <th>Quantity</th>
                                                     <th>Rate</th>
@@ -177,45 +270,31 @@
 													<th>SGST</th>
 													<th>CGST</th>
 													<th>IGST</th>
-													<th>Net Amount</th>
-													 
+													<th>Net Amount</th>													 
 													<th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                               <tr valign="top">
-													
-													<td>
-														 <select id="issueinput6" name="productname" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
-															
-																<option value="444">5555</option>
-														
-													</select>
-													</td>
-													<td>
-														<input type="text" class="code" id="quantity" name="quantity[]" value="" placeholder="Input Name" size="5"/> 
-													</td>
-													<td>
-														<input type="text" class="code" id="rate" name="rate[]" value="" placeholder="Input Name" size="5"/> 
-													</td>
-													<td>
-														<input type="text" class="code" id="amount" name="amount[]" value="" placeholder="Input Name" size="5" /> 
-													</td>
-													<td>
-														<input type="text" class="code" id="SGST" name="SGST[]" value="" placeholder="Input Name" size="2"/> 
-													</td>
-													<td>
-														<input type="text" class="code" id="CGST" name="CGST[]" value="" placeholder="Input Name" size="2" /> 
-													</td>
-													<td>
-														<input type="text" class="code" id="IGST" name="IGST[]" value="" placeholder="Input Name" size="2" /> 
-													</td>
-													<td>
-														<input type="text" class="code" id="netAmount" name="netAmount[]" value="" placeholder="Input Name" size="10" /> 
-													</td>
-													
-													<td> <a href="javascript:void(0);" class="addCF">Add</a> </td>
-												</tr>
+                                               <tr th:each="purchace : ${purchaceEntryList}">
+									                <td th:text="${purchace.id}">S.No</td>
+									                <td th:text="${purchace.invoiceDate}"></td>
+									                <td th:text="${purchace.billMode}"></td>
+									                <td th:text="${purchace.supplierCreation.supplierName}"></td>
+									                <td th:text="${purchace.supplierInvoiceNum}"></td>
+													<td th:text="${purchace.itemCreation.itemName}"></td>
+									                <td th:text="${purchace.quantity}"></td>
+									                <td th:text="${purchace.rate}"></td>
+									                <td th:text="${purchace.amount}"></td>
+													<td th:text="${purchace.sgst}"></td>
+									                <td th:text="${purchace.cgst}"></td>
+									                <td th:text="${purchace.igst}"></td>
+									                <td th:text="${purchace.netAmt}"></td>
+									                <td>
+									                <button type='button' class="btn btn-primary btn-xs accountEdit" data-title="Edit" th:data-id="${purchace.id}" th:data-itemId="${purchace.itemCreation.id}" th:data-supplierId="${purchace.supplierCreation.id}"><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
+									                    &nbsp;&nbsp;&nbsp;
+									                     <a th:href="@{'/purchaceDelete/'+${purchace.id}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>Delete</a>
+									                </td>
+									            </tr>	
                                                 
                                             </tbody>
                                         </table>
@@ -224,6 +303,8 @@
                            
                               
                         </div>
+                    </div>
+                    </div>
                     </div>
 
 
@@ -241,15 +322,16 @@
     <div class="drag-target"></div>
 
     <!-- BEGIN: Footer-->
-
+  		<th:block th:include="fragments/footer :: footer"></th:block>
     <!-- END: Footer-->
 
 	<script>
 	$(document).ready(function(){
 		
 		$(".addCF").click(function(){
-		
-			$("#customFields").append('<tr valign="top"> <td><input type="text" class="code" id="itemName" name="itemName[]" value="" placeholder="Input Name" /> </td><td><input type="text" class="code" id="quantity" name="quantity[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="rate" name="rate[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="amount" name="amount[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="SGST" name="SGST[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="CGST" name="CGST[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="IGST" name="IGST[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="netAmount" name="netAmount[]" value="" placeholder="Input Name" /> </td>  <td> <a href="javascript:void(0);" class="remCF">Remove</a></td></tr>');
+			 var row = $(this).closest('tr').html();
+			$("#customFields").append('<tr>'+row+'</tr>');
+			//$("#customFields").append('<tr valign="top"> <td><input type="text" class="code" id="itemName" name="itemName[]" value="" placeholder="Input Name" /> </td><td><input type="text" class="code" id="quantity" name="quantity[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="rate" name="rate[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="amount" name="amount[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="SGST" name="SGST[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="CGST" name="CGST[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="IGST" name="IGST[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="netAmount" name="netAmount[]" value="" placeholder="Input Name" /> </td>  <td> <a href="javascript:void(0);" class="remCF">Remove</a></td></tr>');
 		});
 		$("#customFields").on('click','.remCF',function(){
 			$(this).parent().parent().remove();
@@ -272,6 +354,50 @@
         <!-- BEGIN: Page JS-->
     <script src="./app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
     <!-- END: Page JS-->
+    
+    <script>
+    
+    $(document).on("click", ".accountEdit", function(e) {
+ 	   //$('#topicchange').attr('disabled',false);
+ 	   $("#clearform").find('input:text,select, textarea').val('').css('border-color', '');
+        $("#errordesc").html("");
+        $("#btnSave").html("Update");
+        var $row = $(this).closest("tr");
+        var tankName = $row.find("td:nth-child(2)").eq(0).text();
+        var capacity = $row.find("td:nth-child(3)").eq(0).text();
+        var openingStock = $row.find("td:nth-child(5)").eq(0).text();
+        var tankID = $(this).attr('data-id');
+        var itemId = $(this).attr('data-itemId');
+
+        $("#tankID").val(tankID*1);
+        $("#tankName").val(tankName);
+        $("#capacity").val(capacity);
+        $("#itemId").val(itemId*1);
+        $("#openingStock").val(openingStock);
+
+ 	   $("#createDivIcon").removeClass().addClass('ft-minus');
+ 	   $("#createDivClass").addClass('show');
+       
+    });
+    $(document).on("click", ".btnCancel", function(e) {
+	   	 
+    	$("#tankID").val("");
+        $("#tankName").val("");
+        $("#capacity").val("");
+        $("#itemId").val("");
+        $("#openingStock").val("");
+	     $("#btnSave").html("Save");
+    });
+
+    var url = new URL(window.location.href);
+    var status= url.searchParams.get("status");
+    //alert(status);
+    if(status=='save' || status=='update'){
+    	   $("#createDivIcon").removeClass().addClass('ft-minus');
+    	   $("#createDivClass").addClass('show');
+    	   
+    }
+    </script>
 
 </body>
 <!-- END: Body-->

@@ -13,7 +13,7 @@ import com.securepump.securepump.exception.RecordNotFoundException;
 import com.securepump.securepump.model.SupplierCreationEntity;
 import com.securepump.securepump.service.SupplierCreationService;
 
-@Service
+@Service("supplierService")
 public class SupplierCreationServiceImpl implements SupplierCreationService {
 	@Autowired
 	SupplierCreationRepository supplierRepository;

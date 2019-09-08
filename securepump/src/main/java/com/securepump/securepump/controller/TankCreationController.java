@@ -1,9 +1,7 @@
 package com.securepump.securepump.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,16 +31,10 @@ public class TankCreationController {
 	TankCreationService tankService;
 	
 	@RequestMapping("/tank-creation")
-	public String itemCreate(Model model,@RequestParam(name = "status") String status,@ModelAttribute TankCreationBean tankBean) throws RecordNotFoundException {
+	public String itemCreate(Model model,@RequestParam(name = "status") String status) throws RecordNotFoundException {
 		List<TankCreationEntity> listAccounts = tankService.getAllItems();
 		
-		List<TankCreationBean> addTankList=new ArrayList<TankCreationBean>();
-		
-		/*List<ItemCreationEntity> allItemNames=itemService.getAllItemNature("Fuel");
-		Map<Long,String> itemMap=new HashMap<Long,String>();
-		for(ItemCreationEntity itemEnt:allItemNames) {
-			itemMap.put(itemEnt.getId(), itemEnt.getItemName());
-		}*/
+		/*List<TankCreationBean> addTankList=new ArrayList<TankCreationBean>();		
 		
 		for(TankCreationEntity tanklist:listAccounts) {
 			System.out.println("---"+tanklist);
@@ -56,10 +48,8 @@ public class TankCreationController {
 			tank.setOpeningStock(tanklist.getOpeningStock());
 			addTankList.add(tank);
 			
-		}
-	    model.addAttribute("listTanks", addTankList);
-	   // model.addAttribute("itemNameList",allItemNames);
-	    //System.out.println("status--"+status);
+		}*/
+	    model.addAttribute("listTanks", listAccounts);
 	    model.addAttribute("status", status);
 		return "tank-creation";
 	}

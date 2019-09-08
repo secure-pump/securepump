@@ -224,10 +224,10 @@
 									                <td th:text="${tank.id}">S.No</td>
 									                <td th:text="${tank.tankName}"></td>
 									                <td th:text="${tank.capacity}"></td>
-									                <td th:text="${tank.itemName}"></td>
+									                <td th:text="${tank.itemCreation.itemName}"></td>
 									                <td th:text="${tank.openingStock}"></td>
 									                <td>
-									                <button type='button' class="btn btn-primary btn-xs accountEdit" data-title="Edit" th:data-id="${tank.id}"><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
+									                <button type='button' class="btn btn-primary btn-xs accountEdit" data-title="Edit" th:data-id="${tank.id}" th:data-itemId="${tank.itemCreation.id}"><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
 									                    &nbsp;&nbsp;&nbsp;
 									                     <a th:href="@{'/tankDelete/'+${tank.id}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>Delete</a>
 									                </td>
@@ -287,33 +287,29 @@
         $("#errordesc").html("");
         $("#btnSave").html("Update");
         var $row = $(this).closest("tr");
-        var itemName = $row.find("td:nth-child(2)").eq(0).text();
-        var itemNature = $row.find("td:nth-child(3)").eq(0).text();
-        var hsnCode = $row.find("td:nth-child(4)").eq(0).text();
-		var gstPercent = $row.find("td:nth-child(5)").eq(0).text();
-        var openingStock = $row.find("td:nth-child(6)").eq(0).text();
-        var openingStockDate = $row.find("td:nth-child(7)").eq(0).text();
-        var itemID = $(this).attr('data-id');
+        var tankName = $row.find("td:nth-child(2)").eq(0).text();
+        var capacity = $row.find("td:nth-child(3)").eq(0).text();
+        var openingStock = $row.find("td:nth-child(5)").eq(0).text();
+        var tankID = $(this).attr('data-id');
+        var itemId = $(this).attr('data-itemId');
 
-        $("#itemID").val(itemID*1);
-        $("#itemName").val(itemName);
-        $("#itemNature").val(itemNature);
-        $("#hsnCode").val(hsnCode);
-		$("#gstPercent").val(gstPercent);
+        $("#tankID").val(tankID*1);
+        $("#tankName").val(tankName);
+        $("#capacity").val(capacity);
+        $("#itemId").val(itemId*1);
         $("#openingStock").val(openingStock);
-        $("#openingStockDate").val(openingStockDate);
-        $("#createDiv").trigger("click");
+
+ 	   $("#createDivIcon").removeClass().addClass('ft-minus');
+ 	   $("#createDivClass").addClass('show');
        
     });
     $(document).on("click", ".btnCancel", function(e) {
 	   	 
-		 $("#itemID").val("");
-        $("#itemName").val("");
-        $("#itemNature").val("");
-        $("#hsnCode").val("");
-		$("#gstPercent").val("");
+    	$("#tankID").val("");
+        $("#tankName").val("");
+        $("#capacity").val("");
+        $("#itemId").val("");
         $("#openingStock").val("");
-        $("#openingStockDate").val("");
 	     $("#btnSave").html("Save");
     });
 
