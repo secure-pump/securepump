@@ -59,29 +59,29 @@ public class PurchaseEntryController {
 			}else {
 				status="update";
 			}
-			
-			ItemCreationEntity itemCre=new ItemCreationEntity();
-			itemCre.setId(purchaceBean.getItemId());
-			
-			SupplierCreationEntity supplyCre=new SupplierCreationEntity();
-			supplyCre.setId(purchaceBean.getItemId());
-			
-			PurchaseEntryEntity purchaceEntry=new PurchaseEntryEntity();
-			purchaceEntry.setId(purchaceBean.getId());
-			purchaceEntry.setInvoiceDate(purchaceBean.getInvoiceDate());
-			purchaceEntry.setBillMode(purchaceBean.getBillMode());				
-			purchaceEntry.setItemCreation(itemCre);
-			purchaceEntry.setSupplierCreation(supplyCre);
-			purchaceEntry.setSupplierInvoiceNum(purchaceBean.getSupplierInvoiceNum());
-			purchaceEntry.setQuantity(purchaceBean.getQuantity());
-			purchaceEntry.setRate(purchaceBean.getRate());
-			purchaceEntry.setAmount(purchaceBean.getAmount());		
-			purchaceEntry.setSgst(purchaceBean.getSgst());
-			purchaceEntry.setCgst(purchaceBean.getCgst());
-			purchaceEntry.setIgst(purchaceBean.getIgst());
-			purchaceEntry.setNetAmt(purchaceBean.getNetAmt());
+									
+			for(int i=0;i<purchaceBean.getItemId().length;i++) {
+				SupplierCreationEntity supplyCre=new SupplierCreationEntity();
+				supplyCre.setId(purchaceBean.getSupplierId());
 				
-			purchaceEntryService.createorUpdateItem(purchaceEntry);
+				PurchaseEntryEntity purchaceEntry=new PurchaseEntryEntity();
+				ItemCreationEntity itemCre=new ItemCreationEntity();
+				itemCre.setId(purchaceBean.getItemId()[i]);
+				purchaceEntry.setId(purchaceBean.getId());
+				purchaceEntry.setInvoiceDate(purchaceBean.getInvoiceDate());
+				purchaceEntry.setBillMode(purchaceBean.getBillMode());				
+				purchaceEntry.setItemCreation(itemCre);
+				purchaceEntry.setSupplierCreation(supplyCre);
+				purchaceEntry.setSupplierInvoiceNum(purchaceBean.getSupplierInvoiceNum());
+				purchaceEntry.setQuantity(purchaceBean.getQuantity()[i]);
+				purchaceEntry.setRate(purchaceBean.getRate()[i]);
+				purchaceEntry.setAmount(purchaceBean.getAmount()[i]);		
+				purchaceEntry.setSgst(purchaceBean.getSgst()[i]);
+				purchaceEntry.setCgst(purchaceBean.getCgst()[i]);
+				purchaceEntry.setIgst(purchaceBean.getIgst()[i]);
+				purchaceEntry.setNetAmt(purchaceBean.getNetAmt()[i]); 
+				purchaceEntryService.createorUpdateItem(purchaceEntry);
+			}						
 			
 		}catch(Exception e) {
 			e.printStackTrace();

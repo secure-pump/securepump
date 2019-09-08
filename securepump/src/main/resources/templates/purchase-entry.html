@@ -292,7 +292,7 @@
 									                <td>
 									                <button type='button' class="btn btn-primary btn-xs accountEdit" data-title="Edit" th:data-id="${purchace.id}" th:data-itemId="${purchace.itemCreation.id}" th:data-supplierId="${purchace.supplierCreation.id}"><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
 									                    &nbsp;&nbsp;&nbsp;
-									                     <a th:href="@{'/purchaceDelete/'+${purchace.id}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>Delete</a>
+									                     <a th:href="@{'/purchaceEntryDelete/'+${purchace.id}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>Delete</a>
 									                </td>
 									            </tr>	
                                                 
@@ -324,13 +324,17 @@
     <!-- BEGIN: Footer-->
   		<th:block th:include="fragments/footer :: footer"></th:block>
     <!-- END: Footer-->
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script>
 	$(document).ready(function(){
 		
 		$(".addCF").click(function(){
-			 var row = $(this).closest('tr').html();
-			$("#customFields").append('<tr>'+row+'</tr>');
+			//$("#customFields").append('<tr valign="top"> <td><select id="" name="itemId" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status"><option th:each="item : ${itemNameList}" th:value="${item.id}" th:text="${item.itemName}"></option></select></td><td><input type="text" class="code" id="" name="quantity" value="" placeholder="quantity" size="5"/></td><td><input type="text" class="code" id="" name="rate" value="" placeholder="rate" size="5"/></td><td><input type="text" class="code" id="" name="amount" value="" placeholder="amount" size="5" /></td><td><input type="text" class="code" id="" name="sgst" value="" placeholder="sgst" size="2"/></td><td><input type="text" class="code" id="" name="cgst" value="" placeholder="cgst" size="2" /></td><td><input type="text" class="code" id="" name="igst" value="" placeholder="igst" size="2" /></td><td><input type="text" class="code" id="" name="netAmt" value="" placeholder="netAmt" size="10" /></td><td> <a href="javascript:void(0);" class="remCF">Remove</a></td></tr>');
+			 var row1 = $(this).closest('tr').html();
+			 //var clone1=$(row1).find('.addCF').removeClass("addCF").addClass("remCF");
+			// var clone1=$(tdChange).clone();
+			$("#customFields").append('<tr>'+row1+'</tr>');
+			$("#customFields").find('tr td:last-child').text("remove");
 			//$("#customFields").append('<tr valign="top"> <td><input type="text" class="code" id="itemName" name="itemName[]" value="" placeholder="Input Name" /> </td><td><input type="text" class="code" id="quantity" name="quantity[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="rate" name="rate[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="amount" name="amount[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="SGST" name="SGST[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="CGST" name="CGST[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="IGST" name="IGST[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="netAmount" name="netAmount[]" value="" placeholder="Input Name" /> </td>  <td> <a href="javascript:void(0);" class="remCF">Remove</a></td></tr>');
 		});
 		$("#customFields").on('click','.remCF',function(){
