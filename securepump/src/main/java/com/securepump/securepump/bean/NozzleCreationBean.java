@@ -2,11 +2,14 @@ package com.securepump.securepump.bean;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class NozzleCreationBean {
 	
 	private Long id;
 	private String nozzleName;
 	private int openingMeterReading;
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private Date openingMeterDate;
 	private String created_by;
 	private Date created_date;
