@@ -59,29 +59,7 @@ public class PurchaseEntryController {
 			}else {
 				status="update";
 			}
-									
-			for(int i=0;i<purchaceBean.getItemId().length;i++) {
-				SupplierCreationEntity supplyCre=new SupplierCreationEntity();
-				supplyCre.setId(purchaceBean.getSupplierId());
-				
-				PurchaseEntryEntity purchaceEntry=new PurchaseEntryEntity();
-				ItemCreationEntity itemCre=new ItemCreationEntity();
-				itemCre.setId(purchaceBean.getItemId()[i]);
-				purchaceEntry.setId(purchaceBean.getId());
-				purchaceEntry.setInvoiceDate(purchaceBean.getInvoiceDate());
-				purchaceEntry.setBillMode(purchaceBean.getBillMode());				
-				purchaceEntry.setItemCreation(itemCre);
-				purchaceEntry.setSupplierCreation(supplyCre);
-				purchaceEntry.setSupplierInvoiceNum(purchaceBean.getSupplierInvoiceNum());
-				purchaceEntry.setQuantity(purchaceBean.getQuantity()[i]);
-				purchaceEntry.setRate(purchaceBean.getRate()[i]);
-				purchaceEntry.setAmount(purchaceBean.getAmount()[i]);		
-				purchaceEntry.setSgst(purchaceBean.getSgst()[i]);
-				purchaceEntry.setCgst(purchaceBean.getCgst()[i]);
-				purchaceEntry.setIgst(purchaceBean.getIgst()[i]);
-				purchaceEntry.setNetAmt(purchaceBean.getNetAmt()[i]); 
-				purchaceEntryService.createorUpdateItem(purchaceEntry);
-			}						
+			purchaceEntryService.createorUpdateItem(purchaceBean);									
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -104,7 +82,7 @@ public class PurchaseEntryController {
 	
 	@ModelAttribute("itemNameList")
 	public List<ItemCreationEntity> getAllItemNames() throws RecordNotFoundException {
-		List<ItemCreationEntity> allItemNames=itemService.getAllItems();
+		List<ItemCreationEntity> allItemNames=itemService.getAllItems();		
 		return allItemNames;
 	}
 	@ModelAttribute("supplierList")

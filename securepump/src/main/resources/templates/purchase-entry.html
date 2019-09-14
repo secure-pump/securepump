@@ -149,7 +149,7 @@
                                                         <div class="form-group">
                                                             <label for="supplierId"> Supplier Name</label>
                                                              <select id="supplierId" name="supplierId" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
-																<option th:each="supplier : ${supplierList}" th:value="${supplier.id}" th:text="${supplier.supplierName}"></option>
+																<option th:each="supplier : ${supplierList}" th:value="${supplier.id}" th:text="${supplier.supplierName}" th:data-supplier-gstno="${supplier.gstNo}"></option>
 															  </select>
                                                         </div>
                                                     </div>
@@ -179,30 +179,30 @@
                                             <tbody>
                                                <tr valign="top">													
 													<td>
-														<select id="itemId" name="itemId" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
-															<option th:each="item : ${itemNameList}" th:value="${item.id}" th:text="${item.itemName}"></option>														
+														<select class="itemId" id="itemId" name="itemId" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
+															<option th:each="item : ${itemNameList}" th:value="${item.id}" th:text="${item.itemName}" th:data-itemnature="${item.itemNature}"></option>														
 														</select>
 													</td>
 													<td>
-														<input type="text" class="code" id="quantity" name="quantity" value="" placeholder="quantity" size="5"/> 
+														<input type="text" class="quantity" id="quantity" name="quantity" value="" placeholder="quantity" size="5"/> 
 													</td>
 													<td>
-														<input type="text" class="code" id="rate" name="rate" value="" placeholder="rate" size="5"/> 
+														<input type="text" class="rate" id="rate" name="rate" value="" placeholder="rate" size="5"/> 
 													</td>
 													<td>
-														<input type="text" class="code" id="amount" name="amount" value="" placeholder="amount" size="5" /> 
+														<input type="text" class="amount" id="amount" name="amount" value="" placeholder="amount" size="5" /> 
 													</td>
 													<td>
-														<input type="text" class="code" id="sgst" name="sgst" value="" placeholder="sgst" size="2"/> 
+														<input type="text" class="sgst" id="sgst" name="sgst" value="" placeholder="sgst" size="2"/> 
 													</td>
 													<td>
-														<input type="text" class="code" id="cgst" name="cgst" value="" placeholder="cgst" size="2" /> 
+														<input type="text" class="cgst" id="cgst" name="cgst" value="" placeholder="cgst" size="2" /> 
 													</td>
 													<td>
-														<input type="text" class="code" id="igst" name="igst" value="" placeholder="igst" size="2" /> 
+														<input type="text" class="igst" id="igst" name="igst" value="" placeholder="igst" size="2" /> 
 													</td>
 													<td>
-														<input type="text" class="code" id="netAmt" name="netAmt" value="" placeholder="netAmt" size="10" /> 
+														<input type="text" class="netAmt" id="netAmt" name="netAmt" value="" placeholder="netAmt" size="10" /> 
 													</td>													
 													<td> <a href="javascript:void(0);" class="addCF">Add</a> </td>
 												</tr>
@@ -324,24 +324,7 @@
     <!-- BEGIN: Footer-->
   		<th:block th:include="fragments/footer :: footer"></th:block>
     <!-- END: Footer-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script>
-	$(document).ready(function(){
-		
-		$(".addCF").click(function(){
-			//$("#customFields").append('<tr valign="top"> <td><select id="" name="itemId" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status"><option th:each="item : ${itemNameList}" th:value="${item.id}" th:text="${item.itemName}"></option></select></td><td><input type="text" class="code" id="" name="quantity" value="" placeholder="quantity" size="5"/></td><td><input type="text" class="code" id="" name="rate" value="" placeholder="rate" size="5"/></td><td><input type="text" class="code" id="" name="amount" value="" placeholder="amount" size="5" /></td><td><input type="text" class="code" id="" name="sgst" value="" placeholder="sgst" size="2"/></td><td><input type="text" class="code" id="" name="cgst" value="" placeholder="cgst" size="2" /></td><td><input type="text" class="code" id="" name="igst" value="" placeholder="igst" size="2" /></td><td><input type="text" class="code" id="" name="netAmt" value="" placeholder="netAmt" size="10" /></td><td> <a href="javascript:void(0);" class="remCF">Remove</a></td></tr>');
-			 var row1 = $(this).closest('tr').html();
-			 //var clone1=$(row1).find('.addCF').removeClass("addCF").addClass("remCF");
-			// var clone1=$(tdChange).clone();
-			$("#customFields").append('<tr>'+row1+'</tr>');
-			$("#customFields").find('tr td:last-child').text("remove");
-			//$("#customFields").append('<tr valign="top"> <td><input type="text" class="code" id="itemName" name="itemName[]" value="" placeholder="Input Name" /> </td><td><input type="text" class="code" id="quantity" name="quantity[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="rate" name="rate[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="amount" name="amount[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="SGST" name="SGST[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="CGST" name="CGST[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="IGST" name="IGST[]" value="" placeholder="Input Name" /> </td> <td><input type="text" class="code" id="netAmount" name="netAmount[]" value="" placeholder="Input Name" /> </td>  <td> <a href="javascript:void(0);" class="remCF">Remove</a></td></tr>');
-		});
-		$("#customFields").on('click','.remCF',function(){
-			$(this).parent().parent().remove();
-		});
-	});
-	</script>
+	
     <!-- BEGIN: Vendor JS-->
     <script src="./app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
@@ -360,24 +343,98 @@
     <!-- END: Page JS-->
     
     <script>
-    
+$(document).ready(function(){
+		
+		$(".addCF").click(function(){
+			 var row1 = $(this).closest('tr').html();
+			$("#customFields").append('<tr>'+row1+'</tr>');
+			$('#customFields tr:last td:last').html('<a href="javascript:void(0);" class="remCF">Remove</a>');
+		});
+		$("#customFields").on('click','.remCF',function(){
+			$(this).parent().parent().remove();
+		});
+		 $(document).on("blur", ".quantity", function(e) {	
+			 e.stopPropagation();
+			 console.log(jQuery(this).closest("tr").find(".cgst").val() );
+		  });
+		 $(document).on("blur", ".rate", function(e) {	
+			 e.stopPropagation();
+			 var row=jQuery(this).closest("tr");
+			 var rate=row.find(".rate").val();
+			 var quantity=row.find(".quantity").val();
+			 var amount=rate*quantity;
+			 row.find(".amount").val(amount);
+		  });
+		 $(document).on("blur", ".amount", function(e) {	
+			 e.stopPropagation();
+			 var row=jQuery(this).closest("tr");
+			 var amount=row.find(".amount").val();
+			 var quantity=row.find(".quantity").val();
+			 var rate=amount/quantity;
+			 row.find(".rate").val(rate);
+			 var itemnature=row.find('option:selected').attr('data-itemnature');
+			 if(itemnature=='Fuel'){
+				 row.find(".netAmt").val(amount);
+			 }
+		  });
+		 $(document).on("change", ".itemId", function(e) {
+			 var row=jQuery(this).closest("tr");
+		        var itemnature=jQuery(this).find('option:selected').attr('data-itemnature');
+		        if(itemnature=='Fuel'){
+		        	row.find(".sgst").val("");
+		        	row.find(".cgst").val("");
+		        	row.find(".igst").val("");
+		        	row.find(".sgst").attr("disabled", true);
+		        	row.find(".cgst").attr("disabled", true);
+		        	row.find(".igst").attr("disabled", true);
+		        }else{
+		        	row.find(".sgst").attr("disabled", false);
+		        	row.find(".cgst").attr("disabled", false);
+		        	row.find(".igst").attr("disabled", false);
+		        }
+		    });
+	});
+	
     $(document).on("click", ".accountEdit", function(e) {
  	   //$('#topicchange').attr('disabled',false);
  	   $("#clearform").find('input:text,select, textarea').val('').css('border-color', '');
         $("#errordesc").html("");
         $("#btnSave").html("Update");
         var $row = $(this).closest("tr");
-        var tankName = $row.find("td:nth-child(2)").eq(0).text();
-        var capacity = $row.find("td:nth-child(3)").eq(0).text();
-        var openingStock = $row.find("td:nth-child(5)").eq(0).text();
-        var tankID = $(this).attr('data-id');
+        var purchaceID=$(this).attr('data-id');
+		var invoiceDate = $row.find("td:nth-child(2)").eq(0).text();
+        var billMode = $row.find("td:nth-child(3)").eq(0).text();
+		var supplierId=$(this).attr('data-supplierId');
+        var supplierInvoiceNum = $row.find("td:nth-child(5)").eq(0).text();
         var itemId = $(this).attr('data-itemId');
+		var quantity = $row.find("td:nth-child(7)").eq(0).text();
+        var rate = $row.find("td:nth-child(8)").eq(0).text();
+		var amount = $row.find("td:nth-child(9)").eq(0).text();
+        var sgst = $row.find("td:nth-child(10)").eq(0).text();
+		var cgst = $row.find("td:nth-child(11)").eq(0).text();
+        var igst = $row.find("td:nth-child(12)").eq(0).text();
+		var netAmt = $row.find("td:nth-child(13)").eq(0).text();
+		
+		var now = new Date(invoiceDate);
 
-        $("#tankID").val(tankID*1);
-        $("#tankName").val(tankName);
-        $("#capacity").val(capacity);
+		var day = ("0" + now.getDate()).slice(-2);
+		var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+		invoiceDate = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+		$("#purchaceID").val(purchaceID*1);
+        $("#invoiceDate").val(invoiceDate);
+        $("#billMode").val(billMode);
+        $("#supplierId").val(supplierId*1);
+		$("#supplierInvoiceNum").val(supplierInvoiceNum);
         $("#itemId").val(itemId*1);
-        $("#openingStock").val(openingStock);
+        $("#quantity").val(quantity);
+        $("#rate").val(rate);
+        $("#amount").val(amount);
+        $("#sgst").val(sgst);
+        $("#cgst").val(cgst);
+        $("#igst").val(igst);
+        $("#netAmt").val(netAmt);
 
  	   $("#createDivIcon").removeClass().addClass('ft-minus');
  	   $("#createDivClass").addClass('show');
@@ -385,11 +442,19 @@
     });
     $(document).on("click", ".btnCancel", function(e) {
 	   	 
-    	$("#tankID").val("");
-        $("#tankName").val("");
-        $("#capacity").val("");
+    	$("#purchaceID").val("");
+        $("#invoiceDate").val("");
+        $("#billMode").val("");
+        $("#supplierId").val("");
+		$("#supplierInvoiceNum").val("");
         $("#itemId").val("");
-        $("#openingStock").val("");
+        $("#quantity").val("");
+        $("#rate").val("");
+        $("#amount").val("");
+        $("#sgst").val("");
+        $("#cgst").val("");
+        $("#igst").val("");
+        $("#netAmt").val("");
 	     $("#btnSave").html("Save");
     });
 
