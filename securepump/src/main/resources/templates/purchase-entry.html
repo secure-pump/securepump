@@ -349,13 +349,49 @@ $(document).ready(function(){
 			 var row1 = $(this).closest('tr').html();
 			$("#customFields").append('<tr>'+row1+'</tr>');
 			$('#customFields tr:last td:last').html('<a href="javascript:void(0);" class="remCF">Remove</a>');
+			
+		 	if(itemnature=='Fuel'){		 		
+		 		$('#customFields tr:last td:nth-child(5)').find("#sgst").attr("disabled", true);
+		 		$('#customFields tr:last td:nth-child(6)').find("#cgst").attr("disabled", true);
+		 		$('#customFields tr:last td:nth-child(7)').find("#igst").attr("disabled", true);
+		 	}else{
+		 		if(sameState){
+		 			$('#customFields tr:last td:nth-child(5)').find("#sgst").attr("disabled", false);
+			 		$('#customFields tr:last td:nth-child(6)').find("#cgst").attr("disabled", false);
+			 		$('#customFields tr:last td:nth-child(7)').find("#igst").attr("disabled", true);
+		 		}else{
+		 			$('#customFields tr:last td:nth-child(5)').find("#sgst").attr("disabled", true);
+			 		$('#customFields tr:last td:nth-child(6)').find("#cgst").attr("disabled", true);
+			 		$('#customFields tr:last td:nth-child(7)').find("#igst").attr("disabled", false);
+		 		}
+		 		
+		 	}
 		});
-		$("#customFields").on('click','.remCF',function(){
-			$(this).parent().parent().remove();
+		$(document).on('click','.remCF',function(){
+			$(this).closest("tr").remove();
 		});
 		 $(document).on("blur", ".quantity", function(e) {	
 			 e.stopPropagation();
-			 console.log(jQuery(this).closest("tr").find(".cgst").val() );
+			 //console.log(jQuery(this).closest("tr").find(".cgst").val() );
+		  });
+		 $(document).on("blur", ".cgst", function(e) {	
+			 e.stopPropagation();
+			 var row=jQuery(this).closest("tr");
+			 var amount=row.find(".amount").val();
+			 var sgst=row.find(".sgst").val();
+			 var cgst=row.find(".cgst").val();
+			 var totalTax= sgst*1+cgst*1;
+			 var netAmt=(amount*1 * totalTax/100) + amount*1;
+			 row.find(".netAmt").val(netAmt);
+		  });
+		 $(document).on("blur", ".igst", function(e) {	
+			 e.stopPropagation();
+			 var row=jQuery(this).closest("tr");
+			 var amount=row.find(".amount").val();
+			 var igst=row.find(".igst").val();
+			 var totalTax= igst*1;
+			 var netAmt=(amount*1 * totalTax/100) + amount*1;
+			 row.find(".netAmt").val(netAmt);
 		  });
 		 $(document).on("blur", ".rate", function(e) {	
 			 e.stopPropagation();
@@ -388,12 +424,89 @@ $(document).ready(function(){
 		        	row.find(".cgst").attr("disabled", true);
 		        	row.find(".igst").attr("disabled", true);
 		        }else{
-		        	row.find(".sgst").attr("disabled", false);
-		        	row.find(".cgst").attr("disabled", false);
-		        	row.find(".igst").attr("disabled", false);
+		        	if(sameState){
+		        		row.find(".sgst").attr("disabled", false);
+			        	row.find(".cgst").attr("disabled", false);
+			        	row.find(".igst").attr("disabled", true);
+		        	}else{
+		        		row.find(".sgst").attr("disabled", true);
+			        	row.find(".cgst").attr("disabled", true);
+			        	row.find(".igst").attr("disabled", false);
+		        	}		   
 		        }
 		    });
 	});
+$(document).on("change", "#supplierId", function(e) {
+	supplierGst=jQuery(this).find('option:selected').attr('data-supplier-gstno');
+	supplierGstNo = supplierGst.slice(0, 2);
+	//alert(UserGstNo+"--"+supplierGstNo);
+	if(UserGstNo==supplierGstNo){
+		sameState=true;
+	}else{
+		sameState=false;
+	}
+	$('#customFields tbody tr').each(function() {
+		var itemnature=jQuery(this).find('option:selected').attr('data-itemnature');
+		 var row=jQuery(this);
+		console.log(itemnature);
+        if(itemnature=='Fuel'){
+        	row.find(".sgst").val("");
+        	row.find(".cgst").val("");
+        	row.find(".igst").val("");
+        	row.find(".sgst").attr("disabled", true);
+        	row.find(".cgst").attr("disabled", true);
+        	row.find(".igst").attr("disabled", true);
+        }else{
+        	if(sameState){
+        		row.find(".sgst").attr("disabled", false);
+	        	row.find(".cgst").attr("disabled", false);
+	        	row.find(".igst").attr("disabled", true);
+	        	row.find(".igst").val("");
+        	}else{
+        		row.find(".sgst").val("");
+            	row.find(".cgst").val("");
+        		row.find(".sgst").attr("disabled", true);
+	        	row.find(".cgst").attr("disabled", true);
+	        	row.find(".igst").attr("disabled", false);
+        	}		   
+        }
+	});
+});
+
+var UserGstNo="AP2705256";
+UserGstNo = UserGstNo.slice(0, 2);
+var supplierGst=jQuery("#supplierId").find('option:selected').attr('data-supplier-gstno');
+var supplierGstNo = supplierGst.slice(0, 2);
+//alert(UserGstNo+"--"+supplierGstNo);
+var sameState=false;
+if(UserGstNo==supplierGstNo){
+	sameState=true;
+}
+
+var itemnature=jQuery("#itemId").find('option:selected').attr('data-itemnature');
+	if(itemnature=='Fuel'){
+		$("#sgst").val("");
+		$("#cgst").val("");
+		$("#igst").val("");
+		$("#sgst").attr("disabled", true);
+		$("#cgst").attr("disabled", true);
+		$("#igst").attr("disabled", true);
+	}else{
+		if(sameState){
+			$("#sgst").attr("disabled", false);
+			$("#cgst").attr("disabled", false);
+			$("#igst").attr("disabled", true);
+		}else{
+			$("#sgst").attr("disabled", true);
+			$("#cgst").attr("disabled", true);
+			$("#igst").attr("disabled", false);
+		}
+	}
+	var now = new Date();
+	var day = ("0" + now.getDate()).slice(-2);
+	var month = ("0" + (now.getMonth() + 1)).slice(-2);
+	invoiceDate = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    $("#invoiceDate").val(invoiceDate);
 	
     $(document).on("click", ".accountEdit", function(e) {
  	   //$('#topicchange').attr('disabled',false);
@@ -416,12 +529,9 @@ $(document).ready(function(){
 		var netAmt = $row.find("td:nth-child(13)").eq(0).text();
 		
 		var now = new Date(invoiceDate);
-
 		var day = ("0" + now.getDate()).slice(-2);
 		var month = ("0" + (now.getMonth() + 1)).slice(-2);
-
 		invoiceDate = now.getFullYear()+"-"+(month)+"-"+(day) ;
-
 		$("#purchaceID").val(purchaceID*1);
         $("#invoiceDate").val(invoiceDate);
         $("#billMode").val(billMode);
@@ -438,6 +548,25 @@ $(document).ready(function(){
 
  	   $("#createDivIcon").removeClass().addClass('ft-minus');
  	   $("#createDivClass").addClass('show');
+ 	  var itemnature=jQuery("#itemId").find('option:selected').attr('data-itemnature');
+	 	if(itemnature=='Fuel'){
+	 		$("#sgst").val("");
+	 		$("#cgst").val("");
+	 		$("#igst").val("");
+	 		$("#sgst").attr("disabled", true);
+	 		$("#cgst").attr("disabled", true);
+	 		$("#igst").attr("disabled", true);
+	 	}else{
+	 		if(sameState){
+	 			$("#sgst").attr("disabled", false);
+		 		$("#cgst").attr("disabled", false);
+		 		$("#igst").attr("disabled", true);
+	 		}else{
+	 			$("#sgst").attr("disabled", true);
+		 		$("#cgst").attr("disabled", true);
+		 		$("#igst").attr("disabled", false);
+	 		}
+	 	}
        
     });
     $(document).on("click", ".btnCancel", function(e) {
@@ -457,7 +586,7 @@ $(document).ready(function(){
         $("#netAmt").val("");
 	     $("#btnSave").html("Save");
     });
-
+	
     var url = new URL(window.location.href);
     var status= url.searchParams.get("status");
     //alert(status);
