@@ -12,6 +12,7 @@ import com.securepump.securepump.bean.PurchaceEntryBean;
 import com.securepump.securepump.dao.PurchaceEntryRepository;
 import com.securepump.securepump.exception.RecordNotFoundException;
 import com.securepump.securepump.model.ItemCreationEntity;
+import com.securepump.securepump.model.PurchaseChaildEntity;
 import com.securepump.securepump.model.PurchaseEntryEntity;
 import com.securepump.securepump.model.SupplierCreationEntity;
 import com.securepump.securepump.service.PurchaceEntryService;
@@ -21,6 +22,10 @@ public class PurchaceEntryServiceImpl implements PurchaceEntryService {
 	
 	@Autowired
 	PurchaceEntryRepository purchaceEntry;
+	
+	/*@Autowired
+	@Qualifier("PurchaceChaildRepo")
+	PurchaceChaildRepository purchaceChaildRep;*/
 
 	@Override
 	public List<PurchaseEntryEntity> getAllItems() {
@@ -47,38 +52,47 @@ public class PurchaceEntryServiceImpl implements PurchaceEntryService {
 	@Override
 	public void createorUpdateItem(PurchaceEntryBean purchaceBean) {
 		// TODO Auto-generated method stub
-		boolean entryFlag=true;
-
-		for(int i=0;i<purchaceBean.getItemId().length;i++) {
 			SupplierCreationEntity supplyCre=new SupplierCreationEntity();
 			supplyCre.setId(purchaceBean.getSupplierId());
 			
 			PurchaseEntryEntity entity=new PurchaseEntryEntity();
-			ItemCreationEntity itemCre=new ItemCreationEntity();
-			itemCre.setId(purchaceBean.getItemId()[i]);
-			if(purchaceBean.getId()!=null&&entryFlag) {
-				entity.setId(purchaceBean.getId());
-				entryFlag=false;
-			}
 			
+			entity.setId(purchaceBean.getPurchaceid());
 			entity.setInvoiceDate(purchaceBean.getInvoiceDate());
-			entity.setBillMode(purchaceBean.getBillMode());				
-			entity.setItemCreation(itemCre);
+			entity.setBillMode(purchaceBean.getBillMode());	
 			entity.setSupplierCreation(supplyCre);
 			entity.setSupplierInvoiceNum(purchaceBean.getSupplierInvoiceNum());
-			entity.setQuantity(purchaceBean.getQuantity()[i]);
-			entity.setRate(purchaceBean.getRate()[i]);
-			entity.setAmount(purchaceBean.getAmount()[i]);		
-			entity.setSgst(purchaceBean.getSgst()[i]);
-			entity.setCgst(purchaceBean.getCgst()[i]);
-			entity.setIgst(purchaceBean.getIgst()[i]);
-			entity.setNetAmt(purchaceBean.getNetAmt()[i]);
 			entity.setCreated_date(new Date());
 			entity.setCreated_by("admin");
 			entity.setUpdated_date(new Date());
 			entity.setUpdated_by("admin");
+			List<PurchaseChaildEntity> allPurchaseChaildEntitys = new ArrayList<PurchaseChaildEntity>();
+			
+			for(int i=0;i<purchaceBean.getItemId().length;i++) {
+				PurchaseChaildEntity chaildEntity=new PurchaseChaildEntity();
+				
+				ItemCreationEntity itemCre=new ItemCreationEntity();
+				itemCre.setId(purchaceBean.getItemId()[i]);
+				
+				chaildEntity.setId(purchaceBean.getPurchaceChaildId()[i]);
+				chaildEntity.setItemCreation(itemCre);
+				chaildEntity.setQuantity(purchaceBean.getQuantity()[i]);
+				chaildEntity.setRate(purchaceBean.getRate()[i]);
+				chaildEntity.setAmount(purchaceBean.getAmount()[i]);
+				chaildEntity.setSgst(purchaceBean.getSgst()[i]);
+				chaildEntity.setCgst(purchaceBean.getCgst()[i]);
+				chaildEntity.setIgst(purchaceBean.getIgst()[i]);
+				chaildEntity.setNetAmt(purchaceBean.getNetAmt()[i]);
+				chaildEntity.setPurchaceEntity(entity);
+				chaildEntity.setCreated_date(new Date());
+				chaildEntity.setCreated_by("admin");
+				chaildEntity.setUpdated_date(new Date());
+				chaildEntity.setUpdated_by("admin");
+				allPurchaseChaildEntitys.add(chaildEntity);
+				//purchaceChaildRep.save(chaildEntity);
+			}
+			entity.setPurchaseChaildEntity(allPurchaseChaildEntitys);
 			entity = purchaceEntry.save(entity);
-		}
 		
 	}
 

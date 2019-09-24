@@ -1,7 +1,9 @@
 package com.securepump.securepump.model;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,12 +11,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="PURCHASE_ENTRY_CREATION")
+@Table(name="TBL_PURCHASE_PARENT_ENTRY")
 public class PurchaseEntryEntity {
 
 	@Id
@@ -32,26 +35,8 @@ public class PurchaseEntryEntity {
 	@Column(name="supplier_invoie_num")
 	private String supplierInvoiceNum;
 	
-	@ManyToOne
-    @JoinColumn(referencedColumnName = "ID")
-	ItemCreationEntity itemCreation;
-	
-	@Column(name="quantity")
-	private Long quantity;
-	@Column(name="rate")
-	private Double rate;
-	
-	@Column(name="amount")
-	private Double amount;
-	
-	@Column(name="sgst")
-	private Double sgst;
-	@Column(name="cgst")
-	private Double cgst;
-	@Column(name="igst")
-	private Double igst;
-	@Column(name="net_amount")
-	private Double netAmt;
+	@OneToMany(mappedBy = "purchaceEntity", cascade = CascadeType.ALL)
+    List<PurchaseChaildEntity> purchaseChaildEntity;
 	
 	@Column(name = "created_by",updatable=false)
     private String created_by;
@@ -104,69 +89,13 @@ public class PurchaseEntryEntity {
 	public void setSupplierInvoiceNum(String supplierInvoiceNum) {
 		this.supplierInvoiceNum = supplierInvoiceNum;
 	}
-
-	public ItemCreationEntity getItemCreation() {
-		return itemCreation;
+	
+	public List<PurchaseChaildEntity> getPurchaseChaildEntity() {
+		return purchaseChaildEntity;
 	}
 
-	public void setItemCreation(ItemCreationEntity itemCreation) {
-		this.itemCreation = itemCreation;
-	}
-
-	public Long getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Long quantity) {
-		this.quantity = quantity;
-	}
-
-	public Double getRate() {
-		return rate;
-	}
-
-	public void setRate(Double rate) {
-		this.rate = rate;
-	}
-
-	public Double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-
-	public Double getSgst() {
-		return sgst;
-	}
-
-	public void setSgst(Double sgst) {
-		this.sgst = sgst;
-	}
-
-	public Double getCgst() {
-		return cgst;
-	}
-
-	public void setCgst(Double cgst) {
-		this.cgst = cgst;
-	}
-
-	public Double getIgst() {
-		return igst;
-	}
-
-	public void setIgst(Double igst) {
-		this.igst = igst;
-	}
-
-	public Double getNetAmt() {
-		return netAmt;
-	}
-
-	public void setNetAmt(Double netAmt) {
-		this.netAmt = netAmt;
+	public void setPurchaseChaildEntity(List<PurchaseChaildEntity> purchaseChaildEntity) {
+		this.purchaseChaildEntity = purchaseChaildEntity;
 	}
 
 	public String getCreated_by() {
@@ -205,14 +134,7 @@ public class PurchaseEntryEntity {
 	public String toString() {
 		return "PurchaseEntryEntity [id=" + id + ", invoiceDate=" + invoiceDate + ", billMode=" + billMode
 				+ ", supplierCreation=" + supplierCreation + ", supplierInvoiceNum=" + supplierInvoiceNum
-				+ ", itemCreation=" + itemCreation + ", quantity=" + quantity + ", rate=" + rate + ", amount=" + amount
-				+ ", sgst=" + sgst + ", cgst=" + cgst + ", igst=" + igst + ", netAmt=" + netAmt + ", created_by="
-				+ created_by + ", created_date=" + created_date + ", updated_by=" + updated_by + ", updated_date="
-				+ updated_date + "]";
+				+ ", purchaseChaildEntity=" + purchaseChaildEntity + ", created_by=" + created_by + ", created_date="
+				+ created_date + ", updated_by=" + updated_by + ", updated_date=" + updated_date + "]";
 	}
-    
-    
-	
-
-
 }

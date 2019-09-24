@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.securepump.securepump.bean.PurchaceEntryBean;
@@ -43,10 +44,13 @@ public class PurchaseEntryController {
 	@RequestMapping("/purchase-entry")
 	public String purchaseCreate(Model model,@RequestParam(name = "status") String status)
 	{
-		List<PurchaseEntryEntity> purchaceList = purchaceEntryService.getAllItems();		
+		List<PurchaseEntryEntity> purchaceList = purchaceEntryService.getAllItems();
+	    /*System.out.println("size-----"+purchaceList.size());
+		for(PurchaseEntryEntity pur:purchaceList) {
+			System.out.println(pur.getPurchaseChaildEntity().size());
+		}*/
 	    model.addAttribute("purchaceEntryList", purchaceList);
-	    //System.out.println("status--"+status);
-	   model.addAttribute("status", status);
+	   //model.addAttribute("status", status);
 		return "purchase-entry";
 	}
 	@RequestMapping(value = "/savePurchaceEntry", method = RequestMethod.POST)
@@ -54,7 +58,7 @@ public class PurchaseEntryController {
 		System.out.println("account--"+purchaceBean);
 		String status="error";
 		try {
-			if(purchaceBean.getId()==null) {
+			if(purchaceBean.getPurchaceid()==null) {
 				status="save";
 			}else {
 				status="update";
@@ -67,13 +71,21 @@ public class PurchaseEntryController {
 	    return "redirect:/purchase-entry?status="+status;
 	}
 	
-	@RequestMapping("/purchaceEntryEdit/{id}")
+	/*@RequestMapping("/purchaceEntryEdit/{id}")
 	public ModelAndView showEditItemPage(@PathVariable(name = "id") Long id) throws RecordNotFoundException {
 	    ModelAndView mav = new ModelAndView("purchase-entry");
 	    PurchaseEntryEntity item = purchaceEntryService.getItemById(id);
 	    mav.addObject("purchaceEditData", item);
 	    return mav;
-	}
+	}*/
+	@RequestMapping(value = "/purchaceEntryEdit", method = RequestMethod.GET,consumes = "application/json", produces = "application/json")
+	@ResponseBody 
+    public PurchaseEntryEntity processAJAXRequest(@RequestParam("purchaceid") Long purchaceid) throws RecordNotFoundException {
+        String response = "";
+        System.out.println("working"+purchaceid);
+        PurchaseEntryEntity purchaseEntryData = purchaceEntryService.getItemById(purchaceid);
+        return purchaseEntryData;
+    }
 	@RequestMapping("/purchaceEntryDelete/{id}")
 	public String deleteItem(@PathVariable(name = "id") Long id,Model model) throws RecordNotFoundException {
 		purchaceEntryService.deleteItemById(id);

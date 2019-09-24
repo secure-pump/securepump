@@ -6,15 +6,14 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class PurchaceEntryBean {
-	private Long id;
+	private Long purchaceid;
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private Date invoiceDate;
 	private String billMode;
 	private Long supplierId;
-	//private String supplierName;
 	private String supplierInvoiceNum;
+	private Long[] purchaceChaildId;
 	private Long[] itemId;
-	//private String itemName;
 	private Long[] quantity;
 	private Double[] rate;
 	private Double[] amount;	
@@ -22,11 +21,18 @@ public class PurchaceEntryBean {
 	private Double[] cgst;
 	private Double[] igst;
 	private Double[] netAmt;
-	public Long getId() {
-		return id;
+	
+	public Long getPurchaceid() {
+		return purchaceid;
 	}
-	public void setId(Long id) {
-		this.id = id;
+	public void setPurchaceid(Long purchaceid) {
+		this.purchaceid = purchaceid;
+	}
+	public Long[] getPurchaceChaildId() {
+		return purchaceChaildId;
+	}
+	public void setPurchaceChaildId(Long[] purchaceChaildId) {
+		this.purchaceChaildId = purchaceChaildId;
 	}
 	public Date getInvoiceDate() {
 		return invoiceDate;
@@ -102,13 +108,14 @@ public class PurchaceEntryBean {
 	}
 	@Override
 	public String toString() {
-		return "PurchaceEntryBean [id=" + id + ", invoiceDate=" + invoiceDate + ", billMode=" + billMode
-				+ ", supplierId=" + supplierId + ", supplierInvoiceNum=" + supplierInvoiceNum + ", itemId="
-				+ Arrays.toString(itemId) + ", quantity=" + Arrays.toString(quantity) + ", rate="
-				+ Arrays.toString(rate) + ", amount=" + Arrays.toString(amount) + ", sgst=" + Arrays.toString(sgst)
-				+ ", cgst=" + Arrays.toString(cgst) + ", igst=" + Arrays.toString(igst) + ", netAmt="
-				+ Arrays.toString(netAmt) + "]";
+		return "PurchaceEntryBean [purchaceid=" + purchaceid + ", invoiceDate=" + invoiceDate + ", billMode=" + billMode
+				+ ", supplierId=" + supplierId + ", supplierInvoiceNum=" + supplierInvoiceNum + ", purchaceChaildId="
+				+ Arrays.toString(purchaceChaildId) + ", itemId=" + Arrays.toString(itemId) + ", quantity="
+				+ Arrays.toString(quantity) + ", rate=" + Arrays.toString(rate) + ", amount=" + Arrays.toString(amount)
+				+ ", sgst=" + Arrays.toString(sgst) + ", cgst=" + Arrays.toString(cgst) + ", igst="
+				+ Arrays.toString(igst) + ", netAmt=" + Arrays.toString(netAmt) + "]";
 	}
+
 	
 	
 	

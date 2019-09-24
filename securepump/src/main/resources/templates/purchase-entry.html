@@ -131,7 +131,7 @@
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                        	<input type="hidden" name="id" id="purchaceID" />
+                                                        	<input type="hidden" name="purchaceid" id="purchaceID" />
                                                             <label for="invoiceDate">Invoice Date</label>
                                                            <input type="date" id="invoiceDate" class="form-control" name="invoiceDate">
                                                         </div>
@@ -177,20 +177,23 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                               <tr valign="top">													
+                                               <tr valign="top">
+	                                               <td style="display:none;">
+	                                                 <input type="hidden" name="purchaceChaildId" id="purchaceChaildId" />
+	                                               </td>												
 													<td>
 														<select class="itemId" id="itemId" name="itemId" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
 															<option th:each="item : ${itemNameList}" th:value="${item.id}" th:text="${item.itemName}" th:data-itemnature="${item.itemNature}"></option>														
 														</select>
 													</td>
 													<td>
-														<input type="text" class="quantity" id="quantity" name="quantity" value="" placeholder="quantity" size="5"/> 
+														<input type="text" class="quantity" id="quantity" name="quantity" value="" placeholder="quantity" size="5" required/> 
 													</td>
 													<td>
-														<input type="text" class="rate" id="rate" name="rate" value="" placeholder="rate" size="5"/> 
+														<input type="text" class="rate" id="rate" name="rate" value="" placeholder="rate" size="5" required/> 
 													</td>
 													<td>
-														<input type="text" class="amount" id="amount" name="amount" value="" placeholder="amount" size="5" /> 
+														<input type="text" class="amount" id="amount" name="amount" value="" placeholder="amount" size="5" required/> 
 													</td>
 													<td>
 														<input type="text" class="sgst" id="sgst" name="sgst" value="" placeholder="sgst" size="2"/> 
@@ -263,14 +266,14 @@
                                                     <th>Bill Mode</th>
                                                     <th>Supplier Name</th>
                                                     <th>Suppler Invoice No</th>
-                                                    <th>Item Name</th>
+                                               <!-- <th>Item Name</th>
                                                     <th>Quantity</th>
                                                     <th>Rate</th>
 													<th>Amount</th>
 													<th>SGST</th>
 													<th>CGST</th>
 													<th>IGST</th>
-													<th>Net Amount</th>													 
+													<th>Net Amount</th>	-->												 
 													<th>Action</th>
                                                 </tr>
                                             </thead>
@@ -281,16 +284,16 @@
 									                <td th:text="${purchace.billMode}"></td>
 									                <td th:text="${purchace.supplierCreation.supplierName}"></td>
 									                <td th:text="${purchace.supplierInvoiceNum}"></td>
-													<td th:text="${purchace.itemCreation.itemName}"></td>
+												<!--<td th:text="${purchace.itemCreation.itemName}"></td>
 									                <td th:text="${purchace.quantity}"></td>
 									                <td th:text="${purchace.rate}"></td>
 									                <td th:text="${purchace.amount}"></td>
 													<td th:text="${purchace.sgst}"></td>
 									                <td th:text="${purchace.cgst}"></td>
 									                <td th:text="${purchace.igst}"></td>
-									                <td th:text="${purchace.netAmt}"></td>
+									                <td th:text="${purchace.netAmt}"></td>-->
 									                <td>
-									                <button type='button' class="btn btn-primary btn-xs accountEdit" data-title="Edit" th:data-id="${purchace.id}" th:data-itemId="${purchace.itemCreation.id}" th:data-supplierId="${purchace.supplierCreation.id}"><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
+									                <button type='button' class="btn btn-primary btn-xs accountEdit" data-title="Edit" th:data-id="${purchace.id}" th:data-supplierId="${purchace.supplierCreation.id}"><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
 									                    &nbsp;&nbsp;&nbsp;
 									                     <a th:href="@{'/purchaceEntryDelete/'+${purchace.id}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>Delete</a>
 									                </td>
@@ -351,18 +354,18 @@ $(document).ready(function(){
 			$('#customFields tr:last td:last').html('<a href="javascript:void(0);" class="remCF">Remove</a>');
 			
 		 	if(itemnature=='Fuel'){		 		
-		 		$('#customFields tr:last td:nth-child(5)').find("#sgst").attr("disabled", true);
-		 		$('#customFields tr:last td:nth-child(6)').find("#cgst").attr("disabled", true);
-		 		$('#customFields tr:last td:nth-child(7)').find("#igst").attr("disabled", true);
+		 		$('#customFields tr:last td:nth-child(5)').find("#sgst").attr("readonly", true);
+		 		$('#customFields tr:last td:nth-child(6)').find("#cgst").attr("readonly", true);
+		 		$('#customFields tr:last td:nth-child(7)').find("#igst").attr("readonly", true);
 		 	}else{
 		 		if(sameState){
-		 			$('#customFields tr:last td:nth-child(5)').find("#sgst").attr("disabled", false);
-			 		$('#customFields tr:last td:nth-child(6)').find("#cgst").attr("disabled", false);
-			 		$('#customFields tr:last td:nth-child(7)').find("#igst").attr("disabled", true);
+		 			$('#customFields tr:last td:nth-child(5)').find("#sgst").attr("readonly", false);
+			 		$('#customFields tr:last td:nth-child(6)').find("#cgst").attr("readonly", false);
+			 		$('#customFields tr:last td:nth-child(7)').find("#igst").attr("readonly", true);
 		 		}else{
-		 			$('#customFields tr:last td:nth-child(5)').find("#sgst").attr("disabled", true);
-			 		$('#customFields tr:last td:nth-child(6)').find("#cgst").attr("disabled", true);
-			 		$('#customFields tr:last td:nth-child(7)').find("#igst").attr("disabled", false);
+		 			$('#customFields tr:last td:nth-child(5)').find("#sgst").attr("readonly", true);
+			 		$('#customFields tr:last td:nth-child(6)').find("#cgst").attr("readonly", true);
+			 		$('#customFields tr:last td:nth-child(7)').find("#igst").attr("readonly", false);
 		 		}
 		 		
 		 	}
@@ -420,18 +423,18 @@ $(document).ready(function(){
 		        	row.find(".sgst").val("");
 		        	row.find(".cgst").val("");
 		        	row.find(".igst").val("");
-		        	row.find(".sgst").attr("disabled", true);
-		        	row.find(".cgst").attr("disabled", true);
-		        	row.find(".igst").attr("disabled", true);
+		        	row.find(".sgst").attr("readonly", true);
+		        	row.find(".cgst").attr("readonly", true);
+		        	row.find(".igst").attr("readonly", true);
 		        }else{
 		        	if(sameState){
-		        		row.find(".sgst").attr("disabled", false);
-			        	row.find(".cgst").attr("disabled", false);
-			        	row.find(".igst").attr("disabled", true);
+		        		row.find(".sgst").attr("readonly", false);
+			        	row.find(".cgst").attr("readonly", false);
+			        	row.find(".igst").attr("readonly", true);
 		        	}else{
-		        		row.find(".sgst").attr("disabled", true);
-			        	row.find(".cgst").attr("disabled", true);
-			        	row.find(".igst").attr("disabled", false);
+		        		row.find(".sgst").attr("readonly", true);
+			        	row.find(".cgst").attr("readonly", true);
+			        	row.find(".igst").attr("readonly", false);
 		        	}		   
 		        }
 		    });
@@ -453,21 +456,21 @@ $(document).on("change", "#supplierId", function(e) {
         	row.find(".sgst").val("");
         	row.find(".cgst").val("");
         	row.find(".igst").val("");
-        	row.find(".sgst").attr("disabled", true);
-        	row.find(".cgst").attr("disabled", true);
-        	row.find(".igst").attr("disabled", true);
+        	row.find(".sgst").attr("readonly", true);
+        	row.find(".cgst").attr("readonly", true);
+        	row.find(".igst").attr("readonly", true);
         }else{
         	if(sameState){
-        		row.find(".sgst").attr("disabled", false);
-	        	row.find(".cgst").attr("disabled", false);
-	        	row.find(".igst").attr("disabled", true);
+        		row.find(".sgst").attr("readonly", false);
+	        	row.find(".cgst").attr("readonly", false);
+	        	row.find(".igst").attr("readonly", true);
 	        	row.find(".igst").val("");
         	}else{
         		row.find(".sgst").val("");
             	row.find(".cgst").val("");
-        		row.find(".sgst").attr("disabled", true);
-	        	row.find(".cgst").attr("disabled", true);
-	        	row.find(".igst").attr("disabled", false);
+        		row.find(".sgst").attr("readonly", true);
+	        	row.find(".cgst").attr("readonly", true);
+	        	row.find(".igst").attr("readonly", false);
         	}		   
         }
 	});
@@ -488,18 +491,18 @@ var itemnature=jQuery("#itemId").find('option:selected').attr('data-itemnature')
 		$("#sgst").val("");
 		$("#cgst").val("");
 		$("#igst").val("");
-		$("#sgst").attr("disabled", true);
-		$("#cgst").attr("disabled", true);
-		$("#igst").attr("disabled", true);
+		$("#sgst").attr("readonly", true);
+		$("#cgst").attr("readonly", true);
+		$("#igst").attr("readonly", true);
 	}else{
 		if(sameState){
-			$("#sgst").attr("disabled", false);
-			$("#cgst").attr("disabled", false);
-			$("#igst").attr("disabled", true);
+			$("#sgst").attr("readonly", false);
+			$("#cgst").attr("readonly", false);
+			$("#igst").attr("readonly", true);
 		}else{
-			$("#sgst").attr("disabled", true);
-			$("#cgst").attr("disabled", true);
-			$("#igst").attr("disabled", false);
+			$("#sgst").attr("readonly", true);
+			$("#cgst").attr("readonly", true);
+			$("#igst").attr("readonly", false);
 		}
 	}
 	var now = new Date();
@@ -509,7 +512,7 @@ var itemnature=jQuery("#itemId").find('option:selected').attr('data-itemnature')
     $("#invoiceDate").val(invoiceDate);
 	
     $(document).on("click", ".accountEdit", function(e) {
- 	   //$('#topicchange').attr('disabled',false);
+ 	   //$('#topicchange').attr('readonly',false);
  	   $("#clearform").find('input:text,select, textarea').val('').css('border-color', '');
         $("#errordesc").html("");
         $("#btnSave").html("Update");
@@ -519,14 +522,30 @@ var itemnature=jQuery("#itemId").find('option:selected').attr('data-itemnature')
         var billMode = $row.find("td:nth-child(3)").eq(0).text();
 		var supplierId=$(this).attr('data-supplierId');
         var supplierInvoiceNum = $row.find("td:nth-child(5)").eq(0).text();
-        var itemId = $(this).attr('data-itemId');
+        /* var itemId = $(this).attr('data-itemId');
 		var quantity = $row.find("td:nth-child(7)").eq(0).text();
         var rate = $row.find("td:nth-child(8)").eq(0).text();
 		var amount = $row.find("td:nth-child(9)").eq(0).text();
         var sgst = $row.find("td:nth-child(10)").eq(0).text();
 		var cgst = $row.find("td:nth-child(11)").eq(0).text();
         var igst = $row.find("td:nth-child(12)").eq(0).text();
-		var netAmt = $row.find("td:nth-child(13)").eq(0).text();
+		var netAmt = $row.find("td:nth-child(13)").eq(0).text(); */
+		
+		var purchaceId = 'purchaceid='+purchaceID;
+		 $.ajax({
+	           type: 'GET',
+	           url: '/purchaceEntryEdit',
+	           contentType: 'application/json',
+	           dataType: 'text',
+	           data: JSON.stringify(purchaceId),
+	           success: function(data) {
+	   
+	                alert( response );
+	            },
+	            error : function() {
+	                alert("not working");
+	            }
+	        });
 		
 		var now = new Date(invoiceDate);
 		var day = ("0" + now.getDate()).slice(-2);
@@ -553,18 +572,18 @@ var itemnature=jQuery("#itemId").find('option:selected').attr('data-itemnature')
 	 		$("#sgst").val("");
 	 		$("#cgst").val("");
 	 		$("#igst").val("");
-	 		$("#sgst").attr("disabled", true);
-	 		$("#cgst").attr("disabled", true);
-	 		$("#igst").attr("disabled", true);
+	 		$("#sgst").attr("readonly", true);
+	 		$("#cgst").attr("readonly", true);
+	 		$("#igst").attr("readonly", true);
 	 	}else{
 	 		if(sameState){
-	 			$("#sgst").attr("disabled", false);
-		 		$("#cgst").attr("disabled", false);
-		 		$("#igst").attr("disabled", true);
+	 			$("#sgst").attr("readonly", false);
+		 		$("#cgst").attr("readonly", false);
+		 		$("#igst").attr("readonly", true);
 	 		}else{
-	 			$("#sgst").attr("disabled", true);
-		 		$("#cgst").attr("disabled", true);
-		 		$("#igst").attr("disabled", false);
+	 			$("#sgst").attr("readonly", true);
+		 		$("#cgst").attr("readonly", true);
+		 		$("#igst").attr("readonly", false);
 	 		}
 	 	}
        
