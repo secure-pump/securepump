@@ -8,5 +8,4 @@ public class SecurepumpApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SecurepumpApplication.class, args);
 	}
-
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="loading" lang="en" data-textdirection="ltr">
+<html class="loading" lang="en" data-textdirection="ltr" xmlns:th="http://www.thymeleaf.org">
 <!-- BEGIN: Head-->
 
 <head>
@@ -43,12 +43,13 @@
 <body class="vertical-layout vertical-menu-modern 2-columns   fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
 
     <!-- BEGIN: Header-->
-	<th:block th:include="fragments/header :: header"></th:block>
+		<th:block th:include="fragments/header :: header"></th:block>
     <!-- END: Header-->
 
 
     <!-- BEGIN: Main Menu-->
-		<th:block th:include="fragments/submenu :: submenu"></th:block>
+	
+  		<th:block th:include="fragments/submenu :: submenu"></th:block>
     <!-- END: Main Menu-->
     <!-- BEGIN: Content-->
     <div class="app-content content">
@@ -59,11 +60,11 @@
                     <div class="row breadcrumbs-top d-inline-block">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.php"> Home </a>
+                                <li class="breadcrumb-item"><a href="index.html">Home</a>
                                 </li>
                                 <li class="breadcrumb-item"><a href="#">Account Setup</a>
                                 </li>
-                                <li class="breadcrumb-item active">Nozzle Creation
+                                <li class="breadcrumb-item active">Tank Creation 
                                 </li>
                             </ol>
                         </div>
@@ -85,22 +86,23 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title" id="basic-layout-form">Nozzle Creation </h4>
+                                    <h4 class="card-title" id="basic-layout-form">Price Setup </h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
-                                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                            <li><a data-action="collapse" id="createDiv"><i id="createDivIcon" class="ft-plus"></i></a></li>
                                             <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                             <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
                                             <li><a data-action="close"><i class="ft-x"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="card-content collapse show">
+                                <div id="createDivClass" class="card-content collapse">
                                     <div class="card-body">
-                                        	
-												
+                                        
+										<!-- <div th:if="${status=='save'}">-->
 									<div th:switch="${status}">
+												
 										<div th:case="'save'" class="alert alert-success alert-dismissible mb-2" role="alert">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
@@ -120,68 +122,51 @@
                                             <strong>  Sorry</strong> Unable to process, please try again.<a href="#" class="alert-link"></a>                                           
                                         </div>                                   
                                       </div>
-													
-                                        <form class="form" action="/saveNozzle" method="post">
+										
+														
+												
+                                        <form class="form" action="/saveTank" method="post">
+                                        
                                             <div class="form-body">
-                                                <h4 class="form-section"><i class="ft-user"></i> Nozzle Setup</h4>
+                                                <h4 class="form-section"><i class="ft-user"></i> Daily Sale Price Setup</h4>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label for="projectinput1">Name</label>
-                                                          <input type="text" id="nozzleName" class="form-control" placeholder="Please Enter Nozzle Name"  name="nozzleName">
+                                                            <label for="itemId">Select Product</label>
+                                                            <select id="itemId" name="itemId" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">															
+															 	<option th:each="item : ${itemNameList}" th:value="${item.id}" th:text="${item.itemName}">
+														     	</option>
+														     	<!-- th:selected="${user.isSelected(lastselected)}"-->
+															  </select>
+															  
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label for="projectinput2">Opening Meter Reading</label>
-                                                            <input type="number" class="form-control" placeholder="Please Enter Opening Meter Reading " aria-describedby="basic-addon3" name="openingMeterReading" id="openingMeterReading">
+                                                            <label for="capacity">Sale Price</label>
+                                                            <input type="number" id="saleprice" class="form-control" placeholder="Please Enter Capacity  of Tank" aria-describedby="basic-addon3" name="saleprice">
                                                         </div>
                                                     </div>
-                                                     <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label for="projectinput1">Unit Name</label>
-                                                           <select id="unitId" name="unitId" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
-																
-																<option th:each="unit : ${unitNameList}" th:value="${unit.id}" th:text="${unit.unitName}">
-														     	</option>
-														
-															  </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-													
-												 <div class="row">
-                                                   
-                                                   <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label for="projectinput3">Opening Meter Date</label>
-                                                           <input type="date" id="openingMeterDate" class="form-control" name="openingMeterDate">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label for="projectinput4">Select Tank Name</label>
-                                                             <select id="tankId" name="tankId" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
-																
-																<option th:each="tank : ${tankNameList}" th:value="${tank.id}" th:text="${tank.tankName}">
-														     	</option>
-																
-															  </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 
+                                                    
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="openingStock">Date</label>
+                                                            <input type="date" id="timesheetinput3" class="form-control" name="date">
+                                                        </div>
+                                                    </div>
+                                                </div>
 												
 
                                                
                                             </div>
 
                                             <div class="form-actions">
-                                                <button type="button" class="btn btn-warning mr-1">
-                                                    <i class="ft-x"></i> Cancel
+                                            	<button type="button" class="btn btn-warning mr-1btnCancel btnCancel" id="btnCancel">
+                                                    Cancel
                                                 </button>
-                                                <button type="submit" class="btn btn-primary" name="SaveButton">
-                                                    <i class="la la-check-square-o"></i> Save
+                                                <button type="submit" class="btn btn-primary btnSave" name="SubmitButton" id="btnSave">
+                                                    Save
                                                 </button>
                                             </div>
                                         </form>
@@ -200,7 +185,7 @@
                                         </div>
 						<div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Basic Tables</h4>
+                                <h4 class="card-title">Price Details</h4>
                                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
                                     <ul class="list-inline mb-0">
@@ -219,28 +204,27 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Nozzle Name</th>
-                                                    <th>Open Mt Reading</th>
-                                                    <th>Unit Name</th>
-													 <th>Tank Name</th>
-													 <th>Opening Mt Date</th>
-													 <th>Action </th>
+                                                    <th>Date</th>
+                                                    <th>Sale Rate </th>
+													<th>Product Name</th>
+                                                    <th>Action</th>
+													
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr th:each="nozzle : ${listNozzle}">
-                                                	 <td th:text="${nozzle.id}">S.No</td>
-                                                	<td th:text="${nozzle.nozzleName}"></td>
-                                                	<td th:text="${nozzle.openingMeterReading}"> </td>
-                                                	<td th:text="${nozzle.tankName}"> </td>
-                                                	<td th:text="${nozzle.unitName}"> </td>
-                                                	<td th:text="${nozzle.openingMeterDate}"> </td>
-                                                	 <td>
-									                <button type='button' class="btn btn-primary btn-xs accountEdit" data-title="Edit" th:data-id="${nozzle.id}"><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
+                                             
+												  <tr th:each="tank : ${listTanks}">
+									                <td th:text="${tank.id}">S.No</td>
+									                <td th:text="${tank.tankName}"></td>
+									                <td th:text="${tank.capacity}"></td>
+									                <td th:text="${tank.itemCreation.itemName}"></td>
+									                <td th:text="${tank.openingStock}"></td>
+									                <td>
+									                <button type='button' class="btn btn-primary btn-xs accountEdit" data-title="Edit" th:data-id="${tank.id}" th:data-itemId="${tank.itemCreation.id}"><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
 									                    &nbsp;&nbsp;&nbsp;
-									                     <a th:href="@{'/nozzleDelete/'+${nozzle.id}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>Delete</a>
+									                     <a th:href="@{'/tankDelete/'+${tank.id}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>Delete</a>
 									                </td>
-                                                </tr>
+									            </tr>													 
                                             </tbody>
                                         </table>
                                     </div>
@@ -248,6 +232,8 @@
                            
                               
                         </div>
+                    </div>
+                    </div>
                     </div>
 
 
@@ -265,7 +251,7 @@
     <div class="drag-target"></div>
 
     <!-- BEGIN: Footer-->
-		<th:block th:include="fragments/footer :: footer"></th:block>
+  		<th:block th:include="fragments/footer :: footer"></th:block>
     <!-- END: Footer-->
 
 
@@ -285,6 +271,50 @@
         <!-- BEGIN: Page JS-->
     <script src="./app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
     <!-- END: Page JS-->
+    
+    <script>
+    
+    $(document).on("click", ".accountEdit", function(e) {
+ 	   //$('#topicchange').attr('disabled',false);
+ 	   $("#clearform").find('input:text,select, textarea').val('').css('border-color', '');
+        $("#errordesc").html("");
+        $("#btnSave").html("Update");
+        var $row = $(this).closest("tr");
+        var tankName = $row.find("td:nth-child(2)").eq(0).text();
+        var capacity = $row.find("td:nth-child(3)").eq(0).text();
+        var openingStock = $row.find("td:nth-child(5)").eq(0).text();
+        var tankID = $(this).attr('data-id');
+        var itemId = $(this).attr('data-itemId');
+
+        $("#tankID").val(tankID*1);
+        $("#tankName").val(tankName);
+        $("#capacity").val(capacity);
+        $("#itemId").val(itemId*1);
+        $("#openingStock").val(openingStock);
+
+ 	   $("#createDivIcon").removeClass().addClass('ft-minus');
+ 	   $("#createDivClass").addClass('show');
+       
+    });
+    $(document).on("click", ".btnCancel", function(e) {
+	   	 
+    	$("#tankID").val("");
+        $("#tankName").val("");
+        $("#capacity").val("");
+        $("#itemId").val("");
+        $("#openingStock").val("");
+	     $("#btnSave").html("Save");
+    });
+
+    var url = new URL(window.location.href);
+    var status= url.searchParams.get("status");
+    //alert(status);
+    if(status=='save' || status=='update'){
+    	   $("#createDivIcon").removeClass().addClass('ft-minus');
+    	   $("#createDivClass").addClass('show');
+    	   
+    }
+    </script>
 
 </body>
 <!-- END: Body-->

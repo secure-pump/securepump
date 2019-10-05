@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,7 +43,7 @@ public class NozzleCreationController {
 		List<NozzleCreationEntity> listAccounts = nozzleService.getAllNozzles();
 		List<NozzleCreationBean> addNozzleList=new ArrayList<NozzleCreationBean>();
 		for(NozzleCreationEntity nozzleList:listAccounts) {
-			System.out.println("---"+listAccounts);
+			//System.out.println("---"+listAccounts);
 			NozzleCreationBean nozzle=new NozzleCreationBean();
 			nozzle.setId(nozzleList.getId());
 			nozzle.setNozzleName(nozzleList.getNozzleName());
@@ -53,9 +54,9 @@ public class NozzleCreationController {
 			nozzle.setUnitId(nozzleList.getUnitCreation().getId());
 			nozzle.setUnitName(nozzleList.getUnitCreation().getUnitName());
 			addNozzleList.add(nozzle);
-			
-			
+			System.out.println("---------");
 		}
+		System.out.println(addNozzleList);
 		model.addAttribute("listNozzle", addNozzleList);
 		   // model.addAttribute("itemNameList",allItemNames);
 		    //System.out.println("status--"+status);
@@ -95,6 +96,11 @@ public class NozzleCreationController {
 		}
 	    return "redirect:/nozzle-creation?status="+status;
 	}
+	 @RequestMapping("/nozzleDelete/{id}")
+	 public String deleteNozzle(@PathVariable(name = "id") Long id,Model model) throws RecordNotFoundException {
+		 nozzleService.deleteNozzleById(id);
+		 return "redirect:/nozzle-creation?status=delete";
+	 }
 	 @ModelAttribute("tankNameList")
 	 public List<TankCreationEntity> getAllItemNames() throws RecordNotFoundException {	      
 	      List<TankCreationEntity> allItemNames=tankService.getAllItems();     
