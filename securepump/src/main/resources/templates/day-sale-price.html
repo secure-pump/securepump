@@ -125,7 +125,7 @@
 										
 														
 												
-                                        <form class="form" action="/saveTank" method="post">
+                                        <form class="form" action="/saveDailyPrice" method="post">
                                         
                                             <div class="form-body">
                                                 <h4 class="form-section"><i class="ft-user"></i> Daily Sale Price Setup</h4>
@@ -144,7 +144,7 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="capacity">Sale Price</label>
-                                                            <input type="number" id="saleprice" class="form-control" placeholder="Please Enter Capacity  of Tank" aria-describedby="basic-addon3" name="saleprice">
+                                                            <input type="number" id="dailySaleRate" class="form-control" placeholder="Please Enter Capacity  of Tank" aria-describedby="basic-addon3" name="dailySaleRate">
                                                         </div>
                                                     </div>
                                                 
@@ -213,16 +213,15 @@
                                             </thead>
                                             <tbody>
                                              
-												  <tr th:each="tank : ${listTanks}">
-									                <td th:text="${tank.id}">S.No</td>
-									                <td th:text="${tank.tankName}"></td>
-									                <td th:text="${tank.capacity}"></td>
-									                <td th:text="${tank.itemCreation.itemName}"></td>
-									                <td th:text="${tank.openingStock}"></td>
+												  <tr th:each="rates : ${listRates}">
+									                <td th:text="${rates.id}">S.No</td>
+									                <td th:text="${rates.date}"></td>
+									                <td th:text="${rates.dailySaleRate}"></td>
+									              	<td th:text="${rates.itemCreation.itemName}"></td>
 									                <td>
-									                <button type='button' class="btn btn-primary btn-xs accountEdit" data-title="Edit" th:data-id="${tank.id}" th:data-itemId="${tank.itemCreation.id}"><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
+									                <button type='button' class="btn btn-primary btn-xs accountEdit" data-title="Edit" th:data-id="${rates.id}" ><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
 									                    &nbsp;&nbsp;&nbsp;
-									                     <a th:href="@{'/tankDelete/'+${tank.id}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>Delete</a>
+									                     <a th:href="@{'/dailyRateDelete/'+${rates.id}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>Delete</a>
 									                </td>
 									            </tr>													 
                                             </tbody>
