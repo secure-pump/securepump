@@ -176,7 +176,7 @@
 													<th>Action</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="purchaceTableBody">
                                                <tr valign="top">
 	                                               <td style="display:none;">
 	                                                 <input type="hidden" name="purchaceChaildId" id="purchaceChaildId" />
@@ -265,15 +265,7 @@
                                                     <th>Invoice Date</th>
                                                     <th>Bill Mode</th>
                                                     <th>Supplier Name</th>
-                                                    <th>Suppler Invoice No</th>
-                                               <!-- <th>Item Name</th>
-                                                    <th>Quantity</th>
-                                                    <th>Rate</th>
-													<th>Amount</th>
-													<th>SGST</th>
-													<th>CGST</th>
-													<th>IGST</th>
-													<th>Net Amount</th>	-->												 
+                                                    <th>Suppler Invoice No</th>									 
 													<th>Action</th>
                                                 </tr>
                                             </thead>
@@ -284,14 +276,7 @@
 									                <td th:text="${purchace.billMode}"></td>
 									                <td th:text="${purchace.supplierCreation.supplierName}"></td>
 									                <td th:text="${purchace.supplierInvoiceNum}"></td>
-												<!--<td th:text="${purchace.itemCreation.itemName}"></td>
-									                <td th:text="${purchace.quantity}"></td>
-									                <td th:text="${purchace.rate}"></td>
-									                <td th:text="${purchace.amount}"></td>
-													<td th:text="${purchace.sgst}"></td>
-									                <td th:text="${purchace.cgst}"></td>
-									                <td th:text="${purchace.igst}"></td>
-									                <td th:text="${purchace.netAmt}"></td>-->
+												
 									                <td>
 									                <button type='button' class="btn btn-primary btn-xs accountEdit" data-title="Edit" th:data-id="${purchace.id}" th:data-supplierId="${purchace.supplierCreation.id}"><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
 									                    &nbsp;&nbsp;&nbsp;
@@ -366,8 +351,7 @@ $(document).ready(function(){
 		 			$('#customFields tr:last td:nth-child(5)').find("#sgst").attr("readonly", true);
 			 		$('#customFields tr:last td:nth-child(6)').find("#cgst").attr("readonly", true);
 			 		$('#customFields tr:last td:nth-child(7)').find("#igst").attr("readonly", false);
-		 		}
-		 		
+		 		}		 		
 		 	}
 		});
 		$(document).on('click','.remCF',function(){
@@ -403,6 +387,7 @@ $(document).ready(function(){
 			 var quantity=row.find(".quantity").val();
 			 var amount=rate*quantity;
 			 row.find(".amount").val(amount);
+			 row.find(".netAmt").val(amount);
 		  });
 		 $(document).on("blur", ".amount", function(e) {	
 			 e.stopPropagation();
@@ -518,52 +503,102 @@ var itemnature=jQuery("#itemId").find('option:selected').attr('data-itemnature')
         $("#btnSave").html("Update");
         var $row = $(this).closest("tr");
         var purchaceID=$(this).attr('data-id');
-		var invoiceDate = $row.find("td:nth-child(2)").eq(0).text();
-        var billMode = $row.find("td:nth-child(3)").eq(0).text();
-		var supplierId=$(this).attr('data-supplierId');
-        var supplierInvoiceNum = $row.find("td:nth-child(5)").eq(0).text();
-        /* var itemId = $(this).attr('data-itemId');
-		var quantity = $row.find("td:nth-child(7)").eq(0).text();
-        var rate = $row.find("td:nth-child(8)").eq(0).text();
-		var amount = $row.find("td:nth-child(9)").eq(0).text();
-        var sgst = $row.find("td:nth-child(10)").eq(0).text();
-		var cgst = $row.find("td:nth-child(11)").eq(0).text();
-        var igst = $row.find("td:nth-child(12)").eq(0).text();
-		var netAmt = $row.find("td:nth-child(13)").eq(0).text(); */
-		
 		var purchaceId = 'purchaceid='+purchaceID;
 		 $.ajax({
 	           type: 'GET',
 	           url: '/purchaceEntryEdit',
 	           contentType: 'application/json',
 	           dataType: 'text',
-	           data: JSON.stringify(purchaceId),
+	           data: purchaceId,
 	           success: function(data) {
-	   
-	                alert( response );
+	        	   //console.log(data);
+	        	   var jsonData=JSON.parse(data);
+	        	 
+	        	   var purchaceID=jsonData.id;
+	       		var invoiceDate = jsonData.invoiceDate;
+	               var billMode = jsonData.billMode;
+	       		var supplierId=jsonData.supplierID;
+	               var supplierName = jsonData.supplierName;
+	               var supplierInvoiceNum = jsonData.supplierInvoiceNum;
+	               var purchaseChaildEntity = jsonData.purchaseChaildRestVo;
+	        	   
+	        	   var now = new Date(invoiceDate);
+	       		var day = ("0" + now.getDate()).slice(-2);
+	       		var month = ("0" + (now.getMonth() + 1)).slice(-2);
+	       		invoiceDate = now.getFullYear()+"-"+(month)+"-"+(day) ;
+	       		$("#purchaceID").val(purchaceID*1);
+	               $("#invoiceDate").val(invoiceDate);
+	               $("#billMode").val(billMode);
+	               $("#supplierId").val(supplierId*1);
+	       		$("#supplierInvoiceNum").val(supplierInvoiceNum);
+	       		console.log("---"+purchaseChaildEntity.length);
+	       		$("#purchaceTableBody").find("tr:gt(0)").remove();
+	        	   for(var i=0;i<purchaseChaildEntity.length;i++){
+	        		   var purchaceChaildId=purchaseChaildEntity[i].purchaceChaildId;
+	        		   var itemId=purchaseChaildEntity[i].itemId;
+	        		   var quantity=purchaseChaildEntity[i].quantity;
+	        		   var rate = purchaseChaildEntity[i].rate;
+	        			var amount = purchaseChaildEntity[i].amount;
+	        	        var sgst = purchaseChaildEntity[i].sgst;
+	        			var cgst = purchaseChaildEntity[i].cgst;
+	        	        var igst = purchaseChaildEntity[i].igst;
+	        			var netAmt = purchaseChaildEntity[i].netAmt;
+	        			var itemnature = purchaseChaildEntity[i].itemNature;
+	        		if(i==0){
+	        			$("#purchaceChaildId").val(purchaceChaildId*1);
+	        		   	$("#itemId").val(itemId*1);
+	        	        $("#quantity").val(quantity);
+	        	        $("#rate").val(rate);
+	        	        $("#amount").val(amount);
+	        	        $("#sgst").val(sgst);
+	        	        $("#cgst").val(cgst);
+	        	        $("#igst").val(igst);
+	        	        $("#netAmt").val(netAmt);
+	        	   }
+	        		else{
+	        	        	 var row1 = $("#purchaceTableBody tr:first").html();
+	 	        			$("#customFields").append('<tr>'+row1+'</tr>');
+	 	        			var thistr=$('#customFields tr:last');
+	 	        			$(thistr).find('td:last').html('<a href="javascript:void(0);" class="remCF">Remove</a>');
+	 	        			//$(thistr).find("td").eq(1).html();
+	 	        			$(thistr).find("td").eq(0).find("#purchaceChaildId").val(purchaceChaildId*1);
+	 	        			$(thistr).find("td").eq(1).find("#itemId").val(itemId*1);
+	 	        			$(thistr).find("td").eq(2).find("#quantity").val(quantity);
+	 	        			$(thistr).find("td").eq(3).find("#rate").val(rate);
+	 	        			$(thistr).find("td").eq(4).find("#amount").val(amount);
+	 	        			$(thistr).find("td").eq(5).find("#sgst").val(sgst);
+	 	        			$(thistr).find("td").eq(6).find("#cgst").val(cgst);
+	 	        			$(thistr).find("td").eq(7).find("#igst").val(igst);
+	 	        			$(thistr).find("td").eq(8).find("#netAmt").val(netAmt); 	   		 			
+	        	        }
+	        		var thisrow=$('#customFields tr:last');
+	        		if(itemnature=='Fuel'){		 		
+	        			$(thisrow).find("td").eq(5).find("#sgst").attr("readonly", true);
+	        			$(thisrow).find("td").eq(6).find("#cgst").attr("readonly", true);
+	        			$(thisrow).find("td").eq(7).find("#igst").attr("readonly", true);
+	    		 	}else{
+	    		 		if(sameState){
+	    		 			$(thisrow).find("td").eq(5).find("#sgst").attr("readonly", false);
+		        			$(thisrow).find("td").eq(6).find("#cgst").attr("readonly", false);
+		        			$(thisrow).find("td").eq(7).find("#igst").attr("readonly", true);
+	    		 		}else{
+	    		 			$(thisrow).find("td").eq(5).find("#sgst").attr("readonly", true);
+		        			$(thisrow).find("td").eq(6).find("#cgst").attr("readonly", true);
+		        			$(thisrow).find("td").eq(7).find("#igst").attr("readonly", false);
+	    		 		}		 		
+	    		 	}
+	        	       
+	        	   }
+	        	   
 	            },
 	            error : function() {
 	                alert("not working");
 	            }
 	        });
 		
-		var now = new Date(invoiceDate);
-		var day = ("0" + now.getDate()).slice(-2);
-		var month = ("0" + (now.getMonth() + 1)).slice(-2);
-		invoiceDate = now.getFullYear()+"-"+(month)+"-"+(day) ;
-		$("#purchaceID").val(purchaceID*1);
-        $("#invoiceDate").val(invoiceDate);
-        $("#billMode").val(billMode);
-        $("#supplierId").val(supplierId*1);
-		$("#supplierInvoiceNum").val(supplierInvoiceNum);
-        $("#itemId").val(itemId*1);
-        $("#quantity").val(quantity);
-        $("#rate").val(rate);
-        $("#amount").val(amount);
-        $("#sgst").val(sgst);
-        $("#cgst").val(cgst);
-        $("#igst").val(igst);
-        $("#netAmt").val(netAmt);
+		
+		
+       
 
  	   $("#createDivIcon").removeClass().addClass('ft-minus');
  	   $("#createDivClass").addClass('show');

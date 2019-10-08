@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.securepump.securepump.bean.PurchaceEntryBean;
 import com.securepump.securepump.exception.RecordNotFoundException;
@@ -78,14 +76,7 @@ public class PurchaseEntryController {
 	    mav.addObject("purchaceEditData", item);
 	    return mav;
 	}*/
-	@RequestMapping(value = "/purchaceEntryEdit", method = RequestMethod.GET,consumes = "application/json", produces = "application/json")
-	@ResponseBody 
-    public PurchaseEntryEntity processAJAXRequest(@RequestParam("purchaceid") Long purchaceid) throws RecordNotFoundException {
-        String response = "";
-        System.out.println("working"+purchaceid);
-        PurchaseEntryEntity purchaseEntryData = purchaceEntryService.getItemById(purchaceid);
-        return purchaseEntryData;
-    }
+
 	@RequestMapping("/purchaceEntryDelete/{id}")
 	public String deleteItem(@PathVariable(name = "id") Long id,Model model) throws RecordNotFoundException {
 		purchaceEntryService.deleteItemById(id);

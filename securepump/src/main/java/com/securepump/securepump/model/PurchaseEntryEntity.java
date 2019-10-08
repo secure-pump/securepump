@@ -1,5 +1,6 @@
 package com.securepump.securepump.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -18,8 +19,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="TBL_PURCHASE_PARENT_ENTRY")
-public class PurchaseEntryEntity {
-
+public class PurchaseEntryEntity implements Serializable {
+	 private static final long serialVersionUID = 1L;
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
