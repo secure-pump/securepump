@@ -337,7 +337,7 @@ $(document).ready(function(){
 			 var row1 = $(this).closest('tr').html();
 			$("#customFields").append('<tr>'+row1+'</tr>');
 			$('#customFields tr:last td:last').html('<a href="javascript:void(0);" class="remCF">Remove</a>');
-			
+			$('#customFields tr:last td:first').find("#purchaceChaildId").attr('value', '');
 		 	if(itemnature=='Fuel'){		 		
 		 		$('#customFields tr:last td:nth-child(5)').find("#sgst").attr("readonly", true);
 		 		$('#customFields tr:last td:nth-child(6)').find("#cgst").attr("readonly", true);
@@ -556,11 +556,10 @@ var itemnature=jQuery("#itemId").find('option:selected').attr('data-itemnature')
 	        	        $("#netAmt").val(netAmt);
 	        	   }
 	        		else{
-	        	        	 var row1 = $("#purchaceTableBody tr:first").html();
+	        	        	var row1 = $("#purchaceTableBody tr:first").html();
 	 	        			$("#customFields").append('<tr>'+row1+'</tr>');
 	 	        			var thistr=$('#customFields tr:last');
-	 	        			$(thistr).find('td:last').html('<a href="javascript:void(0);" class="remCF">Remove</a>');
-	 	        			//$(thistr).find("td").eq(1).html();
+	 	        			$(thistr).find('td:last').html('<a href="javascript:void(0);" class="remCF">Remove</a>');	        			
 	 	        			$(thistr).find("td").eq(0).find("#purchaceChaildId").val(purchaceChaildId*1);
 	 	        			$(thistr).find("td").eq(1).find("#itemId").val(itemId*1);
 	 	        			$(thistr).find("td").eq(2).find("#quantity").val(quantity);
