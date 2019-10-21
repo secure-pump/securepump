@@ -93,30 +93,58 @@
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
-                                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                            <li><a data-action="collapse" id="createDiv"><i id="createDivIcon" class="ft-plus"></i></a></li>
                                             <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                             <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
                                             <li><a data-action="close"><i class="ft-x"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="card-content collapse show">
+                                <div id="createDivClass" class="card-content collapse">
                                     <div class="card-body">
                                         
-                                        <form class="form">
+										<!-- <div th:if="${status=='save'}">-->
+									<div th:switch="${status}">
+												
+										<div th:case="'save'" class="alert alert-success alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Records</strong> Inserted Successfully <a href="#" class="alert-link"></a>                                            
+                                        </div>
+                                        <div th:case="'update'" class="alert alert-success alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Records</strong> Updated Successfully <a href="#" class="alert-link"></a>                                            
+                                        </div>
+                                        <div th:case="'error'" class="alert alert-danger alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Sorry</strong> Unable to process, please try again.<a href="#" class="alert-link"></a>                                           
+                                        </div>                                   
+                                      </div>
+										
+														
+												
+                                        <form class="form" action="/saveItem" method="post">
+                                        
                                             <div class="form-body">
                                                 <h4 class="form-section"><i class="ft-user"></i> Shift Details </h4>
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput1">Boy Name</label>
-                                                           <input type="text" id="timesheetinput1" class="form-control" placeholder="Please Enter Boy Name" name="employeename">
+                                                            <label for="boyId">Boy Name</label>
+                                                            <select class="boyId form-control" id="boyId" name="boyId" >
+															<option th:each="boy : ${boysNameList}" th:value="${boy.id}" th:text="${boy.boyName}" th:data-mobileNo="${boy.mobileNo}"></option>														
+														</select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label for="projectinput2">Mobile Number</label>
-                                                             <input type="text" class="form-control" placeholder="Please Enter Mobile Number" aria-describedby="basic-addon3">
+                                                            <label for="mobileNo">Mobile Number</label>
+                                                             <input type="text" name="mobileNo" id="mobileNo" class="form-control" placeholder="Please Enter Mobile Number">
                                                         </div>
                                                     </div>
 													
@@ -131,9 +159,10 @@
 													  <div class="table-responsive">
                                         <table class="table">
                                             <thead>
-                                                <tr>
-                                                    
-                                                    <th>Item Name</th>
+                                                <tr>                                              
+                                                    <th>Item Nature</th>
+                                                    <th>group (unit  names)</th>
+                                                    <th>Nozzle Name</th>
                                                     <th>Open Reading</th>
                                                    	<th>Close Reading</th>
                                                    	<th>Testing</th>
@@ -145,35 +174,44 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Mark</td>
-                                                    <td>Mark</td>
-                                                    <td>Hi</td>
-                                                    <td>Mark</td>
-                                                   
+                                                    <td>
+                                                    <select id="itemNature" name="itemNature" class="form-control">
+																	<option value="Fuel">Fuel</option>
+																	<option value="Lubs">Lub's</option>
+																</select>                                                    
+													</td>
+                                                   <td>                                                
+														<select id="unitId" name="unitId" class="form-control">
+                                                     			<option value="SELECT">--Select--</option>															
+																<option th:each="unit : ${unitNameList}" th:value="${unit.id}" th:text="${unit.unitName}">
+														     	</option>													
+															  </select>	  
+													</td>
+                                                    <td><select id="nozzleName" name="nozzleName" class="form-control">
+                                                     			<option value="SELECT">--Select--</option></select>
+                                                     			</td>
+                                                    <td><input type="text" name="openReading" id="openReading" class="form-control" readOnly="readonly"/></td>
+                                                    <td><input type="text" name="closeReading" id="closeReading" class="form-control" readOnly="readonly"/></td>
+                                                    <td><input type="text" name="testReading" id="testReading" class="form-control" readOnly="readonly"/></td> 
+                                                    <td><input type="text" name="saleStock" id="saleStock" class="form-control" readOnly="readonly"/></td>
+                                                    <td><input type="text" name="rate" id="rate" class="form-control" /></td>
+                                                    <td><input type="text" name="totalAmt" id="totalAmt" class="form-control" /></td>
+                                                    <td> <a href="javascript:void(0);" class="addCF">Add</a> </td>       
                                                 </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>Jacob</td>
-                                                    <td>Mark</td>
-                                                    <td>456</td>
-                                                    <td>Mark</td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td>Larry</td>
-                                                    <td>Mark</td>
-                                                    <td>Mark</td>
-                                                    
-                                                </tr>
-                                            </tbody>
+                                          </tbody>
                                         </table>
                                     </div>
                                                
                                             </div>
 
-                                            
+                                            <div class="form-actions">
+                                            	<button type="button" class="btn btn-warning mr-1btnCancel btnCancel" id="btnCancel">
+                                                    Cancel
+                                                </button>
+                                                <button type="submit" class="btn btn-primary btnSave" name="SubmitButton" id="btnSave">
+                                                    Save
+                                                </button>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -182,6 +220,12 @@
 
                         <div class="col-md-12">
                             
+                                        <div th:if="${status=='delete'}" class="alert alert-success alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Records</strong> Deleted Successfully <a href="#" class="alert-link"></a>                                            
+                                        </div>
 						<div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Shift Details</h4>
@@ -271,6 +315,8 @@
                               
                         </div>
                     </div>
+                    </div>
+                    </div>
 
 
                    
@@ -307,6 +353,110 @@
         <!-- BEGIN: Page JS-->
     <script src="./app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
     <!-- END: Page JS-->
+    
+    <script>
+    var mobileNo = $("#boyId option:selected").attr("data-mobileno");
+    $("#mobileNo").val(mobileNo);
+    $(document).ready(function(){
+    		  $("#boyId").change(function(){
+    			 var mobileNo = $("#boyId option:selected").attr("data-mobileno");
+    			    $("#mobileNo").val(mobileNo);
+    		   });
+    		  $("#unitId").change(function(){
+     			 var unitId = $("#unitId option:selected").val();
+     			 unitId = 'unitId='+unitId;
+     			 $.ajax({
+     		           type: 'GET',
+     		           url: '/unitNozzleList',
+     		           contentType: 'application/json',
+     		           dataType: 'text',
+     		           data: unitId,
+     		           success: function(data) {
+     		        	   //console.log(data);
+     		        	   var jsonData=JSON.parse(data);
+     		        	   console.log(jsonData);
+     		        	  $('#nozzleName option').remove();
+     		        	 $("#openReading").val("");
+     		        	 $('#nozzleName').append( '<option value="Select">--Select--</option>' );
+     		        	  for (var i = 0; i < jsonData.length; i++)
+     		        	 { 
+     		        	      $('#nozzleName').append( '<option value="'+jsonData[i]+'">'+jsonData[i]+'</option>' );
+     		        	 }
+     		           }
+     			 });
+     		   });
+    		  $("#nozzleName").change(function(){
+      			 var nozzleName = $("#nozzleName option:selected").val();
+      			nozzleName = 'nozzleName='+nozzleName;
+      			 $.ajax({
+      		           type: 'GET',
+      		           url: '/nozzleOpenReading',
+      		           contentType: 'application/json',
+      		           dataType: 'text',
+      		           data: nozzleName,
+      		           success: function(data) {
+      		        	   //console.log(data);
+      		        	   var jsonData=JSON.parse(data);
+      		        	   console.log(jsonData);
+      		        	 $("#openReading").val(jsonData);
+      		           }
+      			 });
+      		   });
+    		});
+    $(document).on("click", ".accountEdit", function(e) {
+ 	   //$('#topicchange').attr('disabled',false);
+ 	   $("#clearform").find('input:text,select, textarea').val('').css('border-color', '');
+        $("#errordesc").html("");
+        $("#btnSave").html("Update");
+        var $row = $(this).closest("tr");
+        var itemName = $row.find("td:nth-child(2)").eq(0).text();
+        var itemNature = $row.find("td:nth-child(3)").eq(0).text();
+        var hsnCode = $row.find("td:nth-child(4)").eq(0).text();
+		var gstPercent = $row.find("td:nth-child(5)").eq(0).text();
+        var openingStock = $row.find("td:nth-child(6)").eq(0).text();
+        var stockDate = $row.find("td:nth-child(7)").eq(0).text();
+        //console.log(stockDate);
+        
+        var now = new Date(stockDate);
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var openingStockDate = now.getFullYear()+"-"+(month)+"-"+(day) ;
+        
+        var itemID = $(this).attr('data-id');
+
+        $("#itemID").val(itemID*1);
+        $("#itemName").val(itemName);
+        $("#itemNature").val(itemNature);
+        $("#hsnCode").val(hsnCode);
+		$("#gstPercent").val(gstPercent);
+        $("#openingStock").val(openingStock);
+        $("#openingStockDate").val(openingStockDate);
+        //$("#createDiv").trigger("click");
+        $("#createDivIcon").removeClass().addClass('ft-minus');
+ 	   $("#createDivClass").addClass('show');
+       
+    });
+    $(document).on("click", ".btnCancel", function(e) {
+	   	 
+		 $("#itemID").val("");
+        $("#itemName").val("");
+        $("#itemNature").val("");
+        $("#hsnCode").val("");
+		$("#gstPercent").val("");
+        $("#openingStock").val("");
+        $("#openingStockDate").val("");
+	     $("#btnSave").html("Save");
+    });
+
+    var url = new URL(window.location.href);
+    var status= url.searchParams.get("status");
+    //alert(status);
+    if(status=='save' || status=='update'){
+    	   $("#createDivIcon").removeClass().addClass('ft-minus');
+    	   $("#createDivClass").addClass('show');
+    	   
+    }
+    </script>
 
 </body>
 <!-- END: Body-->

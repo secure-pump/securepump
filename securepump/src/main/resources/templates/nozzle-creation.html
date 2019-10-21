@@ -140,11 +140,9 @@
                                                      <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="projectinput1">Unit Name</label>
-                                                           <select id="unitId" name="unitId" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">
-																
+                                                           <select id="unitId" name="unitId" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">																
 																<option th:each="unit : ${unitNameList}" th:value="${unit.id}" th:text="${unit.unitName}">
-														     	</option>
-														
+														     	</option>													
 															  </select>
                                                         </div>
                                                     </div>

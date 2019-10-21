@@ -132,6 +132,7 @@
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
+                                                        <input type="hidden" name="dailySaleID" id="dailySaleID" />
                                                             <label for="itemId">Select Product</label>
                                                             <select id="itemId" name="itemId" class="form-control" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="Status">															
 															 	<option th:each="item : ${itemNameList}" th:value="${item.id}" th:text="${item.itemName}">
@@ -143,16 +144,16 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label for="capacity">Sale Price</label>
-                                                            <input type="number" id="dailySaleRate" class="form-control" placeholder="Please Enter Capacity  of Tank" aria-describedby="basic-addon3" name="dailySaleRate">
+                                                            <label for="dailySaleRate">Sale Price</label>
+                                                            <input type="number" id="dailySaleRate" class="form-control" placeholder="Please Enter Price" aria-describedby="basic-addon3" name="dailySaleRate">
                                                         </div>
                                                     </div>
                                                 
                                                     
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label for="openingStock">Date</label>
-                                                            <input type="date" id="timesheetinput3" class="form-control" name="date">
+                                                            <label for="dailySalesDate">Date</label>
+                                                            <input type="date" id="dailySaleDate" class="form-control" name="date">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -219,7 +220,7 @@
 									                <td th:text="${rates.dailySaleRate}"></td>
 									              	<td th:text="${rates.itemCreation.itemName}"></td>
 									                <td>
-									                <button type='button' class="btn btn-primary btn-xs accountEdit" data-title="Edit" th:data-id="${rates.id}" ><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
+									                <button type='button' class="btn btn-primary btn-xs accountEdit" data-title="Edit" th:data-id="${rates.id}" th:data-itemId="${rates.itemCreation.id}"><span class="glyphicon glyphicon-pencil"></span>Edit</button>									                     
 									                    &nbsp;&nbsp;&nbsp;
 									                     <a th:href="@{'/dailyRateDelete/'+${rates.id}}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>Delete</a>
 									                </td>
@@ -279,17 +280,22 @@
         $("#errordesc").html("");
         $("#btnSave").html("Update");
         var $row = $(this).closest("tr");
-        var tankName = $row.find("td:nth-child(2)").eq(0).text();
-        var capacity = $row.find("td:nth-child(3)").eq(0).text();
-        var openingStock = $row.find("td:nth-child(5)").eq(0).text();
-        var tankID = $(this).attr('data-id');
+        var dailySaleDate = $row.find("td:nth-child(2)").eq(0).text();
+        var dailySaleRate = $row.find("td:nth-child(3)").eq(0).text();
+        var dailySaleID = $(this).attr('data-id');
         var itemId = $(this).attr('data-itemId');
+        
+       // console.log(dailySaleDate+"---"+dailySaleRate);
+        
+        var now = new Date(dailySaleDate);
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        dailySaleDate = now.getFullYear()+"-"+(month)+"-"+(day) ;
 
-        $("#tankID").val(tankID*1);
-        $("#tankName").val(tankName);
-        $("#capacity").val(capacity);
+        $("#dailySaleID").val(dailySaleID*1);
+        $("#dailySaleDate").val(dailySaleDate);
+        $("#dailySaleRate").val(dailySaleRate);
         $("#itemId").val(itemId*1);
-        $("#openingStock").val(openingStock);
 
  	   $("#createDivIcon").removeClass().addClass('ft-minus');
  	   $("#createDivClass").addClass('show');
@@ -297,11 +303,10 @@
     });
     $(document).on("click", ".btnCancel", function(e) {
 	   	 
-    	$("#tankID").val("");
-        $("#tankName").val("");
-        $("#capacity").val("");
-        $("#itemId").val("");
-        $("#openingStock").val("");
+    	$("#dailySaleID").val("");
+        $("#dailySaleDate").val("");
+        $("#dailySaleRate").val("");
+        $("#itemId").val($("#itemId option:first").val());
 	     $("#btnSave").html("Save");
     });
 
