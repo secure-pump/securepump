@@ -8,7 +8,7 @@ import com.securepump.securepump.exception.RecordNotFoundException;
 import com.securepump.securepump.model.BoyCreationEntity;
 import com.securepump.securepump.model.CustomerCreationEntity;
 
-@Service
+@Service("boyService")
 public interface BoyCreationService {
 
 	public List<BoyCreationEntity> getAllCutomer();

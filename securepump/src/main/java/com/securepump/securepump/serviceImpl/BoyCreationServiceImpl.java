@@ -14,7 +14,7 @@ import com.securepump.securepump.model.BoyCreationEntity;
 import com.securepump.securepump.model.CustomerCreationEntity;
 import com.securepump.securepump.service.BoyCreationService;
 
-@Service
+@Service("boyService")
 public class BoyCreationServiceImpl implements BoyCreationService {
 
 	@Autowired

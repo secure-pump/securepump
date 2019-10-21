@@ -6,17 +6,24 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.securepump.securepump.dao.NozzleCreationRepository;
+import com.securepump.securepump.dao.NozzleReadingRepository;
 import com.securepump.securepump.exception.RecordNotFoundException;
 import com.securepump.securepump.model.NozzleCreationEntity;
-import com.securepump.securepump.model.TankCreationEntity;
+import com.securepump.securepump.model.NozzleReadingEntity;
 import com.securepump.securepump.service.NozzleCreationService;
 @Service("nozzleservice")
 public class NozzleCreationServiceImpl implements NozzleCreationService {
 	@Autowired
+	@Qualifier("nozzleCreationRepo")
 	NozzleCreationRepository nozzleRepo;
+	@Autowired
+	@Qualifier("nozzleReadingRepo")
+	NozzleReadingRepository nozzleReading;
+	
 	@Override
 	public List<NozzleCreationEntity> getAllNozzles() {
 		// TODO Auto-generated method stub
@@ -45,6 +52,17 @@ public class NozzleCreationServiceImpl implements NozzleCreationService {
 		entity.setCreated_by("admin");
 		entity.setUpdated_date(new Date());
 		//entity.setUpdated_by("admin");
+		
+		if(entity.getId()==null) {
+			NozzleReadingEntity reading=new NozzleReadingEntity();
+			//reading.setId(entity.getId());
+			reading.setNozzleName(entity.getNozzleName());
+			reading.setNozzleReading(entity.getOpeningMeterReading());
+			reading.setStatus(0);
+			reading.setDate(entity.getOpeningMeterDate());
+			System.out.println("--"+reading);
+			nozzleReading.save(reading);
+		}
 		entity = nozzleRepo.save(entity);
 		return entity;
 	}

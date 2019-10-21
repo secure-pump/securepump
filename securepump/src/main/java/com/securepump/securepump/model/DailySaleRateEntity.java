@@ -20,11 +20,14 @@ public class DailySaleRateEntity {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@Column(name="Daily_sale_rate") 
 	private Long dailySaleRate;
+	
 	@Column(name="Date")
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private Date date;
+	
 	@Column(name = "created_by",updatable=false)
     private String created_by;
     
@@ -36,9 +39,12 @@ public class DailySaleRateEntity {
     
     @Column(name="updated_date")
     private Date updated_date;
+    
+    
 	@ManyToOne
     @JoinColumn(referencedColumnName = "ID")
 	ItemCreationEntity itemCreation;
+	
 	public Long getId() {
 		return id;
 	}
@@ -93,6 +99,7 @@ public class DailySaleRateEntity {
 				+ created_by + ", created_date=" + created_date + ", updated_by=" + updated_by + ", updated_date="
 				+ updated_date + ", itemCreation=" + itemCreation + "]";
 	}
+	
 
 	
 }
