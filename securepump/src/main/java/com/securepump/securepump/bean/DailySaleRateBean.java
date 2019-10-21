@@ -5,7 +5,7 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class DailySaleRateBean {
-	private Long id;
+	private Long dailySaleID;
 	private Long dailySaleRate;
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private Date date; 
@@ -15,11 +15,12 @@ public class DailySaleRateBean {
 	private Date updated_date;
 	private Long itemId;
 	private String itemName;
-	public Long getId() {
-		return id;
+	
+	public Long getDailySaleID() {
+		return dailySaleID;
 	}
-	public void setId(Long id) {
-		this.id = id;
+	public void setDailySaleID(Long dailySaleID) {
+		this.dailySaleID = dailySaleID;
 	}
 	public Long getDailySaleRate() {
 		return dailySaleRate;
@@ -71,7 +72,7 @@ public class DailySaleRateBean {
 	}
 	@Override
 	public String toString() {
-		return "DailySaleRateBean [id=" + id + ", dailySaleRate=" + dailySaleRate + ", date=" + date + ", created_by="
+		return "DailySaleRateBean [dailySaleID=" + dailySaleID + ", dailySaleRate=" + dailySaleRate + ", date=" + date + ", created_by="
 				+ created_by + ", created_date=" + created_date + ", updated_by=" + updated_by + ", updated_date="
 				+ updated_date + ", itemId=" + itemId + ", itemName=" + itemName + "]";
 	}
