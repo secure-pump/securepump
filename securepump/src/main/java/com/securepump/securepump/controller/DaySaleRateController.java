@@ -16,10 +16,8 @@ import com.securepump.securepump.bean.DailySaleRateBean;
 import com.securepump.securepump.exception.RecordNotFoundException;
 import com.securepump.securepump.model.DailySaleRateEntity;
 import com.securepump.securepump.model.ItemCreationEntity;
-import com.securepump.securepump.model.TankCreationEntity;
 import com.securepump.securepump.service.DailySaleRateService;
 import com.securepump.securepump.service.ItemCreationService;
-import com.securepump.securepump.service.TankCreationService;
 
 @Controller
 
@@ -41,7 +39,7 @@ public class DaySaleRateController {
 		System.out.println("account--"+rateBean);
 		String status="error";
 		try {
-			if(rateBean.getId()==null) {
+			if(rateBean.getDailySaleID()==null) {
 				status="save";
 			}else {
 				status="update";
@@ -53,6 +51,7 @@ public class DaySaleRateController {
 			dailyRate.setDailySaleRate(rateBean.getDailySaleRate());
 			dailyRate.setDate(rateBean.getDate());
 			dailyRate.setItemCreation(itemCre);
+			dailyRate.setId(rateBean.getDailySaleID());
 			dailyRateService.createorUpdateRate(dailyRate);
 		}catch(Exception e) {
 			e.printStackTrace();

@@ -3,6 +3,7 @@ package com.securepump.securepump.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,6 +22,7 @@ import com.securepump.securepump.service.BoyCreationService;
 public class BoyCreationController {
 
 	@Autowired
+	@Qualifier("boyService")
 	BoyCreationService boyService;
 	@RequestMapping("/boy-creation")
 	public String boyCreate(@ModelAttribute("boycreate") CustomerCreationEntity boyCreate,Model model,@RequestParam(name = "status") String status) {

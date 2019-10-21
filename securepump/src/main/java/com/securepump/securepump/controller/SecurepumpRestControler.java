@@ -15,12 +15,17 @@ import com.securepump.securepump.exception.RecordNotFoundException;
 import com.securepump.securepump.model.PurchaseChaildEntity;
 import com.securepump.securepump.model.PurchaseEntryEntity;
 import com.securepump.securepump.service.PurchaceEntryService;
+import com.securepump.securepump.service.ShiftDetailsService;
 
 @RestController
 public class SecurepumpRestControler {
 	@Autowired
 	@Qualifier("purchaceservice")
 	PurchaceEntryService purchaceEntryService;
+	
+	@Autowired
+	@Qualifier("shiftDetails")
+	ShiftDetailsService shiftDetails;
 	
 	@RequestMapping("/purchaceEntryEdit")
     public PurchaceEntryRestVO processAJAXRequest(@RequestParam("purchaceid") Long purchaceid) throws RecordNotFoundException {
@@ -56,5 +61,15 @@ public class SecurepumpRestControler {
         System.out.println("----chaildListVo--"+chaildListVo.size());
         return restVo;
     }
+	@RequestMapping("/unitNozzleList")
+	 public List<String> getAllshiftDetails(@RequestParam("unitId") Long unitId) throws RecordNotFoundException {	      
+		 List<String> listBoy=shiftDetails.findByNozzleName(unitId);    
+	      return listBoy;
+	   }
+	@RequestMapping("nozzleOpenReading")
+	 public int getNozzleOpenReading(@RequestParam("nozzleName") String nozzleName) throws RecordNotFoundException {	      
+		 int nozzleReading=shiftDetails.findByNozzleReading(nozzleName);    
+	      return nozzleReading;
+	   }
 
 }
