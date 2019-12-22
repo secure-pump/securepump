@@ -9,6 +9,8 @@ public class ShiftDetailsBean {
 	private Long shiftDetailsId;
 	private Long boyId;
 	private Long mobileNo;
+	private boolean shiftStatus;
+	private Double totalAmount;
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private Date shiftDetailsDate;
 	private Long[] shiftChaildId;
@@ -106,18 +108,29 @@ public class ShiftDetailsBean {
 	public void setTotalAmt(Long[] totalAmt) {
 		this.totalAmt = totalAmt;
 	}
+	public boolean isShiftStatus() {
+		return shiftStatus;
+	}
+	public void setShiftStatus(boolean shiftStatus) {
+		this.shiftStatus = shiftStatus;
+	}
+	public Double getTotalAmount() {
+		return totalAmount;
+	}
+	public void setTotalAmount(Double totalAmount) {
+		this.totalAmount = totalAmount;
+	}
 	@Override
 	public String toString() {
 		return "ShiftDetailsBean [shiftDetailsId=" + shiftDetailsId + ", boyId=" + boyId + ", mobileNo=" + mobileNo
-				+ ", shiftDetailsDate=" + shiftDetailsDate + ", shiftChaildId=" + Arrays.toString(shiftChaildId)
-				+ ", itemNature=" + Arrays.toString(itemNature) + ", unitId=" + Arrays.toString(unitId)
-				+ ", nozzleName=" + Arrays.toString(nozzleName) + ", openReading=" + Arrays.toString(openReading)
-				+ ", closeReading=" + Arrays.toString(closeReading) + ", testReading=" + Arrays.toString(testReading)
-				+ ", saleStock=" + Arrays.toString(saleStock) + ", rate=" + Arrays.toString(rate) + ", totalAmt="
+				+ ", shiftStatus=" + shiftStatus + ", totalAmount=" + totalAmount + ", shiftDetailsDate="
+				+ shiftDetailsDate + ", shiftChaildId=" + Arrays.toString(shiftChaildId) + ", itemNature="
+				+ Arrays.toString(itemNature) + ", unitId=" + Arrays.toString(unitId) + ", nozzleName="
+				+ Arrays.toString(nozzleName) + ", openReading=" + Arrays.toString(openReading) + ", closeReading="
+				+ Arrays.toString(closeReading) + ", testReading=" + Arrays.toString(testReading) + ", saleStock="
+				+ Arrays.toString(saleStock) + ", rate=" + Arrays.toString(rate) + ", totalAmt="
 				+ Arrays.toString(totalAmt) + "]";
 	}
-	
-	
 	
 
 }

@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="TBL_SHIFTDETAILS_PARENT_11")
+@Table(name="TBL_SHIFTDETAILS_PARENT_1")
 public class ShiftDetailsEntity {
 
 	@Id
@@ -32,7 +32,11 @@ public class ShiftDetailsEntity {
 	private Date shiftDetailsDate;
 	
 	@OneToMany(mappedBy = "shiftDetailsEntity", cascade = CascadeType.ALL)
-    List<ShiftDetailsChaildEntity> ShiftDetailsChaildEntity;
+    List<ShiftDetailsChaildEntity> shiftDetailsChaildEntity;
+	
+	private boolean shiftStatus;
+	
+	private Double totalAmount;
 	
 	@Column(name = "created_date" ,updatable=false)
 	private Date created_date;
@@ -71,11 +75,11 @@ public class ShiftDetailsEntity {
 	}
 
 	public List<ShiftDetailsChaildEntity> getShiftDetailsChaildEntity() {
-		return ShiftDetailsChaildEntity;
+		return shiftDetailsChaildEntity;
 	}
 
 	public void setShiftDetailsChaildEntity(List<ShiftDetailsChaildEntity> shiftDetailsChaildEntity) {
-		ShiftDetailsChaildEntity = shiftDetailsChaildEntity;
+		this.shiftDetailsChaildEntity = shiftDetailsChaildEntity;
 	}
 
 	public Date getCreated_date() {
@@ -110,13 +114,31 @@ public class ShiftDetailsEntity {
 		this.updated_date = updated_date;
 	}
 
+	public boolean isShiftStatus() {
+		return shiftStatus;
+	}
+
+	public void setShiftStatus(boolean shiftStatus) {
+		this.shiftStatus = shiftStatus;
+	}
+
+	public Double getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(Double totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
 	@Override
 	public String toString() {
 		return "ShiftDetailsEntity [id=" + id + ", boyCreation=" + boyCreation + ", shiftDetailsDate="
-				+ shiftDetailsDate + ", ShiftDetailsChaildEntity=" + ShiftDetailsChaildEntity + ", created_date="
-				+ created_date + ", created_by=" + created_by + ", updated_by=" + updated_by + ", updated_date="
-				+ updated_date + "]";
+				+ shiftDetailsDate + ", shiftDetailsChaildEntity=" + shiftDetailsChaildEntity + ", shiftStatus="
+				+ shiftStatus + ", totalAmount=" + totalAmount + ", created_date=" + created_date + ", created_by="
+				+ created_by + ", updated_by=" + updated_by + ", updated_date=" + updated_date + "]";
 	}
+
+
 	
 	
 

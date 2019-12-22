@@ -9,11 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.securepump.securepump.bean.DailySaleRateBean;
 import com.securepump.securepump.bean.PurchaceEntryRestVO;
 import com.securepump.securepump.bean.PurchaseChaildRestVo;
+import com.securepump.securepump.bean.ShiftDetailsChaildRestVO;
+import com.securepump.securepump.bean.ShiftDetailsRestVO;
 import com.securepump.securepump.exception.RecordNotFoundException;
 import com.securepump.securepump.model.PurchaseChaildEntity;
 import com.securepump.securepump.model.PurchaseEntryEntity;
+import com.securepump.securepump.model.ShiftDetailsChaildEntity;
+import com.securepump.securepump.model.ShiftDetailsEntity;
 import com.securepump.securepump.service.PurchaceEntryService;
 import com.securepump.securepump.service.ShiftDetailsService;
 
@@ -71,5 +76,56 @@ public class SecurepumpRestControler {
 		 int nozzleReading=shiftDetails.findByNozzleReading(nozzleName);    
 	      return nozzleReading;
 	   }
+	@RequestMapping("nozzleSalePrice")
+	 public Double getSalePricce(@RequestParam("nozzleName") String nozzleName,@RequestParam("shiftDetailsDate") String shiftDetailsDate) throws RecordNotFoundException {	      
+		 Double nozzleReading=shiftDetails.getSalePrice(nozzleName, shiftDetailsDate);    
+	      return nozzleReading;
+	   }
+	@RequestMapping("shiftDatePriceDetails")
+	 public DailySaleRateBean getshiftDatePriceDetails(@RequestParam("shiftDetailsDate") String shiftDetailsDate) throws RecordNotFoundException {	      
+	      return shiftDetails.getshiftDatePriceDetails(shiftDetailsDate);
+	   }
+
+	@RequestMapping("/shiftDetailsEdit")
+    public ShiftDetailsRestVO shiftDetailsEdit(@RequestParam("shiftDetailsId") Long shiftDetailsId) throws RecordNotFoundException {
+        
+        System.out.println("working--"+shiftDetailsId);
+        ShiftDetailsEntity shiftDetailsData = shiftDetails.getShiftDetailsById(shiftDetailsId);
+        //System.out.println(shiftDetailsData);
+        //PurchaseEntryEntity purchaseEntryData = purchaceEntryService.getItemById();
+        ShiftDetailsRestVO restVo=new ShiftDetailsRestVO();
+        restVo.setShiftDetailsId(shiftDetailsData.getId());
+        restVo.setBoyId(shiftDetailsData.getBoyCreation().getId());
+        restVo.setMobileNo(shiftDetailsData.getBoyCreation().getMobileNo());
+        restVo.setShiftDetailsDate(shiftDetailsData.getShiftDetailsDate());
+
+        restVo.setShiftStatus(shiftDetailsData.isShiftStatus());
+        restVo.setTotalAmount(shiftDetailsData.getTotalAmount());
+        
+        List<ShiftDetailsChaildEntity> shiftChaildEntity=shiftDetailsData.getShiftDetailsChaildEntity();
+       // System.out.println(""+shiftChaildEntity.size());
+        List<ShiftDetailsChaildRestVO> chaildListVo=new ArrayList<ShiftDetailsChaildRestVO>();
+        for(ShiftDetailsChaildEntity shiftChaildEnt:shiftChaildEntity){
+        	ShiftDetailsChaildRestVO shiftChaildVo=new ShiftDetailsChaildRestVO();
+        	shiftChaildVo.setShiftChaildId(shiftChaildEnt.getId());
+        	shiftChaildVo.setItemNature(shiftChaildEnt.getItemNature());
+        	shiftChaildVo.setUnitId(shiftChaildEnt.getUnitCreation().getId());
+        	shiftChaildVo.setUnitName(shiftChaildEnt.getUnitCreation().getUnitName());
+        	shiftChaildVo.setNozzleName(shiftChaildEnt.getNozzleReadingName().getNozzleName());
+        	shiftChaildVo.setNozzleReading(shiftChaildEnt.getNozzleReadingName().getNozzleReading());
+        	shiftChaildVo.setStatus(shiftChaildEnt.getNozzleReadingName().getStatus());
+        	
+        	shiftChaildVo.setOpenReading(shiftChaildEnt.getOpenReading());
+        	shiftChaildVo.setCloseReading(shiftChaildEnt.getCloseReading());
+        	shiftChaildVo.setTestReading(shiftChaildEnt.getTestReading());
+        	shiftChaildVo.setSaleStock(shiftChaildEnt.getSaleStock());
+        	shiftChaildVo.setRate(shiftChaildEnt.getRate());
+        	shiftChaildVo.setTotalAmt(shiftChaildEnt.getTotalAmt());
+        	chaildListVo.add(shiftChaildVo);
+        }
+        restVo.setShiftDetailsChaildRestVO(chaildListVo);
+        System.out.println("----chaildListVo--"+chaildListVo.size());
+        return restVo;
+    }
 
 }

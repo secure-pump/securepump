@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.securepump.securepump.bean.DailySaleRateBean;
 import com.securepump.securepump.bean.ShiftDetailsBean;
 import com.securepump.securepump.exception.RecordNotFoundException;
 import com.securepump.securepump.model.ShiftDetailsEntity;
@@ -15,5 +16,7 @@ public interface ShiftDetailsService {
 	public void deleteShiftDetailsById(Long id) throws RecordNotFoundException;
 	public List<String> findByNozzleName(Long id);
 	public int findByNozzleReading(String nozzleName);
+	public Double getSalePrice(String nozzleName,String ddate);
+	public DailySaleRateBean getshiftDatePriceDetails(String date);
 
 }

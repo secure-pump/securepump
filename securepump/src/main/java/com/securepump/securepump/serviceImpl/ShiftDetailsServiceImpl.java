@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.securepump.securepump.bean.DailySaleRateBean;
 import com.securepump.securepump.bean.ShiftDetailsBean;
 import com.securepump.securepump.dao.NozzleCreationRepository;
 import com.securepump.securepump.dao.NozzleReadingRepository;
@@ -75,7 +76,7 @@ public class ShiftDetailsServiceImpl implements ShiftDetailsService {
 		entity.setUpdated_date(new Date());
 		entity.setUpdated_by("admin");
 		List<ShiftDetailsChaildEntity> allShiftDetailsChaildEntitys = new ArrayList<ShiftDetailsChaildEntity>();
-		
+		Double totalAmt=0d;
 		for(int i=0;i<shiftDetailsBean.getItemNature().length;i++) {
 			ShiftDetailsChaildEntity chaildEntity=new ShiftDetailsChaildEntity();
 			
@@ -99,9 +100,13 @@ public class ShiftDetailsServiceImpl implements ShiftDetailsService {
 			chaildEntity.setCreated_by("admin");
 			chaildEntity.setUpdated_date(new Date());
 			chaildEntity.setUpdated_by("admin");
+			chaildEntity.setShiftDetailsEntity(entity);
 			allShiftDetailsChaildEntitys.add(chaildEntity);
+			totalAmt=totalAmt+(shiftDetailsBean.getTotalAmt()[i]==null?0d:shiftDetailsBean.getTotalAmt()[i]);
 		}
 		entity.setShiftDetailsChaildEntity(allShiftDetailsChaildEntitys);
+		entity.setShiftStatus(false);
+		entity.setTotalAmount(totalAmt);
 		entity = shiftDetailsRepository.save(entity);
 		
 	}
@@ -136,5 +141,19 @@ public class ShiftDetailsServiceImpl implements ShiftDetailsService {
 		
 		return nozzleList.getNozzleReading();
 	}
+
+	@Override
+	public Double getSalePrice(String nozzleName, String date) {
+		// TODO Auto-generated method stub
+		Double nozzleList=shiftDetailsRepository.getSalePrice(nozzleName,date);
+		return nozzleList;
+	}
+
+	@Override
+	public DailySaleRateBean getshiftDatePriceDetails(String date) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 
 }

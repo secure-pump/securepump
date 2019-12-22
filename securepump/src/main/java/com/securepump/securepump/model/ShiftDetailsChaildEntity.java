@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TBL_SHIFTDETAILS_CHAILD_12")
+@Table(name="TBL_SHIFTDETAILS_CHAILD_1")
 public class ShiftDetailsChaildEntity {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +39,7 @@ public class ShiftDetailsChaildEntity {
 	private Long totalAmt;
 	
 	@ManyToOne
-	@JoinColumn(referencedColumnName = "id")
+	@JoinColumn(referencedColumnName = "ID")
 	ShiftDetailsEntity shiftDetailsEntity;
 	
 	@Column(name = "created_date" ,updatable=false)
