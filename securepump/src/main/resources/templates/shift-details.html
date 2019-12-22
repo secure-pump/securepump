@@ -372,52 +372,136 @@
 	        	   var jsonData=JSON.parse(data);
 	        	   console.log(jsonData);
  			row.find("#openReading").val(jsonData);
+			//getSalePricce(nozzleName);
 	           }
 		 });
+		 
 	   });
-    $(document).on("click", ".accountEdit", function(e) {
- 	   //$('#topicchange').attr('disabled',false);
- 	   $("#clearform").find('input:text,select, textarea').val('').css('border-color', '');
-        $("#errordesc").html("");
-        $("#btnSave").html("Update");
-        var $row = $(this).closest("tr");
-        var itemName = $row.find("td:nth-child(2)").eq(0).text();
-        var itemNature = $row.find("td:nth-child(3)").eq(0).text();
-        var hsnCode = $row.find("td:nth-child(4)").eq(0).text();
-		var gstPercent = $row.find("td:nth-child(5)").eq(0).text();
-        var openingStock = $row.find("td:nth-child(6)").eq(0).text();
-        var stockDate = $row.find("td:nth-child(7)").eq(0).text();
-        //console.log(stockDate);
-        
-        var now = new Date(stockDate);
-        var day = ("0" + now.getDate()).slice(-2);
-        var month = ("0" + (now.getMonth() + 1)).slice(-2);
-        var openingStockDate = now.getFullYear()+"-"+(month)+"-"+(day) ;
-        
-        var itemID = $(this).attr('data-id');
+	   
+	  function getSalePricce(nozzleName,shiftDetailsDate){
+   	 var row=jQuery(this).closest("tr");
+		var nozzleName = 'nozzleName='+nozzleName+"&shiftDetailsDate="+shiftDetailsDate;
+		 $.ajax({
+	           type: 'GET',
+	           url: '/nozzleSalePrice',
+	           contentType: 'application/json',
+	           dataType: 'text',
+	           data: nozzleName,
+	           success: function(data) {
+	        	   //console.log(data);
+	        	   var jsonData=JSON.parse(data);
+	        	   console.log(jsonData);
+ 			row.find("#openReading").val(jsonData);
+	           }
+		 });
+	   }
 
-        $("#itemID").val(itemID*1);
-        $("#itemName").val(itemName);
-        $("#itemNature").val(itemNature);
-        $("#hsnCode").val(hsnCode);
-		$("#gstPercent").val(gstPercent);
-        $("#openingStock").val(openingStock);
-        $("#openingStockDate").val(openingStockDate);
-        //$("#createDiv").trigger("click");
-        $("#createDivIcon").removeClass().addClass('ft-minus');
- 	   $("#createDivClass").addClass('show');
-       
+        
+    $(document).on("click", ".accountEdit", function(e) {
+  	   //$('#topicchange').attr('readonly',false);
+  	   $("#clearform").find('input:text,select, textarea').val('').css('border-color', '');
+         $("#errordesc").html("");
+         $("#btnSave").html("Update");
+         var $row = $(this).closest("tr");
+         var shiftDetailsID=$(this).attr('data-id');
+ 		var shiftDetailsData = 'shiftDetailsId='+shiftDetailsID;
+ 		 $.ajax({
+ 	           type: 'GET',
+ 	           url: '/shiftDetailsEdit',
+ 	           contentType: 'application/json',
+ 	           dataType: 'text',
+ 	           data: shiftDetailsData,
+ 	           success: function(data) {
+ 	        	   //console.log(data);
+ 	        	  var jsonData=JSON.parse(data); 	        	 
+ 	        	 var shiftDetailsId=jsonData.shiftDetailsId;
+ 	       		var boyId = jsonData.boyId;
+ 	               var mobileNo = jsonData.mobileNo;
+ 	       		var shiftDetailsDate=jsonData.shiftDetailsDate;
+ 	               var shiftStatus = jsonData.shiftStatus;
+ 	               var totalAmount = jsonData.totalAmount;
+ 	               var purchaseChaildEntity = jsonData.shiftDetailsChaildRestVO;
+ 	        	   
+ 	        	   var now = new Date(shiftDetailsDate);
+ 	       		var day = ("0" + now.getDate()).slice(-2);
+ 	       		var month = ("0" + (now.getMonth() + 1)).slice(-2);
+ 	       		shiftDetailsDate = now.getFullYear()+"-"+(month)+"-"+(day) ;
+ 	       		$("#shiftDetailsId").val(shiftDetailsId*1);
+ 	               $("#boyId").val(boyId);
+ 	               $("#mobileNo").val(mobileNo);
+ 	               $("#shiftDetailsDate").val(shiftDetailsDate);
+ 	       		console.log("---"+purchaseChaildEntity.length);
+ 	       	$(".nozzleName option").remove();
+ 	       		$("#shiftEntryBody").find("tr:gt(0)").remove();
+ 	        	   for(var i=0;i<purchaseChaildEntity.length;i++){
+ 	        		   var shiftChaildId=purchaseChaildEntity[i].shiftChaildId;
+ 	        		   var itemNature=purchaseChaildEntity[i].itemNature;
+ 	        		   var unitId=purchaseChaildEntity[i].unitId;
+ 	        		   var unitName = purchaseChaildEntity[i].unitName;
+ 	        			var nozzleName = purchaseChaildEntity[i].nozzleName;
+ 	        	        var nozzleReading = purchaseChaildEntity[i].nozzleReading;
+ 	        			var status = purchaseChaildEntity[i].status;
+ 	        	        var openReading = purchaseChaildEntity[i].openReading;
+ 	        			var closeReading = purchaseChaildEntity[i].closeReading;
+ 	        			var testReading = purchaseChaildEntity[i].testReading;
+						 var saleStock = purchaseChaildEntity[i].saleStock;
+ 	        			var rate = purchaseChaildEntity[i].rate;
+ 	        			var totalAmt = purchaseChaildEntity[i].totalAmt;
+ 	        		if(i==0){
+ 	        			$("#shiftChaildId").val(shiftChaildId*1);
+ 	        		   	$("#itemNature").val(itemNature);
+ 	        	        $("#unitId").val(unitId);
+ 	        	        $("#nozzleName").append('<option value="'+nozzleName+'">'+nozzleName+'</option>');
+ 	        	        $("#openReading").val(openReading);
+ 	        	        $("#closeReading").val(closeReading);
+ 	        	        $("#testReading").val(testReading);
+ 	        	        $("#saleStock").val(saleStock);
+ 	        	        $("#rate").val(rate);
+ 	        	        $("#totalAmt").val(totalAmt);
+ 	        	   }
+ 	        		else{
+ 	        	        	var row1 = $("#shiftEntryBody tr:first").html();
+ 	 	        			$("#customFields").append('<tr>'+row1+'</tr>');
+ 	 	        			var thistr=$('#customFields tr:last');
+ 	 	        			$(thistr).find('td:last').html('<a href="javascript:void(0);" class="remCF">Remove</a>');	        			
+ 	 	        			$(thistr).find("td").eq(0).find("#shiftChaildId").val(shiftChaildId*1);
+ 	 	        			$(thistr).find("td").eq(1).find("#itemNature").val(itemNature);
+ 	 	        			$(thistr).find("td").eq(2).find("#unitId").val(unitId);
+ 	 	        			$(thistr).find("td").eq(3).find("#nozzleName").append( '<option value="'+nozzleName+'">'+nozzleName+'</option>');
+ 	 	        			$(thistr).find("td").eq(4).find("#openReading").val(openReading);
+ 	 	        			$(thistr).find("td").eq(5).find("#closeReading").val(closeReading);
+ 	 	        			$(thistr).find("td").eq(6).find("#testReading").val(testReading);
+ 	 	        			$(thistr).find("td").eq(7).find("#saleStock").val(saleStock);
+ 	 	        			$(thistr).find("td").eq(8).find("#rate").val(rate);
+							$(thistr).find("td").eq(9).find("#totalAmt").val(totalAmt);
+ 	        	        } 	        		 	        	      
+ 	        	   } 	        	   
+ 	            },
+ 	            error : function() {
+ 	                alert("not working");
+ 	            }
+ 	        });
+ 		 $("#createDivIcon").removeClass().addClass('ft-minus');
+   	   $("#createDivClass").addClass('show');
     });
+    
     $(document).on("click", ".btnCancel", function(e) {
-	   	 
-		 $("#itemID").val("");
-        $("#itemName").val("");
-        $("#itemNature").val("");
-        $("#hsnCode").val("");
-		$("#gstPercent").val("");
-        $("#openingStock").val("");
-        $("#openingStockDate").val("");
-	     $("#btnSave").html("Save");
+    	$("#errordesc").html("");
+        $("#btnSave").html("Save");
+        $(".nozzleName option").remove();
+        $("#nozzleName").append( '<option value="Select">Select</option>');
+        $("#itemNature").val($("#itemNature option:first").val());
+	   	 $("#shiftChaildId").val("");
+ 	        		   	$("#shiftDetailsId").val("");
+ 	        	        $("#unitId").val("");
+ 	        	        $("#nozzleName").val("");
+ 	        	        $("#openReading").val("");
+ 	        	        $("#closeReading").val("");
+ 	        	        $("#testReading").val("");
+ 	        	        $("#saleStock").val("");
+ 	        	        $("#rate").val("");
+ 	        	        $("#totalAmt").val("");
+						$("#shiftEntryBody").find("tr:gt(0)").remove();
     });
 
     var url = new URL(window.location.href);
