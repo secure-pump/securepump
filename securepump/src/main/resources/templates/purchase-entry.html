@@ -618,13 +618,17 @@ var itemnature=jQuery("#itemId").find('option:selected').attr('data-itemnature')
        
     });
     $(document).on("click", ".btnCancel", function(e) {
+    	$("#errordesc").html("");
+        $("#btnSave").html("Save");
+        //$(".nozzleName option").remove();
+       // $("#nozzleName").append( '<option value="Select">Select</option>');
+        $("#billMode").val($("#billMode option:first").val());
+        $("#supplierId").val($("#supplierId option:first").val());
 	   	 
     	$("#purchaceID").val("");
         $("#invoiceDate").val("");
-        $("#billMode").val("");
-        $("#supplierId").val("");
 		$("#supplierInvoiceNum").val("");
-        $("#itemId").val("");
+		$("#itemId").val($("#itemId option:first").val());
         $("#quantity").val("");
         $("#rate").val("");
         $("#amount").val("");
@@ -633,6 +637,12 @@ var itemnature=jQuery("#itemId").find('option:selected').attr('data-itemnature')
         $("#igst").val("");
         $("#netAmt").val("");
 	     $("#btnSave").html("Save");
+	     $("#purchaceTableBody").find("tr:gt(0)").remove();
+	     var now = new Date();
+	 	var day = ("0" + now.getDate()).slice(-2);
+	 	var month = ("0" + (now.getMonth() + 1)).slice(-2);
+	 	invoiceDate = now.getFullYear()+"-"+(month)+"-"+(day) ;
+	     $("#invoiceDate").val(invoiceDate);
     });
 	
     var url = new URL(window.location.href);

@@ -85,24 +85,45 @@ public class ShiftDetailsServiceImpl implements ShiftDetailsService {
 			NozzleReadingEntity nozzleRe=new NozzleReadingEntity();
 			nozzleRe.setNozzleName(shiftDetailsBean.getNozzleName()[i]);
 			
-			chaildEntity.setId(shiftDetailsBean.getShiftChaildId()[i]);
+			if(shiftDetailsBean.getShiftChaildId().length==0){
+				chaildEntity.setId(null);
+			}else{
+				chaildEntity.setId(shiftDetailsBean.getShiftChaildId()[i]);
+			}
 			chaildEntity.setItemNature(shiftDetailsBean.getItemNature()[i]);
 			chaildEntity.setUnitCreation(unitCre);
-			chaildEntity.setNozzleReadingName(nozzleRe);
-			
+			chaildEntity.setNozzleReadingName(nozzleRe);			
 			chaildEntity.setOpenReading(shiftDetailsBean.getOpenReading()[i]);
-			chaildEntity.setCloseReading(shiftDetailsBean.getCloseReading()[i]);
-			chaildEntity.setTestReading(shiftDetailsBean.getTestReading()[i]);
-			chaildEntity.setSaleStock(shiftDetailsBean.getSaleStock()[i]);
+			
+			if(shiftDetailsBean.getCloseReading().length==0){
+				chaildEntity.setCloseReading(null);
+			}else{
+				chaildEntity.setCloseReading(shiftDetailsBean.getCloseReading()[i]);
+			}
+			if(shiftDetailsBean.getTestReading().length==0){
+				chaildEntity.setTestReading(null);
+			}else{
+				chaildEntity.setTestReading(shiftDetailsBean.getTestReading()[i]);
+			}
+			if(shiftDetailsBean.getSaleStock().length==0){
+				chaildEntity.setSaleStock(null);
+			}else{
+				chaildEntity.setSaleStock(shiftDetailsBean.getSaleStock()[i]);
+			}
+			if(shiftDetailsBean.getTotalAmt().length==0){
+				chaildEntity.setTotalAmt(null);
+				totalAmt=0d;
+			}else{
+				chaildEntity.setTotalAmt(shiftDetailsBean.getTotalAmt()[i]);
+				totalAmt=totalAmt+(shiftDetailsBean.getTotalAmt()[i]==null?0d:shiftDetailsBean.getTotalAmt()[i]);
+			}
 			chaildEntity.setRate(shiftDetailsBean.getRate()[i]);
-			chaildEntity.setTotalAmt(shiftDetailsBean.getTotalAmt()[i]);
 			chaildEntity.setCreated_date(new Date());
 			chaildEntity.setCreated_by("admin");
 			chaildEntity.setUpdated_date(new Date());
 			chaildEntity.setUpdated_by("admin");
 			chaildEntity.setShiftDetailsEntity(entity);
 			allShiftDetailsChaildEntitys.add(chaildEntity);
-			totalAmt=totalAmt+(shiftDetailsBean.getTotalAmt()[i]==null?0d:shiftDetailsBean.getTotalAmt()[i]);
 		}
 		entity.setShiftDetailsChaildEntity(allShiftDetailsChaildEntitys);
 		entity.setShiftStatus(false);

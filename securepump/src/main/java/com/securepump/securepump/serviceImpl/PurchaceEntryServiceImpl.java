@@ -73,15 +73,30 @@ public class PurchaceEntryServiceImpl implements PurchaceEntryService {
 				
 				ItemCreationEntity itemCre=new ItemCreationEntity();
 				itemCre.setId(purchaceBean.getItemId()[i]);
-				
-				chaildEntity.setId(purchaceBean.getPurchaceChaildId()[i]);
+				if(purchaceBean.getPurchaceChaildId().length==0){
+					chaildEntity.setId(null);
+				}else{
+					chaildEntity.setId(purchaceBean.getPurchaceChaildId()[i]);
+				}				
 				chaildEntity.setItemCreation(itemCre);
 				chaildEntity.setQuantity(purchaceBean.getQuantity()[i]);
 				chaildEntity.setRate(purchaceBean.getRate()[i]);
 				chaildEntity.setAmount(purchaceBean.getAmount()[i]);
-				chaildEntity.setSgst(purchaceBean.getSgst()[i]);
-				chaildEntity.setCgst(purchaceBean.getCgst()[i]);
-				chaildEntity.setIgst(purchaceBean.getIgst()[i]);
+				if(purchaceBean.getSgst().length==0){
+					chaildEntity.setSgst(null);
+				}else{
+					chaildEntity.setSgst(purchaceBean.getSgst()[i]);
+				}
+				if(purchaceBean.getCgst().length==0){
+					chaildEntity.setCgst(null);
+				}else{
+					chaildEntity.setCgst(purchaceBean.getCgst()[i]);
+				}
+				if(purchaceBean.getIgst().length==0){
+					chaildEntity.setIgst(null);
+				}else{
+					chaildEntity.setIgst(purchaceBean.getIgst()[i]);
+				}
 				chaildEntity.setNetAmt(purchaceBean.getNetAmt()[i]);
 				chaildEntity.setPurchaceEntity(entity);
 				chaildEntity.setCreated_date(new Date());

@@ -683,12 +683,11 @@
     	$("#errordesc").html("");
         $("#btnSave").html("Save");
         $(".nozzleName option").remove();
-        $("#nozzleName").append( '<option value="Select">Select</option>');
         $("#itemNature").val($("#itemNature option:first").val());
 	   	 $("#shiftChaildId").val("");
  	        		   	$("#shiftDetailsId").val("");
  	        	        $("#unitId").val("");
- 	        	        $("#nozzleName").val("");
+ 	        	        $("#nozzleName").append('<option value="Select">Select</option>');
  	        	        $("#openReading").val("");
  	        	        $("#closeReading").val("");
  	        	        $("#testReading").val("");
@@ -698,6 +697,11 @@
 						$("#shiftEntryBody").find("tr:gt(0)").remove();
     });
 
+    var now = new Date();
+ 	var day = ("0" + now.getDate()).slice(-2);
+ 	var month = ("0" + (now.getMonth() + 1)).slice(-2);
+ 	invoiceDate = now.getFullYear()+"-"+(month)+"-"+(day) ;
+     $("#shiftDetailsDate").val(invoiceDate);
     var url = new URL(window.location.href);
     var status= url.searchParams.get("status");
     //alert(status);
