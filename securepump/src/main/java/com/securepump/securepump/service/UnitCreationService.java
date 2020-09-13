@@ -12,6 +12,7 @@ import com.securepump.securepump.model.UnitCreationEntity;
 public interface UnitCreationService {
 	public List<UnitCreationEntity> getAllUnits();
 	public UnitCreationEntity getUnitById(Long id) throws RecordNotFoundException;
+	public boolean getUnitName(String uname);
 	public UnitCreationEntity createOrUpdateUnit(UnitCreationEntity entity);
 	public void deleteUnitById(Long id) throws RecordNotFoundException;
 }

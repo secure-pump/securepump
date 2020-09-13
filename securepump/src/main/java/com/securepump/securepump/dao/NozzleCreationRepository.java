@@ -12,5 +12,6 @@ public interface NozzleCreationRepository extends CrudRepository<NozzleCreationE
 	
 	@Async
 	List<NozzleCreationEntity> findByUnitCreationId(Long IdUnitCreation);
+	List<NozzleCreationEntity> findByNozzleName(String nozzleName);
 
 }

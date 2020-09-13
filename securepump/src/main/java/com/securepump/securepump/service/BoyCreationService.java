@@ -13,6 +13,7 @@ public interface BoyCreationService {
 
 	public List<BoyCreationEntity> getAllCutomer();
 	public BoyCreationEntity getBoyById(Long id) throws RecordNotFoundException;
+	public boolean getBoyName(String bname);
 	public BoyCreationEntity createOrUpdateBoy(BoyCreationEntity entity);
 	public void deleteBoyById(Long id) throws RecordNotFoundException;
 }

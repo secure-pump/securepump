@@ -79,4 +79,17 @@ public class NozzleCreationServiceImpl implements NozzleCreationService {
 		}
 	}
 
+	@Override
+	public boolean getNozzleName(String nozzleName) {
+		// TODO Auto-generated method stub
+		List<NozzleCreationEntity> nName=nozzleRepo.findByNozzleName(nozzleName);
+		if(nName.size()>0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+
 }

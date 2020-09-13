@@ -12,5 +12,5 @@ import com.securepump.securepump.model.ItemCreationEntity;
 public interface ItemCreationRepository extends CrudRepository<ItemCreationEntity, Long>{
 	@Async
 	List<ItemCreationEntity> findByItemNature(String itemNature);
-
+	List<ItemCreationEntity> findByItemName(String itemName);
 }

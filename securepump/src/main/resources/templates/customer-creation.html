@@ -108,13 +108,19 @@
                                             </button>
                                             <strong>  Records</strong> Inserted Successfully <a href="#" class="alert-link"></a>                                            
                                         </div>
+                                        <div th:case="'exist'" class="alert alert-success alert-dismissible mb-2" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <strong>  Customer</strong> Already Existed <a href="#" class="alert-link"></a>                                            
+                                        </div>
                                         <div th:case="'update'" class="alert alert-success alert-dismissible mb-2" role="alert">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
                                             <strong>  Records</strong> Updated Successfully <a href="#" class="alert-link"></a>                                            
                                         </div>
-					<div th:case="'error'" class="alert alert-danger alert-dismissible mb-2" role="alert">
+										<div th:case="'error'" class="alert alert-danger alert-dismissible mb-2" role="alert">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>

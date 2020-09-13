@@ -69,18 +69,12 @@ public class NozzleCreationController {
 		System.out.println("account--"+nozzleBean);
 		String status="error";
 		try {
-			if(nozzleBean.getId()==null) {
-				status="save";
-			}else {
-				status="update";
-			}
-			
-			TankCreationEntity tankCre=new TankCreationEntity();
-			tankCre.setId(nozzleBean.getTankId());
-			//itemCre.setItemName(tankBean.getItemNature());
-			UnitCreationEntity unitcre=new UnitCreationEntity();
-			unitcre.setId(nozzleBean.getUnitId());
-			
+			if(nozzleBean.getId()!=null) {
+				TankCreationEntity tankCre=new TankCreationEntity();
+				tankCre.setId(nozzleBean.getTankId());
+				//itemCre.setItemName(tankBean.getItemNature());
+				UnitCreationEntity unitcre=new UnitCreationEntity();
+				unitcre.setId(nozzleBean.getUnitId());				
 				NozzleCreationEntity nozzle=new NozzleCreationEntity();
 				nozzle.setId(nozzleBean.getId());
 				nozzle.setNozzleName(nozzleBean.getNozzleName());
@@ -88,9 +82,33 @@ public class NozzleCreationController {
 				nozzle.setOpeningMeterDate(nozzleBean.getOpeningMeterDate());
 				nozzle.setUnitCreation(unitcre);
 				nozzle.setTankCreation(tankCre);
-				
-			
-				nozzleService.createorUpdateNozzle(nozzle);			
+				nozzleService.createorUpdateNozzle(nozzle);
+				status="Update";
+				return "redirect:/nozzle-creation?status="+status;
+			}
+			boolean nName=nozzleService.getNozzleName(nozzleBean.getNozzleName());
+			if(nName==true) {
+				status="exist";
+				return "redirect:/nozzle-creation?status="+status;
+			}
+			else {
+				TankCreationEntity tankCre=new TankCreationEntity();
+				tankCre.setId(nozzleBean.getTankId());
+				//itemCre.setItemName(tankBean.getItemNature());
+				UnitCreationEntity unitcre=new UnitCreationEntity();
+				unitcre.setId(nozzleBean.getUnitId());				
+				NozzleCreationEntity nozzle=new NozzleCreationEntity();
+				nozzle.setId(nozzleBean.getId());
+				nozzle.setNozzleName(nozzleBean.getNozzleName());
+				nozzle.setOpeningMeterReading(nozzleBean.getOpeningMeterReading());
+				nozzle.setOpeningMeterDate(nozzleBean.getOpeningMeterDate());
+				nozzle.setUnitCreation(unitcre);
+				nozzle.setTankCreation(tankCre);
+				nozzleService.createorUpdateNozzle(nozzle);
+				status="save";
+				return "redirect:/nozzle-creation?status="+status;
+			}
+						
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

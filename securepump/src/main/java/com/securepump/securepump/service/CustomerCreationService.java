@@ -12,6 +12,7 @@ public interface CustomerCreationService {
 
 	public List<CustomerCreationEntity> getAllCutomer();
 	public CustomerCreationEntity getCustomerById(Long id) throws RecordNotFoundException;
+	public boolean getCustomerByMobile(String mobile);
 	public CustomerCreationEntity createOrUpdateCustomer(CustomerCreationEntity entity);
 	public void deleteCustomerById(Long id) throws RecordNotFoundException;
 	

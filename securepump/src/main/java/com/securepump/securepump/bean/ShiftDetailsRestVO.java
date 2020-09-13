@@ -10,7 +10,7 @@ public class ShiftDetailsRestVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long shiftDetailsId;
 	private Long boyId;
-	private int mobileNo;
+	private String mobileNo;
 	private Date shiftDetailsDate;
 	private boolean shiftStatus;
 	private Double totalAmount;
@@ -31,10 +31,10 @@ public class ShiftDetailsRestVO implements Serializable {
 	public void setBoyId(Long boyId) {
 		this.boyId = boyId;
 	}
-	public int getMobileNo() {
+	public String getMobileNo() {
 		return mobileNo;
 	}
-	public void setMobileNo(int mobileNo) {
+	public void setMobileNo(String mobileNo) {
 		this.mobileNo = mobileNo;
 	}
 	public Date getShiftDetailsDate() {

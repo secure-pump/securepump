@@ -79,5 +79,17 @@ public class ItemCreationServiceImpl implements ItemCreationService {
 		}
 		
 	}
+	@Override
+	public boolean getItemByName(String iname) { 
+		// TODO Auto-generated method stub
+		List<ItemCreationEntity> itemDetail=itemRepo.findByItemName(iname);
+		if(itemDetail.size()>0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
 
 }

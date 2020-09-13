@@ -62,4 +62,17 @@ public class SupplierCreationServiceImpl implements SupplierCreationService {
 		
 	}
 
+	@Override
+	public boolean getSupplierNameOrMobile(String sname, String mobile) {
+		// TODO Auto-generated method stub
+		List<SupplierCreationEntity> supRepo=supplierRepository.findBySupplierNameOrMobileNo(sname, mobile);
+		if(supRepo.size()>0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+
 }

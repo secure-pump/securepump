@@ -62,4 +62,17 @@ public class BoyCreationServiceImpl implements BoyCreationService {
 		}
 	}
 
+	@Override
+	public boolean getBoyName(String bname) {
+		// TODO Auto-generated method stub
+		List<BoyCreationEntity> bStatus=boyrepo.findByBoyName(bname);
+		if(bStatus.size()>0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+
 }

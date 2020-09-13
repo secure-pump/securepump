@@ -13,6 +13,7 @@ import com.securepump.securepump.model.NozzleCreationEntity;
 public interface NozzleCreationService {
 	public List<NozzleCreationEntity> getAllNozzles();
 	public NozzleCreationEntity getNozzleById(Long id) throws RecordNotFoundException;
+	public boolean getNozzleName(String nozzleName);
 	public NozzleCreationEntity createorUpdateNozzle(NozzleCreationEntity entity);
 	public void deleteNozzleById(Long id) throws RecordNotFoundException;
 

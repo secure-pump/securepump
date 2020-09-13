@@ -36,17 +36,28 @@ public class BoyCreationController {
 		//System.out.println("account--"+account);
 		String status="error";
 		try {
-			if(boycreate.getId()==null) {
-				status="save";
-			}else {
+			
+			if(boycreate.getId()!=null) {
 				status="update";
+				boyService.createOrUpdateBoy(boycreate);
+				return "redirect:/boy-creation?status="+status;
 			}
-			boyService.createOrUpdateBoy(boycreate);
+			boolean bstatus=boyService.getBoyName(boycreate.getBoyName());
+			if(bstatus==true) {
+				status="exist";
+				return "redirect:/boy-creation?status="+status;
+			}
+			else {
+				boyService.createOrUpdateBoy(boycreate);
+				status="save";
+				return "redirect:/boy-creation?status="+status;
+			}
+			
 			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-	    return "redirect:/boy-creation?status="+status;
+		return "redirect:/boy-creation?status="+status;
 	}
 	@RequestMapping("/boyEdit/{id}")
 	public ModelAndView showEditBoyPage(@PathVariable(name = "id") Long id) throws RecordNotFoundException {

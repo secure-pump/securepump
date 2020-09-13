@@ -32,17 +32,27 @@ public class CustomerCreationController {
 		System.out.println("Save/Update Customer Details"+customer);
 		String status="error";
 		try {
-			if(customer.getId()==null) {
-				status="save";
-			}else {
+			if(customer.getId()!=null) {
+				customerService.createOrUpdateCustomer(customer);
 				status="update";
+				return "redirect:/customer-creation?status="+status;
 			}
-			customerService.createOrUpdateCustomer(customer);
+			boolean s=customerService.getCustomerByMobile(customer.getMobileNo());
+			if(s==true) {
+				System.out.println("Customer already Exist");
+				status="exist";
+				return "redirect:/customer-creation?status="+status;
+			}
+			else {
+				customerService.createOrUpdateCustomer(customer);
+				status="save";				
+				return "redirect:/customer-creation?status="+status;
+			}
 			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-	    return "redirect:/boy-creation?status="+status;
+	    return "redirect:/customer-creation?status="+status;
 		
 	}
 	
@@ -56,6 +66,6 @@ public class CustomerCreationController {
 	@RequestMapping("/customerDelete/{id}")
 	public String deleteCustomer(@PathVariable(name = "id") Long id,Model model) throws RecordNotFoundException {
 		customerService.deleteCustomerById(id);
-		return "redirect:/cutomer-creation?status=delete";
+		return "redirect:/customer-creation?status=delete";
 	}
 }

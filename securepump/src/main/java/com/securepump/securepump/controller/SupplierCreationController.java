@@ -36,12 +36,31 @@ public class SupplierCreationController {
 	{
 		String status="error";
 		try {
-			if(supplier.getId()==null) {
-				status="save";
-			}else {
+			if(supplier.getId()!=null) {
 				status="update";
+				supplierService.createOrUpdateSupplier(supplier);
+				List<SupplierCreationEntity> listSuppliers=supplierService.getAllSuppliers();
+				System.out.println("Suppliersize=="+listSuppliers.size());
+				model.addAttribute("listSuppliers", listSuppliers);
+				return "redirect:/supplier-creation?status="+status;
 			}
-			supplierService.createOrUpdateSupplier(supplier);
+			boolean record=supplierService.getSupplierNameOrMobile(supplier.getSupplierName(), supplier.getMobileNo());
+			if(record==true) {
+				status="exist";
+				List<SupplierCreationEntity> listSuppliers=supplierService.getAllSuppliers();
+				System.out.println("Suppliersize=="+listSuppliers.size());
+				model.addAttribute("listSuppliers", listSuppliers);
+				return "redirect:/supplier-creation?status="+status;
+			}
+			else {
+				status="save";
+				supplierService.createOrUpdateSupplier(supplier);
+				List<SupplierCreationEntity> listSuppliers=supplierService.getAllSuppliers();
+				System.out.println("Suppliersize=="+listSuppliers.size());
+				model.addAttribute("listSuppliers", listSuppliers);
+				return "redirect:/supplier-creation?status="+status;
+			}
+			
 		}
 		catch(Exception e)
 		{

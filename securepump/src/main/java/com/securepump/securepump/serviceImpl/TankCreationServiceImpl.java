@@ -64,4 +64,17 @@ public class TankCreationServiceImpl implements TankCreationService {
 		}
 	}
 
+	@Override
+	public boolean getTankName(String name) {
+		// TODO Auto-generated method stub
+		List<TankCreationEntity> tankDetails=tankRepository.findByTankName(name);
+		if(tankDetails.size()>0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+
 }

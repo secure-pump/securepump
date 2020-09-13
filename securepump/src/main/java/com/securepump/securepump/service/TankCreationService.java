@@ -14,6 +14,7 @@ public interface TankCreationService {
 
 	public List<TankCreationEntity> getAllItems();
 	public TankCreationEntity getItemById(Long id) throws RecordNotFoundException;
+	public boolean getTankName(String name);
 	public TankCreationEntity createorUpdateItem(TankCreationEntity entity);
 	public void deleteItemById(Long id) throws RecordNotFoundException;
 }

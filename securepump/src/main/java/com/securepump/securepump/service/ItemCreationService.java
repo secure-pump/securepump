@@ -13,6 +13,7 @@ public interface ItemCreationService {
 	public List<ItemCreationEntity> getAllItems();
 	public List<ItemCreationEntity> getAllItemNature(String itemNature) throws RecordNotFoundException;
 	public ItemCreationEntity getItemById(Long id) throws RecordNotFoundException;
+	public boolean getItemByName(String iname);
 	public ItemCreationEntity createorUpdateItem(ItemCreationEntity entity);
 	public void deleteItemById(Long id) throws RecordNotFoundException;
 	

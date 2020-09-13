@@ -58,26 +58,38 @@ public class TankCreationController {
 		System.out.println("account--"+tankBean);
 		String status="error";
 		try {
-			if(tankBean.getId()==null) {
-				status="save";
-			}else {
+			if(tankBean.getId()!=null) {
 				status="update";
-			}
-			
-			ItemCreationEntity itemCre=new ItemCreationEntity();
-			itemCre.setId(tankBean.getItemId());
-			//itemCre.setItemName(tankBean.getItemNature());
-			
+				ItemCreationEntity itemCre=new ItemCreationEntity();
+				itemCre.setId(tankBean.getItemId());
+				//itemCre.setItemName(tankBean.getItemNature());
 				TankCreationEntity tank=new TankCreationEntity();
 				tank.setId(tankBean.getId());
 				tank.setTankName(tankBean.getTankName());
 				tank.setCapacity(tankBean.getCapacity());				
 				tank.setItemCreation(itemCre);
 				tank.setOpeningStock(tankBean.getOpeningStock());
-				
-			
-			tankService.createorUpdateItem(tank);
-			
+				tankService.createorUpdateItem(tank);
+				return "redirect:/tank-creation?status="+status;
+			}
+			boolean tankDetails=tankService.getTankName(tankBean.getTankName());
+			if(tankDetails==true) {
+				status="exist";
+				return "redirect:/tank-creation?status="+status;
+			}
+			else {
+				status="save";
+				ItemCreationEntity itemCre=new ItemCreationEntity();
+				itemCre.setId(tankBean.getItemId());
+				//itemCre.setItemName(tankBean.getItemNature());
+				TankCreationEntity tank=new TankCreationEntity();
+				tank.setId(tankBean.getId());
+				tank.setTankName(tankBean.getTankName());
+				tank.setCapacity(tankBean.getCapacity());				
+				tank.setItemCreation(itemCre);
+				tank.setOpeningStock(tankBean.getOpeningStock());
+				tankService.createorUpdateItem(tank);
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

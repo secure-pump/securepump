@@ -62,4 +62,15 @@ public class CustomerCreationServiceImpl implements CustomerCreationService {
 		}
 	}
 
+	@Override
+	public boolean getCustomerByMobile(String mobile) {
+		// TODO Auto-generated method stub
+		List<CustomerCreationEntity> cus=custRepositoy.findByMobileNo(mobile);
+		if(cus.size() > 0) {
+			return true;
+		}else {
+		return false;
+		}
+	}
+
 }

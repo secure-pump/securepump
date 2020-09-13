@@ -19,7 +19,7 @@ public class BoyCreationEntity {
 		@Column(name="boy_name")
 		private String boyName;
 		@Column(name="mobile_no",length=15)
-		private int mobileNo;
+		private String mobileNo;
 		@Column(name="address1")
 		private String address1;
 		@Column(name="address2")
@@ -51,11 +51,11 @@ public class BoyCreationEntity {
 			this.boyName = boyName;
 		}
 
-		public int getMobileNo() {
+		public String getMobileNo() {
 			return mobileNo;
 		}
 
-		public void setMobileNo(int mobileNo) {
+		public void setMobileNo(String mobileNo) {
 			this.mobileNo = mobileNo;
 		}
 

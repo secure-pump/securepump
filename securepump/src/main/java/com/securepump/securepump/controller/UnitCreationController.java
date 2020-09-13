@@ -39,13 +39,21 @@ public class UnitCreationController {
 		System.out.println("Save/Update Customer Details"+unit);
 		String status="error";
 		try {
-			if(unit.getId()==null) {
-				status="save";
-			}else {
+			if(unit.getId()!=null) {
 				status="update";
+				unitService.createOrUpdateUnit(unit);
+				return "redirect:/unit-creation?status="+status;
 			}
-			unitService.createOrUpdateUnit(unit);
-			
+			boolean unitStatus=unitService.getUnitName(unit.getUnitName());
+			if(unitStatus==true) {
+				status="exist";
+				return "redirect:/unit-creation?status="+status;
+			}
+			else {
+				status="save";
+				unitService.createOrUpdateUnit(unit);
+				return "redirect:/unit-creation?status="+status;
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

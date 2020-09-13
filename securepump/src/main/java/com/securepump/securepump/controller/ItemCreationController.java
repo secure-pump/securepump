@@ -34,12 +34,23 @@ public class ItemCreationController {
 		//System.out.println("account--"+account);
 		String status="error";
 		try {
-			if(item.getId()==null) {
-				status="save";
-			}else {
+			if(item.getId()!=null) {
+				itemService.createorUpdateItem(item);
 				status="update";
+				return "redirect:/item-creation?status="+status;
 			}
-			itemService.createorUpdateItem(item);
+			boolean itemstatus=itemService.getItemByName(item.getItemName());
+			if(itemstatus==true) {
+				System.out.println("Item Already Exist");
+				status="exist";
+				return "redirect:/item-creation?status="+status;
+			}
+			else {
+				status="save";
+				itemService.createorUpdateItem(item);
+				return "redirect:/item-creation?status="+status;
+			}
+			
 			
 		}catch(Exception e) {
 			e.printStackTrace();

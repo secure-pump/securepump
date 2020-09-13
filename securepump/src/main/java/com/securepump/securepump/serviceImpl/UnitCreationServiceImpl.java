@@ -62,6 +62,19 @@ public class UnitCreationServiceImpl implements UnitCreationService {
 			throw new RecordNotFoundException("No Unit Name record exist for given id");
 		}
 	}
+
+	@Override
+	public boolean getUnitName(String uname) {
+		// TODO Auto-generated method stub
+		List<UnitCreationEntity>unitName=unitrepo.findByUnitName(uname);
+		if(unitName.size()>0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
 	
 
 }

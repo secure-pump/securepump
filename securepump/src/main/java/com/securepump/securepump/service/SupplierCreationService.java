@@ -12,6 +12,7 @@ import com.securepump.securepump.model.SupplierCreationEntity;
 public interface SupplierCreationService {
 	public List<SupplierCreationEntity> getAllSuppliers();
 	public SupplierCreationEntity getSupplierById(Long id) throws RecordNotFoundException;
+	public boolean getSupplierNameOrMobile(String sname, String mobile);
 	public SupplierCreationEntity createOrUpdateSupplier(SupplierCreationEntity entity);
 	public void deleteSupplierById(Long id) throws RecordNotFoundException;
 }
