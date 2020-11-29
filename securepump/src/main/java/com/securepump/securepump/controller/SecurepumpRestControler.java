@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,10 +17,12 @@ import com.securepump.securepump.bean.PurchaseChaildRestVo;
 import com.securepump.securepump.bean.ShiftDetailsChaildRestVO;
 import com.securepump.securepump.bean.ShiftDetailsRestVO;
 import com.securepump.securepump.exception.RecordNotFoundException;
+import com.securepump.securepump.model.AccountCreationEntity;
 import com.securepump.securepump.model.PurchaseChaildEntity;
 import com.securepump.securepump.model.PurchaseEntryEntity;
 import com.securepump.securepump.model.ShiftDetailsChaildEntity;
 import com.securepump.securepump.model.ShiftDetailsEntity;
+import com.securepump.securepump.service.AccountCreationService;
 import com.securepump.securepump.service.PurchaceEntryService;
 import com.securepump.securepump.service.ShiftDetailsService;
 
@@ -27,7 +31,8 @@ public class SecurepumpRestControler {
 	@Autowired
 	@Qualifier("purchaceservice")
 	PurchaceEntryService purchaceEntryService;
-	
+	 @Autowired 
+	 AccountCreationService accountService;
 	@Autowired
 	@Qualifier("shiftDetails")
 	ShiftDetailsService shiftDetails;
@@ -127,5 +132,14 @@ public class SecurepumpRestControler {
         System.out.println("----chaildListVo--"+chaildListVo.size());
         return restVo;
     }
+	
+	@RequestMapping("/account-create")
+	public List<AccountCreationEntity> AccountCreate(@ModelAttribute("account") AccountCreationEntity account,Model model,@RequestParam(name = "status") String status) {
+		List<AccountCreationEntity> listAccounts = accountService.getAllAccounts();		
+	    model.addAttribute("listAccounts", listAccounts);
+	  System.out.println("status--"+status);
+	   model.addAttribute("status", status);
+		return listAccounts;
+	}
 
 }

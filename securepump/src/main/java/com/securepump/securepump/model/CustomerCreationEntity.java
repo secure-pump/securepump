@@ -26,8 +26,16 @@ public class CustomerCreationEntity {
 		private String address1;
 		@Column(name="address2")
 		private String address2;
+		@Column (name="gst_type")
+		private String gstType;
 		@Column(name="gstno",length=15)
 		private String gstNo;
+		@Column(name="discount",length=25)
+		private int discount;
+		@Column (name="rate_slab", length=25)
+		private int rateSlab;
+		@Column(name="mode_of_payemnt")
+		private String modeOfPayment; 
 		@Column(name="credit_limit",length=25)
 		private int creditLimit;
 		@Column(name="due_days",length=25)
@@ -130,13 +138,39 @@ public class CustomerCreationEntity {
 		public void setUpdated_date(Date updated_date) {
 			this.updated_date = updated_date;
 		}
+		
+		public String getGstType() {
+			return gstType;
+		}
+		public void setGstType(String gstType) {
+			this.gstType = gstType;
+		}
+		public int getDiscount() {
+			return discount;
+		}
+		public void setDiscount(int discount) {
+			this.discount = discount;
+		}
+		public int getRateSlab() {
+			return rateSlab;
+		}
+		public void setRateSlab(int rateSlab) {
+			this.rateSlab = rateSlab;
+		}
+		public String getModeOfPayment() {
+			return modeOfPayment;
+		}
+		public void setModeOfPayment(String modeOfPayment) {
+			this.modeOfPayment = modeOfPayment;
+		}
 		@Override
 		public String toString() {
-			return "CustomerCreationEntity [Id=" + Id + ", customerName=" + customerName + ", MobileNo=" + mobileNo
-					+ ", address1=" + address1 + ", address2=" + address2 + ", gstNo=" + gstNo + ", creditLimit="
-					+ creditLimit + ", dueDays=" + dueDays + ", openingBal=" + openingBal + ", openingBalDate="
-					+ openingBalDate + ", created_by=" + created_by + ", created_date=" + created_date + ", updated_by="
-					+ updated_by + ", updated_date=" + updated_date + "]";
+			return "CustomerCreationEntity [Id=" + Id + ", customerName=" + customerName + ", mobileNo=" + mobileNo
+					+ ", address1=" + address1 + ", address2=" + address2 + ", gstType=" + gstType + ", gstNo=" + gstNo
+					+ ", discount=" + discount + ", rateSlab=" + rateSlab + ", modeOfPayment=" + modeOfPayment
+					+ ", creditLimit=" + creditLimit + ", dueDays=" + dueDays + ", openingBal=" + openingBal
+					+ ", openingBalDate=" + openingBalDate + ", created_by=" + created_by + ", created_date="
+					+ created_date + ", updated_by=" + updated_by + ", updated_date=" + updated_date + "]";
 		}
 		
 		

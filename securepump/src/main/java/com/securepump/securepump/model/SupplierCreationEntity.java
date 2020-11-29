@@ -26,6 +26,16 @@ public class SupplierCreationEntity {
 	private String address2;
 	@Column(name="gstno",length=1000)
 	private String gstNo;
+	@Column(name="gst_type")
+	private String gstType;
+	@Column(name="credit_days")
+	private int credit_days;
+	@Column(name="discount")
+	private String discount;
+	@Column(name="rate_slab")
+	private String rateSlab;
+	@Column(name="mode_of_payment")
+	private String modeOfPayment;
 	@Column(name="opening_Bal")
 	private Long openingBal;
 	@Column(name = "created_by",updatable=false)
@@ -129,13 +139,55 @@ public class SupplierCreationEntity {
 	public void setUpdated_date(Date updated_date) {
 		this.updated_date = updated_date;
 	}
+	
+	public String getGstType() {
+		return gstType;
+	}
+
+	public void setGstType(String gstType) {
+		this.gstType = gstType;
+	}
+
+	public int getCredit_days() {
+		return credit_days;
+	}
+
+	public void setCredit_days(int credit_days) {
+		this.credit_days = credit_days;
+	}
+
+	public String getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(String discount) {
+		this.discount = discount;
+	}
+
+	public String getRateSlab() {
+		return rateSlab;
+	}
+
+	public void setRateSlab(String rateSlab) {
+		this.rateSlab = rateSlab;
+	}
+
+	public String getModeOfPayment() {
+		return modeOfPayment;
+	}
+
+	public void setModeOfPayment(String modeOfPayment) {
+		this.modeOfPayment = modeOfPayment;
+	}
 
 	@Override
 	public String toString() {
 		return "SupplierCreationEntity [id=" + id + ", supplierName=" + supplierName + ", mobileNo=" + mobileNo
-				+ ", address1=" + address1 + ", address2=" + address2 + ", gstNo=" + gstNo + ", openingBal="
-				+ openingBal + ", created_by=" + created_by + ", created_date=" + created_date + ", updated_by="
-				+ updated_by + ", updated_date=" + updated_date + "]";
+				+ ", address1=" + address1 + ", address2=" + address2 + ", gstNo=" + gstNo + ", gstType=" + gstType
+				+ ", credit_days=" + credit_days + ", discount=" + discount + ", rateSlab=" + rateSlab
+				+ ", modeOfPayment=" + modeOfPayment + ", openingBal=" + openingBal + ", created_by=" + created_by
+				+ ", created_date=" + created_date + ", updated_by=" + updated_by + ", updated_date=" + updated_date
+				+ "]";
 	}
     
     
